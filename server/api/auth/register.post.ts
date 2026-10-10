@@ -3,6 +3,8 @@ import { z } from 'zod'
 const schema = z.object({
   username: z.string().trim().min(3).max(32).regex(/^[\w.-]+$/, 'Lettres, chiffres, . _ - uniquement'),
   password: z.string().min(8).max(200),
+  /** Idioma elegido en la pantalla de registro (cookie), guardado como preferencia inicial. */
+  lang: z.enum(['fr', 'es']).optional(),
 })
 
 export default defineEventHandler(async (event) => {
@@ -17,7 +19,7 @@ export default defineEventHandler(async (event) => {
   const hash = await hashPassword(body.password)
   const info = db.prepare('INSERT INTO users (username, password_hash) VALUES (?, ?)').run(body.username, hash)
   const id = Number(info.lastInsertRowid)
-  db.prepare('INSERT INTO prefs (user_id) VALUES (?)').run(id)
+  db.prepare('INSERT INTO prefs (user_id, lang) VALUES (?, ?)').run(id, body.lang ?? 'fr')
   await setUserSession(event, { user: { id, username: body.username } })
   return { ok: true }
 })

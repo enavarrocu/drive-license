@@ -13,7 +13,8 @@
  *  - autres /api/*     → réseau uniquement (jamais en cache)
  *  - /_nuxt/*          → cache d'abord (assets hachés, immuables)
  *  - navigations       → réseau d'abord, sinon la page en cache, sinon /offline.html
- *  - autres GET locaux → cache puis mise à jour en arrière-plan (icônes, manifest…)
+ *  - icônes, manifest, offline.html → cache puis mise à jour en arrière-plan
+ *  - tout autre GET  → réseau, sans cache
  *
  * Limite connue : seules les pages (et leurs chunks JS) déjà visitées en ligne sont
  * disponibles hors ligne ; la progression faite hors ligne n'est pas enregistrée.
@@ -120,7 +121,8 @@ self.addEventListener('fetch', (event) => {
     return
   } else if (url.pathname.startsWith('/_nuxt/')) {
     event.respondWith(cacheFirst(request, ASSETS))
-  } else {
+  } else if (url.pathname.startsWith('/icons/') || PRECACHE.includes(url.pathname)) {
     event.respondWith(staleWhileRevalidate(request, SHELL))
   }
+  // Tout le reste (y compris un fetch() d'une page HTML depuis le JS) : réseau, sans cache.
 })

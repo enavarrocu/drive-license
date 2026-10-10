@@ -99,7 +99,7 @@ async function confirmReset() {
       <div class="progress-grid">
         <div v-for="p in perTheme" :key="p.theme.id" class="theme-tile">
           <b>{{ p.theme[lang] }} <span v-if="p.theme.grave" class="pill grave" style="font-size: 0.65rem">−5</span></b>
-          <span class="small muted">{{ p.mastered }} / {{ p.total }} · <span v-if="p.wrong" style="color: var(--ko)">{{ p.wrong }} {{ lang === 'fr' ? 'à revoir' : 'a repasar' }}</span></span>
+          <span class="small muted">{{ p.mastered }} / {{ p.total }}<span v-if="p.wrong" style="color: var(--ko)"> · {{ p.wrong }} {{ lang === 'fr' ? 'à revoir' : 'a repasar' }}</span></span>
           <div class="bar"><div :style="{ width: (p.total ? (p.mastered / p.total) * 100 : 0) + '%' }"></div></div>
         </div>
       </div>

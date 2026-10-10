@@ -39,7 +39,11 @@ interface Me {
 }
 
 export function useStore() {
-  const prefs = useState<Prefs>('prefs', () => ({ lang: 'fr', speak: true, helpEs: false, answerSeconds: 15 }))
+  // Idioma elegido en este dispositivo, también antes de iniciar sesión (login/registro).
+  // Al cargar el usuario se sincroniza con sus preferencias en el servidor.
+  const langCookie = useCookie<Lang>('lang', { default: () => 'fr', maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' })
+  const { loggedIn } = useUserSession()
+  const prefs = useState<Prefs>('prefs', () => ({ lang: langCookie.value === 'es' ? 'es' : 'fr', speak: true, helpEs: false, answerSeconds: 15 }))
   const progress = useState<Record<string, ProgressEntry>>('progress', () => ({}))
   const courseRead = useState<Record<string, true>>('courseRead', () => ({}))
   const exams = useState<ExamSummary[]>('exams', () => [])
@@ -51,6 +55,7 @@ export function useStore() {
     if (loaded.value && !force) return
     const me = await requestFetch<Me>('/api/me')
     prefs.value = me.prefs
+    langCookie.value = me.prefs.lang
     progress.value = me.progress
     courseRead.value = Object.fromEntries(me.courseRead.map((c) => [c, true]))
     exams.value = me.exams
@@ -67,6 +72,8 @@ export function useStore() {
   /** Guarda las preferencias (optimista). */
   async function setPrefs(patch: Partial<Prefs>) {
     prefs.value = { ...prefs.value, ...patch }
+    if (patch.lang) langCookie.value = patch.lang
+    if (!loggedIn.value) return
     await $fetch('/api/prefs', { method: 'PUT', body: patch }).catch(() => {})
   }
 

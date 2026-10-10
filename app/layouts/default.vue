@@ -38,7 +38,9 @@ async function logout() {
       <slot />
     </main>
     <footer>
-      Cours et banque de questions originaux, rédigés pour l'entraînement à l'examen théorique B (Bruxelles). Ce n'est pas la banque officielle GOCA.
+      {{ lang === 'fr'
+        ? 'Cours et banque de questions originaux, rédigés pour l\'entraînement à l\'examen théorique B (Bruxelles). Ce n\'est pas la banque officielle GOCA.'
+        : 'Curso y banco de preguntas originales, redactados para preparar el examen teórico B (Bruselas). No es el banco oficial de GOCA.' }}
     </footer>
   </div>
 </template>
