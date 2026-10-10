@@ -19,7 +19,7 @@ SQLite en un volumen persistente que sobrevive a los redeploys.
 - El proyecto en un repositorio Git accesible por Coolify (GitHub, GitLab, Gitea… o un
   repo privado con deploy key). Sube `pnpm-lock.yaml`: el Dockerfile instala con
   `--frozen-lockfile`.
-- Un dominio o subdominio apuntando al servidor de Coolify (p. ej. `permis.tudominio.be`),
+- Un dominio o subdominio apuntando al servidor de Coolify (p. ej. `drive-license.ernestonavarro.dev`),
   con HTTPS (Coolify lo gestiona con Let's Encrypt). **HTTPS no es opcional**: en
   producción la cookie de sesión lleva `Secure` y sin TLS el login no se mantiene.
 - Un secreto de sesión de al menos 32 caracteres. Genera uno:
@@ -36,7 +36,7 @@ SQLite en un volumen persistente que sobrevive a los redeploys.
    Base directory: `/` (si el proyecto está en un subdirectorio del repo, indícalo aquí
    y en la ruta del Dockerfile).
 3. **Port exposes**: `3000`.
-4. **Domains**: `https://permis.tudominio.be`.
+4. **Domains**: `https://drive-license.ernestonavarro.dev`.
 
 No hace falta ningún comando de build/start adicional: todo está en el Dockerfile.
 
@@ -77,7 +77,7 @@ ls -la /data
 ## 6. Primer arranque
 
 1. **Deploy**. En los logs debe aparecer `Listening on http://0.0.0.0:3000`.
-2. Abre `https://permis.tudominio.be/register` y crea tu cuenta (y las de quien vaya a
+2. Abre `https://drive-license.ernestonavarro.dev/register` y crea tu cuenta (y las de quien vaya a
    usarla).
 3. Cambia `NUXT_ALLOW_REGISTRATION` a `false` y vuelve a desplegar (o reinicia): a partir
    de ahí `/register` muestra «inscripciones cerradas» y la API devuelve 403.
@@ -180,6 +180,10 @@ pnpm dev                 # http://localhost:3000, BD en ./data/permis.db
   precompilado para linux/amd64; si construyes en otra arquitectura (arm64) también hay
   binarios, y si no los hubiera compila con `node-gyp` (necesita `python3 make g++`, que
   puedes añadir en la etapa de build del Dockerfile).
+- **`ERR_PNPM_MINIMUM_RELEASE_AGE_VIOLATION` o «The "pnpm" field in package.json is no longer
+  read» al hacer `pnpm install` en el build**: corepack ha bajado un pnpm distinto del que se usa
+  en local. `package.json` fija la versión con `"packageManager": "pnpm@10.x"`; si actualizas pnpm
+  en local, actualiza también ese campo y vuelve a generar el lockfile en el mismo commit.
 - **El login «no se mantiene» / vuelve a `/login`**: casi siempre falta HTTPS (cookie
   `Secure`) o `NUXT_SESSION_PASSWORD` tiene menos de 32 caracteres (la app se niega a
   sellar sesiones). Revisa los logs al arrancar.

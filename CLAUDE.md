@@ -18,7 +18,9 @@ Idiomas del código y la UI: comentarios y textos de interfaz en **francés o es
 - Nuxt 4 (Vue 3 + TS, estructura `app/`), Nitro server, `nuxt-auth-utils` (sesión en cookie
   sellada, `hashPassword`/`verifyPassword`), `better-sqlite3` **sin ORM**, `zod`.
 - Gestor de paquetes: **pnpm** (nunca npm/yarn). `package.json` tiene
-  `pnpm.onlyBuiltDependencies` para que se compile `better-sqlite3`; no lo quites.
+  `pnpm.onlyBuiltDependencies` para que se compile `better-sqlite3`; no lo quites. El campo
+  `packageManager` fija la versión de pnpm que usa corepack en Docker: debe coincidir con la
+  local (`pnpm -v`) o el build de Coolify falla.
 
 ```bash
 pnpm install

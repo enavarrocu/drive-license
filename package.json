@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.3.0",
   "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": { "node": ">=22" },
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
