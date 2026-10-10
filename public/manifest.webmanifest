@@ -1,0 +1,23 @@
+{
+  "name": "Permis Trainer — théorie B (FR/ES)",
+  "short_name": "Permis",
+  "description": "Entraînement à l'examen théorique du permis B (Bruxelles) : cours, questions FR/ES, signaux et simulation d'examen.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "fr",
+  "background_color": "#f4f6fa",
+  "theme_color": "#1b2a41",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Simulation d'examen", "short_name": "Examen", "url": "/exam", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Questions par thème", "short_name": "Étudier", "url": "/study", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Cours", "short_name": "Cours", "url": "/course", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

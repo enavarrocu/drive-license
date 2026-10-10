@@ -1,0 +1,34 @@
+{
+  "name": "permis-trainer",
+  "private": true,
+  "version": "0.3.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "typecheck": "nuxt typecheck",
+    "preview": "node .output/server/index.mjs",
+    "postinstall": "nuxt prepare",
+    "validate": "tsx scripts/validate-data.ts",
+    "icons": "tsx scripts/gen-icons.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.0.0",
+    "nuxt": "^4.6.0",
+    "nuxt-auth-utils": "^0.5.31",
+    "vue": "^3.5.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vue-tsc": "^3.3.13"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
+  }
+}

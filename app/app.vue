@@ -1,0 +1,19 @@
+<script setup lang="ts">
+const { loggedIn } = useUserSession()
+const store = useStore()
+
+// Charge l'état utilisateur dès qu'une session existe (SSR + client).
+await callOnce(async () => {
+  if (loggedIn.value) await store.load().catch(() => {})
+})
+watch(loggedIn, async (v) => {
+  if (v) await store.load(true).catch(() => {})
+  else store.reset()
+})
+</script>
+
+<template>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
+</template>
