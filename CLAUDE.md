@@ -15,7 +15,7 @@ Idiomas del código y la UI: comentarios y textos de interfaz en **francés o es
 
 ## Stack y comandos
 
-- Nuxt 4 (Vue 3 + TS, estructura `app/`), Nitro server, `nuxt-auth-utils` (sesión en cookie
+- Node 24 (fijado en `mise.toml`; Docker usa `node:22`, ambos soportados por Nuxt), Nuxt 4 (Vue 3 + TS, estructura `app/`), Nitro server, `nuxt-auth-utils` (sesión en cookie
   sellada, `hashPassword`/`verifyPassword`), `better-sqlite3` **sin ORM**, `zod`.
 - Gestor de paquetes: **pnpm** (nunca npm/yarn). `package.json` tiene
   `pnpm.onlyBuiltDependencies` para que se compile `better-sqlite3`; no lo quites. El campo
@@ -95,11 +95,18 @@ Dockerfile · DEPLOYMENT.md · README.md
 - Estilos: `app/assets/style.css` con variables CSS (tema claro/oscuro por `prefers-color-scheme`);
   sin frameworks CSS.
 - PWA: `public/sw.js` no pasa por el build; se registra con `?v=<buildId>` y las cachés llevan
-  esa versión (las viejas se borran al activar). Estrategias: `/api/_auth/session` y `/api/me`
-  red-primero con copia en caché (si no, offline el middleware manda a `/login`), resto de
-  `/api/*` solo red, `/_nuxt/*` caché-primero, navegaciones red-primero → página cacheada →
-  `offline.html`. El `DELETE /api/_auth/session` (logout) vacía la caché de páginas. Si cambias
-  los iconos, edita `scripts/gen-icons.ts` y ejecuta `pnpm icons` (no subas PNG a mano).
+  esa versión (las viejas se borran al activar). Al instalar precachea todos los chunks del build
+  (`precache.json`, generado por el hook `nitro:build:public-assets` de `nuxt.config.ts`) y la
+  «shell» SPA (`/study`), que sirve de respaldo para navegar offline a páginas no visitadas.
+  Estrategias: `/api/_auth/session` y `/api/me` red-primero con copia en caché (si no, offline el
+  middleware manda a `/login`), resto de `/api/*` solo red, `/_nuxt/*` caché-primero,
+  navegaciones red-primero → página cacheada → shell → `offline.html`. El logout
+  (`DELETE /api/_auth/session`) vacía la caché de páginas. Iconos: edita `scripts/gen-icons.ts`
+  y ejecuta `pnpm icons` (no subas PNG a mano).
+- Escrituras offline: `useStore.send()` encola en IndexedDB (`app/lib/outbox.ts`, por usuario) las
+  peticiones que fallan por red y `syncOutbox()` las reenvía al volver la conexión o al abrir la
+  app. Es una cola de peticiones, no un caché de datos: la regla «sin localStorage para datos
+  del usuario» sigue vigente. Toda escritura nueva a la API debe pasar por `send()`.
 - Sin dependencias nuevas salvo necesidad clara; si añades una, verifica que existe y su
   versión actual antes de escribirla en `package.json`.
 
@@ -115,7 +122,5 @@ Dockerfile · DEPLOYMENT.md · README.md
 
 - Seguir ampliando el banco (hoy ~340 preguntas en cuatro ficheros: questions, -scenes, -extra, -extra2;
   el siguiente bloque va en `questions-extra3.ts` con ids `z-<tema>-NN`) y añadir escenas a más temas.
-- Panel de administración para editar preguntas desde la web (hoy se editan en `app/data`).
 - Exportar/importar progreso (JSON) y estadísticas por tema en el historial.
-- PWA: precachear los chunks de todas las rutas (hoy solo las páginas ya visitadas funcionan
-  offline) y encolar el progreso hecho sin conexión para enviarlo al volver la red.
+- Descartado: panel de administración de preguntas (se editan en `app/data`).

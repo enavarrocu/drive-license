@@ -16,8 +16,10 @@
  *  - icônes, manifest, offline.html → cache puis mise à jour en arrière-plan
  *  - tout autre GET  → réseau, sans cache
  *
- * Limite connue : seules les pages (et leurs chunks JS) déjà visitées en ligne sont
- * disponibles hors ligne ; la progression faite hors ligne n'est pas enregistrée.
+ * À l'installation, tous les chunks du build (public/precache.json, généré par
+ * nuxt.config.ts) et la coquille SPA sont mis en cache : l'app entière marche hors
+ * ligne dès la première visite. La progression faite hors ligne est mise en file
+ * d'attente côté app (app/lib/outbox.ts) et renvoyée au retour du réseau.
  */
 
 const VERSION = new URL(self.location.href).searchParams.get('v') || 'dev'
@@ -30,13 +32,31 @@ const OFFLINE_URL = '/offline.html'
 /** Réponses d'API liées à l'utilisateur qu'on garde pour le hors-ligne (cache PAGES, vidé à la déconnexion). */
 const SESSION_URLS = new Set(['/api/_auth/session', '/api/me'])
 const PRECACHE = [OFFLINE_URL, '/manifest.webmanifest', '/icons/icon.svg', '/icons/icon-192.png', '/icons/icon-512.png']
+/**
+ * Coquille SPA : une route rendue côté client (`ssr: false`) renvoie le même HTML
+ * générique quelle que soit l'URL. Mise en cache à l'installation, elle sert de
+ * repli pour toute navigation hors ligne vers une page jamais visitée : Nuxt
+ * démarre dessus, lit l'URL et rend la page côté client avec les chunks précachés.
+ */
+const SPA_SHELL = '/study'
+
+/** Met en cache chaque URL séparément : un échec n'annule pas les autres (contrairement à addAll). */
+async function cacheEach(cache, urls) {
+  await Promise.all(urls.map((u) => cache.add(u).catch(() => undefined)))
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches
-      .open(SHELL)
-      .then((cache) => cache.addAll(PRECACHE))
-      .then(() => self.skipWaiting()),
+    (async () => {
+      const shell = await caches.open(SHELL)
+      await shell.addAll(PRECACHE)
+      // Tous les chunks du build (liste générée par nuxt.config.ts) + la coquille SPA.
+      const assets = await caches.open(ASSETS)
+      const list = await fetch(`/precache.json?v=${VERSION}`).then((r) => (r.ok ? r.json() : [])).catch(() => [])
+      await cacheEach(assets, list)
+      await cacheEach(await caches.open(PAGES), [SPA_SHELL])
+      await self.skipWaiting()
+    })(),
   )
 })
 
@@ -92,10 +112,31 @@ async function networkFirst(request, cacheName) {
   }
 }
 
+/**
+ * Rafraîchit en arrière-plan, à chaque navigation réussie, la session et l'état
+ * utilisateur gardés pour le hors-ligne (les pages SSR ne les demandent pas côté
+ * client, donc sans ça ils ne seraient en cache qu'après une page SPA).
+ */
+async function warmUserState() {
+  const cache = await caches.open(PAGES)
+  await Promise.all(
+    [...SESSION_URLS].map((u) =>
+      fetch(u, { headers: { accept: 'application/json' } })
+        .then((res) => (cacheable(res) ? cache.put(u, res) : undefined))
+        .catch(() => undefined),
+    ),
+  )
+}
+
 async function navigate(request) {
   try {
     return await networkFirst(request, PAGES)
   } catch {
+    // Page jamais visitée : la coquille SPA rend la route côté client ; sinon la page hors ligne.
+    const url = new URL(request.url)
+    const isApp = !url.pathname.startsWith('/api/') && !/\.[a-z0-9]+$/i.test(url.pathname)
+    const shell = isApp ? await caches.match(SPA_SHELL, { ignoreSearch: true }) : undefined
+    if (shell) return shell
     const offline = await caches.match(OFFLINE_URL)
     return offline || new Response('Hors ligne', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } })
   }
@@ -115,6 +156,7 @@ self.addEventListener('fetch', (event) => {
 
   if (request.mode === 'navigate') {
     event.respondWith(navigate(request))
+    event.waitUntil(warmUserState())
   } else if (SESSION_URLS.has(url.pathname)) {
     event.respondWith(networkFirst(request, PAGES).catch(() => Response.error()))
   } else if (url.pathname.startsWith('/api/')) {

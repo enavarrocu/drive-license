@@ -1,5 +1,30 @@
+import { readdirSync, statSync, writeFileSync } from 'node:fs'
+import { join, relative } from 'node:path'
+
+/** Liste récursive des fichiers d'un dossier (chemins absolus). */
+function walk(dir: string): string[] {
+  return readdirSync(dir).flatMap((name) => {
+    const full = join(dir, name)
+    return statSync(full).isDirectory() ? walk(full) : [full]
+  })
+}
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  hooks: {
+    // PWA : liste de tous les chunks client (/_nuxt/*.js|css|…) dans public/precache.json,
+    // que public/sw.js met en cache à l'installation pour que toute l'app marche hors ligne.
+    'nitro:build:public-assets'(nitro) {
+      const publicDir = nitro.options.output.publicDir
+      const assetsDir = join(publicDir, '_nuxt')
+      const files = walk(assetsDir)
+        .filter((f) => /\.(js|mjs|css|woff2?|svg|png|webp)$/.test(f) && !f.includes(`${join('_nuxt', 'builds')}`))
+        .map((f) => '/' + relative(publicDir, f).split('\\').join('/'))
+        .sort()
+      writeFileSync(join(publicDir, 'precache.json'), JSON.stringify(files))
+      console.log(`✔ precache.json : ${files.length} fichiers`)
+    },
+  },
   compatibilityDate: '2026-10-01',
   devtools: { enabled: false },
   modules: ['nuxt-auth-utils'],

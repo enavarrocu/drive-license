@@ -102,8 +102,9 @@ ls -la /data
 - No hace falta purgar nada en el servidor ni en Coolify. Si un usuario ve una versión vieja,
   basta con recargar (o cerrar y abrir la app instalada).
 - En el móvil: Android/Chrome muestra el botón «Installer» en la portada; en iOS es
-  Partager → «Sur l'écran d'accueil». Sin conexión funcionan las páginas ya visitadas; el
-  progreso hecho offline no se guarda (se avisa con la etiqueta «hors ligne»).
+  Partager → «Sur l'écran d'accueil». Al instalar se precachea toda la app (unos 700 kB), así
+  que funciona entera sin conexión desde la primera visita; el progreso hecho offline se guarda
+  en una cola local y se envía al volver la red (la cabecera muestra «N à synchroniser»).
 
 ## 8. Copias de seguridad
 

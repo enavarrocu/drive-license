@@ -9,8 +9,8 @@ guardado en **SQLite** (sobrevive a los deploys con un volumen persistente).
 - **Examen**: simulacro de 50 con baremo real, lectura en voz alta, 15 s por pregunta; historial
   completo repasable (`/exams`, `/exams/:id`).
 - **Glosario** FR–ES y **Señales** (168, familias A–F) con flashcards.
-- **PWA**: instalable en el móvil (manifest + service worker propio, sin dependencias); las páginas
-  ya visitadas y la sesión siguen disponibles sin conexión.
+- **PWA**: instalable en el móvil (manifest + service worker propio, sin dependencias); toda la app
+  funciona sin conexión y el progreso hecho offline se sincroniza al volver la red.
 - **Multiusuario**: registro + login (cookie sellada, `nuxt-auth-utils`); cada usuario tiene sus
   preferencias (idioma, voz, ayuda ES, tiempo), progreso por pregunta, marcadas, capítulos leídos y exámenes.
 
@@ -20,6 +20,7 @@ Nuxt 4 (Vue 3 + TypeScript, Nitro) · `nuxt-auth-utils` (sesiones en cookie, has
 `better-sqlite3` (sin ORM, esquema en `server/utils/db.ts`, creado al arrancar) · `zod` · **pnpm**.
 
 ```bash
+mise install                # Node 24 (mise.toml); o cualquier Node >= 22 con corepack
 cp .env.example .env        # pon un NUXT_SESSION_PASSWORD de 32+ caracteres
 pnpm install
 pnpm dev                    # http://localhost:3000

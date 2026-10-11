@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { loggedIn, user, clear } = useUserSession()
 const store = useStore()
-const { lang } = store
+const { lang, pendingCount } = store
 const route = useRoute()
 const { online } = usePwa()
 
@@ -27,7 +27,8 @@ async function logout() {
     <header class="topbar">
       <NuxtLink to="/" class="brand"><span class="dot"></span> Permis Trainer <span class="muted small">· théorie B</span></NuxtLink>
       <div class="spacer"></div>
-      <span v-if="!online" class="pill warn" :title="lang === 'fr' ? 'Pas de connexion : la progression ne sera pas enregistrée' : 'Sin conexión: el progreso no se guardará'">{{ lang === 'fr' ? 'hors ligne' : 'sin conexión' }}</span>
+      <span v-if="!online" class="pill warn" :title="lang === 'fr' ? 'Pas de connexion : la progression sera envoyée au retour du réseau' : 'Sin conexión: el progreso se enviará cuando vuelva la red'">{{ lang === 'fr' ? 'hors ligne' : 'sin conexión' }}</span>
+      <span v-else-if="pendingCount > 0" class="pill" :title="lang === 'fr' ? 'Envois en attente de synchronisation' : 'Envíos pendientes de sincronizar'">{{ pendingCount }} {{ lang === 'fr' ? 'à synchroniser' : 'por sincronizar' }}</span>
       <LangToggle v-model="lang" />
       <button v-if="loggedIn" class="btn sm ghost" type="button" :title="user?.username" @click="logout">⎋</button>
     </header>
