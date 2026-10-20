@@ -9,9 +9,9 @@ const entry = computed(() => theoryById[props.theoryId])
 
 <template>
   <section v-if="entry" class="theory">
-    <div class="row">
+    <div class="theory-head">
       <span class="pill">{{ themeById[entry.theme].es }}</span>
-      <h3 class="grow" style="margin: 0">{{ entry.title.es }} <span class="muted small">— {{ entry.title.fr }}</span></h3>
+      <h3>{{ entry.title.es }} <span class="muted small">— {{ entry.title.fr }}</span></h3>
     </div>
     <p class="body">{{ entry.body }}</p>
     <div class="terms">
