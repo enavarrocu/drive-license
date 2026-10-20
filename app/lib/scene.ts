@@ -103,7 +103,7 @@ function signSvg(s: SceneSign): string {
     case 'C3':
       return `<circle r="10" fill="#fff" stroke="#d1232a" stroke-width="3"/>`
     case 'F19':
-      return `<rect x="-10" y="-10" width="20" height="20" rx="2" fill="#1d5bbf"/><path d="M-6 0 h8 v-4 l5 4 l-5 4 v-4" fill="#fff"/>`
+      return `<rect x="-10" y="-10" width="20" height="20" rx="2" fill="#1d5bbf"/><path d="M-7 -2 h8 v-4 l6 6 l-6 6 v-4 h-8z" fill="#fff"/>`
     case 'light-red':
     case 'light-green':
     case 'light-orange':
