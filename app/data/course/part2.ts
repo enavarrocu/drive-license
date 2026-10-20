@@ -307,7 +307,7 @@ Toda maniobra (girar, cambiar de carril, salir de un aparcamiento, demi-tour, ma
       {
         id: 'ch11-passage-niveau',
         title: { fr: 'Les passages à niveau', es: 'Los pasos a nivel' },
-        body: `Anuncio: **A41** (sin barreras) / **A43** (con barreras) a ~150 m fuera de población, con placas de 3, 2 y 1 barras rojas (distancia). En el paso: **cruz de San Andrés** A45 (una vía) / A47 (varias vías).
+        body: `Anuncio: **A41** (con barreras, pictograma de valla) / **A43** (sin barreras, pictograma de locomotora) a ~150 m fuera de población, con placas de 3, 2 y 1 barras rojas (distancia). En el paso: **cruz de San Andrés** A45 (una vía) / A47 (varias vías).
 
 Obligatorio detenerse cuando: las luces **rojas parpadean** (una o dos alternantes), suena la **campana**, las barreras bajan o están bajadas, o se acerca un tren aunque nada esté activado. Luz **blanca intermitente** = paso libre con prudencia. Nunca entres si no puedes **despejar** el paso inmediatamente; nunca zigzaguees entre medias barreras. Prohibido adelantar en pasos sin barreras ni semáforos; prohibido parar o estacionar sobre el paso a nivel.
 

@@ -409,7 +409,7 @@ export const theory: TheoryEntry[] = [
     theme: 'manoeuvres',
     title: { fr: 'Passages à niveau', es: 'Pasos a nivel' },
     body:
-      'Nunca entres en un «passage à niveau» si no puedes salir de él de inmediato (atasco al otro lado). Hay que detenerse cuando los «feux rouges clignotants» parpadean, cuando suena la «sonnerie» (campana), cuando las «barrières» bajan o están bajadas, y cuando un tren se acerca aunque no haya nada activado. Prohibido zigzaguear entre medias barreras. Señal A41 (sin barreras) / A43 (con barreras) anuncian el paso a nivel; las «croix de Saint-André» (A45/A47) están justo en el paso. Adelantar en un paso a nivel sin barreras ni semáforos está prohibido.',
+      'Nunca entres en un «passage à niveau» si no puedes salir de él de inmediato (atasco al otro lado). Hay que detenerse cuando los «feux rouges clignotants» parpadean, cuando suena la «sonnerie» (campana), cuando las «barrières» bajan o están bajadas, y cuando un tren se acerca aunque no haya nada activado. Prohibido zigzaguear entre medias barreras. Señal A41 (con barreras) / A43 (sin barreras) anuncian el paso a nivel; las «croix de Saint-André» (A45/A47) están justo en el paso. Adelantar en un paso a nivel sin barreras ni semáforos está prohibido.',
     keyTerms: [
       { fr: 'passage à niveau', es: 'paso a nivel' },
       { fr: 'barrières', es: 'barreras' },

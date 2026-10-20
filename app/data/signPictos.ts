@@ -54,20 +54,22 @@ export const P = {
   person: (c = BLK) => `<g fill="${c}"><circle cx="50" cy="28" r="7"/><path d="M42 38 h16 l4 22 h-6 l-2-12 v34 h-6 v-20 h-2 v20 h-6 v-34 l-2 12 h-6z"/></g>`,
   walker: (c = BLK) => `<g fill="${c}"><circle cx="52" cy="26" r="7"/><path d="M46 36 l12 2 l4 16 l8 6 l-3 5 l-10-7 l-2 8 l8 16 l-6 3 l-9-15 l-6 8 l-2 14 l-6-1 l2-18 l7-11 l-2-10 l-6 8 l-5-3z"/></g>`,
   children: (c = BLK) => `<g fill="${c}"><circle cx="38" cy="34" r="6"/><circle cx="60" cy="38" r="6"/><path d="M32 42 h12 l3 18 h-4 v20 h-5 v-18 h-3z M54 46 h12 l3 16 h-4 v18 h-5 v-16 h-3z"/></g>`,
-  horse: (c = BLK) => `<path d="M20 74 v-20 l8-14 h20 l6-10 h10 l4 10 l8 2 v8 l-8 2 v22 h-6 v-16 h-22 v16 h-6 v-16 h-8 v16z" fill="${c}"/>`,
+  horse: (c = BLK) => `<path d="M24 80 v-26 q0-14 14-16 h18 l8-12 h8 l6 8 l6 2 v6 l-8 2 l-4 6 v30 h-7 v-22 h-20 v22 h-7 v-20 h-7 v20z" fill="${c}"/>`,
+  rider: (c = BLK) => `<path d="M24 82 v-24 q0-14 14-16 h16 l8-12 h8 l6 8 l6 2 v6 l-8 2 l-4 6 v28 h-7 v-20 h-18 v20 h-7 v-18 h-7 v18z" fill="${c}"/><circle cx="46" cy="22" r="6" fill="${c}"/><path d="M40 30 h12 l4 14 h-6 l-2-6 h-6 l-4 8 h-6z" fill="${c}"/>`,
+  horseCart: (c = BLK) => `<g transform="scale(0.62) translate(2,34)"><path d="M24 80 v-26 q0-14 14-16 h18 l8-12 h8 l6 8 l6 2 v6 l-8 2 l-4 6 v30 h-7 v-22 h-20 v22 h-7 v-20 h-7 v20z" fill="${c}"/></g><path d="M58 58 h26 v14 h-26z M50 64 h8" fill="${c}" stroke="${c}" stroke-width="3"/><circle cx="71" cy="78" r="6" fill="none" stroke="${c}" stroke-width="4"/>`,
   cart: (c = BLK) => `<path d="M24 60 h40 v-16 h-40z M64 52 h14 l6 8" fill="none" stroke="${c}" stroke-width="5"/><circle cx="44" cy="70" r="7" fill="none" stroke="${c}" stroke-width="5"/>`,
   tractor: (c = BLK) => `<path d="M30 56 v-16 h16 l6 12 h18 v12 h-6 a9 9 0 0 1 -18 0 h-4 a12 12 0 0 1 -24 0z" fill="${c}"/>`,
   train: (c = BLK) => `<path d="M30 70 h40 v-14 h-10 v-10 h-14 v10 h-16z" fill="${c}"/><circle cx="38" cy="74" r="4" fill="${c}"/><circle cx="62" cy="74" r="4" fill="${c}"/><path d="M26 80 h48" stroke="${c}" stroke-width="3"/>`,
   tram: (c = BLK) => `<path d="M30 74 h40 v-30 a6 6 0 0 0 -6 -6 h-28 a6 6 0 0 0 -6 6z" fill="${c}"/><rect x="36" y="44" width="28" height="12" fill="${WHT}"/><path d="M50 38 v-10 l10-6" stroke="${c}" stroke-width="3" fill="none"/><circle cx="38" cy="78" r="3" fill="${c}"/><circle cx="62" cy="78" r="3" fill="${c}"/>`,
   plane: (c = BLK) => `<path d="M50 30 l6 18 l24 8 v6 l-24-4 l-2 14 l8 6 v4 l-12-3 l-12 3 v-4 l8-6 l-2-14 l-24 4 v-6 l24-8z" fill="${c}"/>`,
-  deer: (c = BLK) => `<path d="M24 76 v-20 l8-12 h22 l6-10 h6 l-2 10 l6 2 v6 l-8 2 v22 h-6 v-16 h-18 v16 h-6 v-16 h-4 v16z M60 30 l-4-10 M64 30 l6-10" fill="${c}" stroke="${c}" stroke-width="3"/>`,
-  cow: (c = BLK) => `<path d="M22 72 v-20 h6 l4-8 h26 l6 8 h8 v6 l-8 2 v12 h-6 v-10 h-22 v10 h-6 v-10 h-2 v10z" fill="${c}"/>`,
+  deer: (c = BLK) => `<path d="M26 82 v-24 q2-12 14-14 h18 l6-10 h8 l4 8 v8 l-6 2 v30 h-6 v-20 h-18 v20 h-6 v-18 h-8 v18z" fill="${c}"/><path d="M62 34 l-6-14 M62 34 l4-14 M66 20 l6-4 M56 20 l-6-4 M60 26 l-7-2 M64 26 l7-2" stroke="${c}" stroke-width="2.5" fill="none"/>`,
+  cow: (c = BLK) => `<path d="M22 80 v-22 q0-12 12-14 h26 q8 0 12 6 l6 2 v8 l-6 2 v18 h-6 v-16 h-20 v16 h-6 v-14 h-6 v14z" fill="${c}"/><path d="M64 44 l8-8 M72 44 l-8-8" stroke="${c}" stroke-width="3"/><rect x="40" y="76" width="4" height="6" fill="${c}"/>`,
   roadNarrow: (c = BLK) => `<path d="M34 82 l6-34 M66 82 l-6-34" stroke="${c}" stroke-width="6"/>`,
   roadNarrowRight: (c = BLK) => `<path d="M34 82 v-34 M66 82 l-6-34" stroke="${c}" stroke-width="6"/>`,
   roadNarrowLeft: (c = BLK) => `<path d="M34 82 l6-34 M66 82 v-34" stroke="${c}" stroke-width="6"/>`,
   curveLeft: (c = BLK) => `<path d="M60 82 v-20 a16 16 0 0 0 -16 -16 h-8" stroke="${c}" stroke-width="8" fill="none"/>`,
   curveRight: (c = BLK) => `<path d="M40 82 v-20 a16 16 0 0 1 16 -16 h8" stroke="${c}" stroke-width="8" fill="none"/>`,
-  doubleCurve: (c = BLK) => `<path d="M42 84 v-10 a10 10 0 0 1 10 -10 h0 a10 10 0 0 0 10 -10 v-12" stroke="${c}" stroke-width="7" fill="none"/>`,
+  doubleCurve: (c = BLK) => `<path d="M58 84 v-12 c0-10 -16-8 -16-18 c0-10 16-8 16-18 v-10" stroke="${c}" stroke-width="7" fill="none"/>`,
   hillDown: (c = BLK) => `<path d="M24 82 h52 l-52-24z" fill="${c}"/>${T('10%', 78, 11, WHT, 58)}`,
   hillUp: (c = BLK) => `<path d="M24 82 h52 v-24z" fill="${c}"/>${T('10%', 78, 11, WHT, 42)}`,
   bump: (c = BLK) => `<path d="M24 76 q13-20 26 0 t26 0" stroke="${c}" stroke-width="7" fill="none"/>`,
@@ -80,10 +82,10 @@ export const P = {
   wind: (c = BLK) => `<path d="M30 46 h40 l-6 18 h-28z" fill="${c}"/><rect x="28" y="40" width="4" height="46" fill="${c}"/>`,
   twoWay: (c = BLK) => `<path d="M40 82 v-40 l-8 10 M40 42 l8 10 M60 42 v40 l-8-10 M60 82 l8-10" stroke="${c}" stroke-width="6" fill="none"/>`,
   crossroad: (c = BLK) => `<path d="M50 30 v52 M30 56 h40" stroke="${c}" stroke-width="7"/>`,
-  queue: (c = BLK) => `<g transform="scale(0.42) translate(22,60)">${P_car(c)}</g><g transform="scale(0.42) translate(70,60)">${P_car(c)}</g><g transform="scale(0.42) translate(118,60)">${P_car(c)}</g><g transform="scale(0.42) translate(46,110)">${P_car(c)}</g><g transform="scale(0.42) translate(94,110)">${P_car(c)}</g>`,
+  queue: (c = BLK) => `<g transform="scale(0.36) translate(10,80)">${P_car(c)}</g><g transform="scale(0.36) translate(80,80)">${P_car(c)}</g><g transform="scale(0.36) translate(150,80)">${P_car(c)}</g><g transform="scale(0.36) translate(45,140)">${P_car(c)}</g><g transform="scale(0.36) translate(115,140)">${P_car(c)}</g>`,
   exclaim: (c = BLK) => `<rect x="46" y="34" width="8" height="30" fill="${c}"/><circle cx="50" cy="74" r="5" fill="${c}"/>`,
   quay: (c = BLK) => `<rect x="22" y="64" width="34" height="18" fill="${c}"/><g transform="translate(-14,-22) scale(0.55) translate(30,40)">${P_car(c)}</g><path d="M58 70 q6-6 12 0 t12 0 M58 80 q6-6 12 0 t12 0" stroke="${c}" stroke-width="3" fill="none"/>`,
-  bridgeOpen: (c = BLK) => `<rect x="20" y="72" width="26" height="8" fill="${c}"/><rect x="54" y="72" width="26" height="8" fill="${c}"/><path d="M46 72 l18-30" stroke="${c}" stroke-width="7"/><path d="M20 84 q6-5 12 0 t12 0 t12 0 t12 0 t12 0" stroke="${c}" stroke-width="2.5" fill="none"/>`,
+  bridgeOpen: (c = BLK) => `<rect x="18" y="70" width="26" height="8" fill="${c}"/><path d="M44 70 l22-30" stroke="${c}" stroke-width="8"/><rect x="60" y="70" width="22" height="8" fill="${c}"/><path d="M22 60 v10 M38 60 v10 M62 60 v10 M78 60 v10" stroke="${c}" stroke-width="3"/><path d="M14 84 q6-5 12 0 t12 0 t12 0 t12 0 t12 0 t12 0" stroke="${c}" stroke-width="2.5" fill="none"/>`,
   barrierGate: (c = BLK) => `<path d="M26 78 h48 M30 78 v-16 h40 v16 M36 62 l-4 16 M46 62 l-4 16 M56 62 l-4 16 M66 62 l-4 16" stroke="${c}" stroke-width="4" fill="none"/>`,
   arrowUp: (c = WHT) => `<path d="M50 18 l16 20 h-9 v40 h-14 v-40 h-9z" fill="${c}"/>`,
   arrowDown: (c = WHT) => `<path d="M50 82 l16-20 h-9 v-40 h-14 v40 h-9z" fill="${c}"/>`,
@@ -117,6 +119,11 @@ function P_car(c: string) {
 }
 function P_walker(c: string) {
   return `<g fill="${c}"><circle cx="52" cy="26" r="7"/><path d="M46 36 l12 2 l4 16 l8 6 l-3 5 l-10-7 l-2 8 l8 16 l-6 3 l-9-15 l-6 8 l-2 14 l-6-1 l2-18 l7-11 l-2-10 l-6 8 l-5-3z"/></g>`
+}
+
+/** Panel de dirección en forma de flecha con texto (F29/F31/F35/F41). */
+export function arrowPanel(text: string, fill: string, stroke: string, textColor: string): string {
+  return `<path d="M10 36 h62 l16 14 l-16 14 h-62z" fill="${fill}" stroke="${stroke}" stroke-width="2.5" stroke-linejoin="round"/>${T(text, 55, 12, textColor, 40)}`
 }
 
 export function svg(inner: string): string {
