@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { course } from '../data/course'
 import { renderMd } from '../lib/md'
+import { linkifySignsHtml } from '../lib/signRefs'
 import { signs } from '../data/signs'
 
 const { lang, courseRead, markChapter } = useStore()
+const { onClickDelegated } = useSignPopup()
 const route = useRoute()
 const router = useRouter()
 
@@ -59,7 +61,7 @@ const doneCount = computed(() => course.filter((c) => courseRead.value[c.id]).le
 
       <section v-for="s in chapter.sections" :key="s.id" class="section">
         <h3>{{ s.title.es }} <span class="muted small">— {{ s.title.fr }}</span></h3>
-        <div class="md" v-html="renderMd(s.body)"></div>
+        <div class="md" @click="onClickDelegated" v-html="linkifySignsHtml(renderMd(s.body))"></div>
         <div v-if="signsFor(s.signs).length" class="signs-inline">
           <div v-for="sg in signsFor(s.signs)" :key="sg.code" class="sign-mini">
             <div v-html="sg.svg"></div>

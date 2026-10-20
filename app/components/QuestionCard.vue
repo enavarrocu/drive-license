@@ -64,7 +64,7 @@ function classFor(i: number) {
       <b v-if="chosen === null">{{ lang === 'fr' ? 'Pas de réponse' : 'Sin respuesta' }} — </b>
       <b v-else-if="chosen === question.answer">{{ lang === 'fr' ? 'Correct.' : 'Correcto.' }}</b>
       <b v-else>{{ lang === 'fr' ? 'Incorrect.' : 'Incorrecto.' }}</b>
-      {{ question.why }}
+      <SignText :text="question.why" />
     </div>
   </div>
 </template>

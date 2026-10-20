@@ -4,6 +4,11 @@ import { signs, signCategories } from '../data/signs'
 import { shuffle } from '../lib/exam'
 
 const { lang } = useStore()
+const route = useRoute()
+const { open } = useSignPopup()
+onMounted(() => {
+  if (typeof route.query.code === 'string') open(route.query.code)
+})
 const mode = ref<'grid' | 'flash'>('grid')
 const category = ref<SignCategory | 'all'>('all')
 const list = computed(() => signs.filter((s) => category.value === 'all' || s.category === category.value))

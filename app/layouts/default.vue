@@ -38,6 +38,7 @@ async function logout() {
     <main>
       <slot />
     </main>
+    <SignPopup />
     <footer>
       {{ lang === 'fr'
         ? 'Cours et banque de questions originaux, rédigés pour l\'entraînement à l\'examen théorique B (Bruxelles). Ce n\'est pas la banque officielle GOCA.'

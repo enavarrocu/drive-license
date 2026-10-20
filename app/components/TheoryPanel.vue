@@ -13,7 +13,7 @@ const entry = computed(() => theoryById[props.theoryId])
       <span class="pill">{{ themeById[entry.theme].es }}</span>
       <h3>{{ entry.title.es }} <span class="muted small">— {{ entry.title.fr }}</span></h3>
     </div>
-    <p class="body">{{ entry.body }}</p>
+    <p class="body"><SignText :text="entry.body" /></p>
     <div class="terms">
       <div v-for="t in entry.keyTerms" :key="t.fr" class="term"><b>{{ t.fr }}</b><span>{{ t.es }}</span></div>
     </div>

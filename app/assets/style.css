@@ -206,3 +206,14 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 .install-card { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 .install-card img { border-radius: 10px; flex: none; }
 .install-card .grow { flex: 1; min-width: 200px; }
+
+/* Referencias a señales (popup) */
+.sign-ref { display: inline; border: 0; padding: 0 3px; margin: 0; border-radius: 5px; background: var(--accent-soft); color: var(--accent); font: inherit; font-weight: 700; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 2px; }
+.sign-ref:hover { background: var(--accent); color: #fff; }
+.sign-popup-backdrop { position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; padding: 16px; }
+.sign-popup { position: relative; background: var(--card); color: var(--text); border-radius: 16px; box-shadow: var(--shadow); padding: 22px 20px 18px; width: min(100%, 360px); text-align: center; }
+.sign-popup-img svg { width: 140px; height: 140px; }
+.sign-popup .code { font-weight: 800; color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
+.sign-popup h3 { margin: 4px 0 2px; font-size: 1.15rem; }
+.sign-popup p { text-align: left; margin: 10px 0 14px; }
+.sign-popup-close { position: absolute; top: 8px; right: 10px; border: 0; background: transparent; color: var(--muted); font-size: 1.6rem; line-height: 1; cursor: pointer; }
