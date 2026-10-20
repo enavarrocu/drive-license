@@ -217,3 +217,8 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 .sign-popup h3 { margin: 4px 0 2px; font-size: 1.15rem; }
 .sign-popup p { text-align: left; margin: 10px 0 14px; }
 .sign-popup-close { position: absolute; top: 8px; right: 10px; border: 0; background: transparent; color: var(--muted); font-size: 1.6rem; line-height: 1; cursor: pointer; }
+
+/* Señales mostradas antes del enunciado (como la imagen del examen) */
+.question-signs { display: flex; gap: 10px; justify-content: center; margin: 6px 0 10px; }
+.question-sign { border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 6px; cursor: pointer; }
+.question-sign svg { width: 92px; height: 92px; display: block; }

@@ -3,6 +3,8 @@ import { computed } from 'vue'
 import type { Lang, Question } from '../types'
 import { themeById } from '../data/themes'
 import { renderScene } from '../lib/scene'
+import { splitSignRefs } from '../lib/signRefs'
+import { signByCode } from '../data/signs'
 
 const props = defineProps<{
   question: Question
@@ -24,6 +26,13 @@ const main = computed(() => props.question[props.lang])
 const other = computed(() => props.question[alt.value])
 const letters = ['A', 'B', 'C', 'D']
 const sceneSvg = computed(() => (props.question.scene ? renderScene(props.question.scene) : ''))
+/** Señales citadas en el enunciado: se muestran como imagen antes de la pregunta, como en el examen. */
+const questionSigns = computed(() => {
+  const codes = new Set<string>()
+  for (const p of splitSignRefs(props.question.fr.q)) if (p.type === 'sign') codes.add(p.code)
+  return [...codes].slice(0, 4).map((c) => signByCode[c]!).filter(Boolean)
+})
+const { open } = useSignPopup()
 
 function classFor(i: number) {
   if (!props.revealed) return { chosen: props.chosen === i }
@@ -41,6 +50,11 @@ function classFor(i: number) {
       <span v-if="question.grave" class="pill grave">{{ lang === 'fr' ? 'faute grave' : 'falta grave' }}</span>
     </div>
     <div v-if="sceneSvg" class="scene-wrap" v-html="sceneSvg"></div>
+    <div v-if="questionSigns.length" class="question-signs">
+      <button v-for="s in questionSigns" :key="s.code" type="button" class="question-sign" :title="s.code" @click="open(s.code)">
+        <span v-html="s.svg"></span>
+      </button>
+    </div>
     <p class="q"><SignText :text="main.q" /></p>
     <p v-if="showAlt" class="q alt"><SignText :text="other.q" /></p>
     <ul class="options">

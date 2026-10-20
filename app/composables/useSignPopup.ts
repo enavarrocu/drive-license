@@ -1,7 +1,11 @@
 /** Señal abierta en el popup (null = cerrado). Estado global para toda la app. */
 export function useSignPopup() {
   const current = useState<string | null>('signPopup', () => null)
-  const open = (code: string) => (current.value = code)
+  /** Bloqueado durante el examen: ver el significado sería hacer trampa. */
+  const locked = useState<boolean>('signPopupLocked', () => false)
+  const open = (code: string) => {
+    if (!locked.value) current.value = code
+  }
   const close = () => (current.value = null)
   /** Handler delegado para contenedores con HTML (v-html) que contienen .sign-ref */
   const onClickDelegated = (e: MouseEvent) => {
@@ -11,5 +15,5 @@ export function useSignPopup() {
       open(el.dataset.sign)
     }
   }
-  return { current, open, close, onClickDelegated }
+  return { current, locked, open, close, onClickDelegated }
 }

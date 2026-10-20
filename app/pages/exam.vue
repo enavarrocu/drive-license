@@ -10,6 +10,10 @@ type Phase = 'setup' | 'reading' | 'answering' | 'result'
 const { lang, prefs, setPrefs, saveExam } = useStore()
 
 const phase = ref<Phase>('setup')
+const { locked: signPopupLocked } = useSignPopup()
+// Sin popups de señales mientras dura el examen (revelarían la respuesta).
+watch(phase, (p) => (signPopupLocked.value = p === 'reading' || p === 'answering'), { immediate: true })
+onBeforeUnmount(() => (signPopupLocked.value = false))
 const helpEs = computed({ get: () => prefs.value.helpEs, set: (v: boolean) => void setPrefs({ helpEs: v }) })
 const speak = computed({ get: () => prefs.value.speak, set: (v: boolean) => void setPrefs({ speak: v }) })
 const answerSeconds = computed({ get: () => prefs.value.answerSeconds, set: (v: number) => void setPrefs({ answerSeconds: v }) })
