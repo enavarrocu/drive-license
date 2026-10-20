@@ -41,8 +41,8 @@ function classFor(i: number) {
       <span v-if="question.grave" class="pill grave">{{ lang === 'fr' ? 'faute grave' : 'falta grave' }}</span>
     </div>
     <div v-if="sceneSvg" class="scene-wrap" v-html="sceneSvg"></div>
-    <p class="q">{{ main.q }}</p>
-    <p v-if="showAlt" class="q alt">{{ other.q }}</p>
+    <p class="q"><SignText :text="main.q" /></p>
+    <p v-if="showAlt" class="q alt"><SignText :text="other.q" /></p>
     <ul class="options">
       <li v-for="(opt, i) in main.options" :key="i">
         <button
@@ -54,8 +54,8 @@ function classFor(i: number) {
         >
           <span class="idx">{{ letters[i] }}</span>
           <span class="txt">
-            {{ opt }}
-            <span v-if="showAlt" class="alt">{{ other.options[i] }}</span>
+            <SignText :text="opt" />
+            <span v-if="showAlt" class="alt"><SignText :text="other.options[i] ?? ''" /></span>
           </span>
         </button>
       </li>
