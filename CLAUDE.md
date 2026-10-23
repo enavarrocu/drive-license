@@ -15,7 +15,7 @@ Idiomas del código y la UI: comentarios y textos de interfaz en **francés o es
 
 ## Stack y comandos
 
-- Node 24 (fijado en `mise.toml`; Docker usa `node:22`, ambos soportados por Nuxt), Nuxt 4 (Vue 3 + TS, estructura `app/`), Nitro server, `nuxt-auth-utils` (sesión en cookie
+- Node 24.22.1 (fijado en `mise.toml` y en el `Dockerfile` como `node:24.22.1-bookworm-slim`; actualízalos juntos), Nuxt 4 (Vue 3 + TS, estructura `app/`), Nitro server, `nuxt-auth-utils` (sesión en cookie
   sellada, `hashPassword`/`verifyPassword`), `better-sqlite3` **sin ORM**, `zod`.
 - Gestor de paquetes: **pnpm** (nunca npm/yarn). `package.json` tiene
   `pnpm.onlyBuiltDependencies` para que se compile `better-sqlite3`; no lo quites. El campo

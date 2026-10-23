@@ -5,8 +5,8 @@ SQLite en un volumen persistente que sobrevive a los redeploys.
 
 ## 1. Qué se despliega
 
-- Una sola imagen Docker (ver `Dockerfile`): build con Node 22 + pnpm, runtime
-  `node:22-bookworm-slim` ejecutando `node .output/server/index.mjs` como usuario `node`.
+- Una sola imagen Docker (ver `Dockerfile`): build con Node 24.22.1 + pnpm, runtime
+  `node:24.22.1-bookworm-slim` ejecutando `node .output/server/index.mjs` como usuario `node`.
 - Puerto interno **3000**.
 - Un único fichero de datos: `permis.db` (más `permis.db-wal` y `permis.db-shm`, el
   journal WAL de SQLite) en el directorio que indique `NUXT_DB_PATH`. En el contenedor:

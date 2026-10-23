@@ -1,5 +1,5 @@
 # ---- build ----
-FROM node:22-bookworm-slim AS build
+FROM node:24.22.1-bookworm-slim AS build
 WORKDIR /app
 RUN corepack enable
 COPY package.json pnpm-lock.yaml* ./
@@ -8,7 +8,7 @@ COPY . .
 RUN pnpm build
 
 # ---- run ----
-FROM node:22-bookworm-slim
+FROM node:24.22.1-bookworm-slim
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NUXT_DB_PATH=/data/permis.db

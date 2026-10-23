@@ -20,7 +20,7 @@ Nuxt 4 (Vue 3 + TypeScript, Nitro) · `nuxt-auth-utils` (sesiones en cookie, has
 `better-sqlite3` (sin ORM, esquema en `server/utils/db.ts`, creado al arrancar) · `zod` · **pnpm**.
 
 ```bash
-mise install                # Node 24 (mise.toml); o cualquier Node >= 22 con corepack
+mise install                # Node 24.22.1 (mise.toml); o cualquier Node >= 24.22.1 con corepack
 cp .env.example .env        # pon un NUXT_SESSION_PASSWORD de 32+ caracteres
 pnpm install
 pnpm dev                    # http://localhost:3000
@@ -40,7 +40,7 @@ pnpm icons                  # regenera public/icons/*.png desde scripts/gen-icon
 
 ## Despliegue en Coolify
 
-1. Nuevo recurso → **Dockerfile** (el repo incluye `Dockerfile`, Node 22 slim, usuario `node`).
+1. Nuevo recurso → **Dockerfile** (el repo incluye `Dockerfile`, Node 24.22.1 slim, usuario `node`).
 2. Variables de entorno: las tres de arriba (`NUXT_DB_PATH=/data/permis.db`).
 3. **Persistent storage**: volumen montado en `/data` (ahí vive `permis.db` + ficheros WAL).
 4. Puerto expuesto 3000. Dominio con HTTPS (la cookie de sesión es `secure` en producción).
