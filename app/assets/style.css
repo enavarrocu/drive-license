@@ -233,7 +233,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 
 /* Pregunta con dibujo: en pantallas anchas, imagen a la izquierda y texto/opciones a la derecha. */
 @media (min-width: 900px) {
-  .q-layout.has-visual { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 24px; align-items: start; }
+  .q-layout.has-visual { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 24px; align-items: start; margin-top: 14px; }
   .q-layout.has-visual .scene-wrap { margin: 0; max-width: none; }
   .q-layout.has-visual .question-signs { justify-content: flex-start; margin: 0 0 10px; }
   .q-layout.has-visual .question-image { justify-content: flex-start; margin: 0; }
