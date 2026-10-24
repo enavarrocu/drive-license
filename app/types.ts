@@ -44,6 +44,8 @@ export interface Question {
   why: string
   /** Escena esquemática (cruce, rotonda…) dibujada por código. */
   scene?: Scene
+  /** Imagen SVG (señal con placa adicional, etc.) mostrada antes de la pregunta; sustituye a las señales citadas. */
+  image?: string
 }
 
 export interface KeyTerm {

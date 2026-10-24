@@ -50,7 +50,8 @@ function classFor(i: number) {
       <span v-if="question.grave" class="pill grave">{{ lang === 'fr' ? 'faute grave' : 'falta grave' }}</span>
     </div>
     <div v-if="sceneSvg" class="scene-wrap" v-html="sceneSvg"></div>
-    <div v-if="questionSigns.length" class="question-signs">
+    <div v-if="question.image" class="question-signs"><span class="question-sign" v-html="question.image"></span></div>
+    <div v-else-if="questionSigns.length" class="question-signs">
       <button v-for="s in questionSigns" :key="s.code" type="button" class="question-sign" :title="s.code" @click="open(s.code)">
         <span v-html="s.svg"></span>
       </button>

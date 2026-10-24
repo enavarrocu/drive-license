@@ -221,7 +221,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 /* Señales mostradas antes del enunciado (como la imagen del examen) */
 .question-signs { display: flex; gap: 10px; justify-content: center; margin: 6px 0 10px; }
 .question-sign { border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 6px; cursor: pointer; }
-.question-sign svg { width: 92px; height: 92px; display: block; }
+.question-sign svg { width: 92px; height: auto; display: block; }
 
 /* Corrección del examen */
 .review-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }

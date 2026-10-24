@@ -1,5 +1,6 @@
 import type { Question } from '../types'
 import { Q } from './q'
+import { panels, signWithPanel } from './signs'
 
 /** Segundo bloque del banco: cubre los capítulos del curso que el primer bloque no tocaba. */
 export const extraQuestions: Question[] = [
@@ -176,10 +177,10 @@ export const extraQuestions: Question[] = [
     ['Que signifie le signal C46 (cercle gris barré) ?', 'Fin de toutes les interdictions locales.', 'Fin de l\'interdiction de dépasser seulement.', 'Fin de l\'autoroute ou de la route pour automobiles.'],
     ['¿Qué significa la señal C46 (círculo gris tachado)?', 'Fin de todas las prohibiciones locales.', 'Fin de la prohibición de adelantar solamente.', 'Fin de la autopista o de la vía para automóviles.'],
     0, 'Terminan a la vez la limitación de velocidad, la prohibición de adelantar, etc.'),
-  Q('x-sig-02', 'signaux', 'sig-categories',
+  { ...Q('x-sig-02', 'signaux', 'sig-categories',
     ['Un signal avec un panneau additionnel portant « 2 km » entre deux flèches verticales signifie :', 'Le danger est à 2 km.', 'La règle s\'applique sur 2 km.', 'Vitesse maximale 2 km/h.'],
     ['Una señal con una placa «2 km» entre dos flechas verticales significa:', 'El peligro está a 2 km.', 'La regla se aplica durante 2 km.', 'Velocidad máxima 2 km/h.'],
-    1, 'Placa de distancia (sin flechas) = a qué distancia; placa con flechas = longitud del tramo.'),
+    1, 'Placa de distancia (sin flechas) = a qué distancia; placa con flechas = longitud del tramo.'), image: signWithPanel('C43', panels.length2km) },
   Q('x-sig-03', 'signaux', 'sig-categories',
     ['Un signal temporaire (fond jaune, travaux) contredit un signal permanent. Lequel s\'applique ?', 'Le permanent.', 'Le temporaire.', 'Le plus restrictif.'],
     ['Una señal temporal (fondo amarillo, obras) contradice una señal permanente. ¿Cuál se aplica?', 'La permanente.', 'La temporal.', 'La más restrictiva.'],

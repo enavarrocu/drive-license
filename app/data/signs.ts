@@ -221,3 +221,26 @@ export const signCategories: { id: SignCategory; fr: string; es: string }[] = [
 ]
 
 export const signByCode = Object.fromEntries(signs.map((s) => [s.code, s])) as Record<string, SignWithSvg>
+
+/** Placa adicional (rectángulo blanco con borde negro) con un contenido SVG en coordenadas 0..80 × 0..40. */
+function panel(inner: string): string {
+  return `<g transform="translate(10 104)"><rect width="80" height="40" rx="2" fill="${WHT}" stroke="${BLK}" stroke-width="2.5"/>${inner}</g>`
+}
+
+/** Señal con una placa adicional debajo (viewBox 100×150), para mostrarla antes de una pregunta. */
+export function signWithPanel(code: string, panelInner: string): string {
+  const s = signByCode[code]!.svg.replace('<svg viewBox=', '<svg x="0" y="0" width="100" height="100" viewBox=')
+  return `<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg" role="img">${s}${panel(panelInner)}</svg>`
+}
+
+/** Placas adicionales usadas en las preguntas. */
+export const panels = {
+  /** Disco de estacionamiento + duración. */
+  disc30: `<circle cx="20" cy="20" r="12" fill="${BLUE}"/><circle cx="20" cy="20" r="8" fill="${WHT}"/><path d="M20 20 v-5 M20 20 l4 2" stroke="${BLK}" stroke-width="1.5"/><text x="56" y="25" font-size="13" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">30 min</text>`,
+  /** Longitud del tramo: distancia entre dos flechas verticales. */
+  length2km: `<path d="M14 6 v28 M10 10 l4-4 4 4 M10 30 l4 4 4-4" stroke="${BLK}" stroke-width="2.5" fill="none"/><text x="48" y="25" font-size="13" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">2 km</text>`,
+  /** Tres barras rojas oblicuas (paso a nivel a ~150 m). */
+  bars3: `<path d="M22 32 l12-24 M38 32 l12-24 M54 32 l12-24" stroke="${RED}" stroke-width="5"/>`,
+  /** Excepto ciclistas (M2). */
+  exceptCyclists: `<text x="40" y="14" font-size="9" text-anchor="middle" fill="${BLK}" font-family="Arial">EXCEPTÉ</text><circle cx="31" cy="27" r="6" fill="none" stroke="${BLK}" stroke-width="2"/><circle cx="49" cy="27" r="6" fill="none" stroke="${BLK}" stroke-width="2"/><path d="M31 27 l9-8 h6 l3 8 M40 19 l-4 8" stroke="${BLK}" stroke-width="2" fill="none"/>`,
+}

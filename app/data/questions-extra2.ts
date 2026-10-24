@@ -1,6 +1,7 @@
 import type { Question } from '../types'
 import type { Scene, SceneVehicle } from '../lib/scene'
 import { Q, QS } from './q'
+import { panels, signWithPanel } from './signs'
 
 /**
  * Tercer bloque: refuerza los temas con menos cobertura (alumbrado, usuarios
@@ -131,10 +132,10 @@ export const extraQuestions2: Question[] = [
     ['Je rate un carrefour et veux revenir. La solution la plus sûre est :', 'Faire marche arrière jusqu\'au carrefour.', 'Faire le tour du pâté de maisons.', 'Faire demi-tour sur la ligne continue.'],
     ['Me paso un cruce y quiero volver. La solución más segura es:', 'Dar marcha atrás hasta el cruce.', 'Dar la vuelta a la manzana.', 'Dar media vuelta sobre la línea continua.'],
     1, 'La marcha atrás solo para lo estrictamente necesario y nunca para «deshacer» un recorrido. O usar la siguiente rotonda.'),
-  Q('y-man-05', 'manoeuvres', 'man-passage-niveau',
+  { ...Q('y-man-05', 'manoeuvres', 'man-passage-niveau',
     ['Que signifie le panneau additionnel à trois barres rouges obliques sous un A41 ?', 'Trois voies ferrées.', 'Le passage à niveau est à 150 m.', 'Interdiction de dépasser sur 3 km.'],
     ['¿Qué significa la placa con tres barras rojas oblicuas bajo una señal A41?', 'Tres vías férreas.', 'El paso a nivel está a 150 m.', 'Prohibido adelantar durante 3 km.'],
-    1, 'Las «balises» cuentan atrás: 3 barras ≈ 150 m, 2 ≈ 100 m, 1 ≈ 50 m. Siguen los paneles de 2 y 1 barras.'),
+    1, 'Las «balises» cuentan atrás: 3 barras ≈ 150 m, 2 ≈ 100 m, 1 ≈ 50 m. Siguen los paneles de 2 y 1 barras.'), image: signWithPanel('A41', panels.bars3) },
   Q('y-man-06', 'manoeuvres', 'man-passage-niveau',
     ['Je m\'engage dans un tunnel long. Que dois-je faire avec mon autoradio ?', 'L\'éteindre complètement.', 'Le régler sur la fréquence indiquée (F93).', 'Le laisser tel quel, sans rien changer.'],
     ['Entro en un túnel largo. ¿Qué debo hacer con la radio?', 'Apagarla por completo.', 'Sintonizar la frecuencia indicada (F93).', 'Dejarla como está, sin cambiar nada.'],
@@ -181,10 +182,10 @@ export const extraQuestions2: Question[] = [
     ['Une borne de recharge électrique est libre. Puis-je y stationner ma voiture thermique ?', 'Oui, si elle est libre.', 'Non, c\'est réservé.', 'Oui, la nuit.'],
     ['Un punto de recarga eléctrica está libre. ¿Puedo estacionar mi coche térmico?', 'Sí, si está libre.', 'No, está reservada.', 'Sí, de noche.'],
     1, 'Y un eléctrico solo mientras carga, si la placa lo indica. Solo para vehículos eléctricos en carga.'),
-  Q('y-sta-05', 'stationnement', 'sta-regles',
+  { ...Q('y-sta-05', 'stationnement', 'sta-regles',
     ['Signal E9a avec panneau additionnel « 30 min » et pictogramme de disque. Cela signifie :', 'Stationnement payant, 30 minutes maximum.', 'Stationnement avec disque, 30 minutes maximum.', 'Stationnement interdit pendant 30 minutes.'],
     ['Señal E9a con placa «30 min» y pictograma de disco. Significa:', 'Estacionamiento de pago, 30 minutos máximo.', 'Estacionamiento con disco, 30 minutos máximo.', 'Estacionamiento prohibido durante 30 minutos.'],
-    1, 'La placa modifica la duración por defecto de la zona azul (2 h).'),
+    1, 'La placa modifica la duración por defecto de la zona azul (2 h).'), image: signWithPanel('E9a', panels.disc30) },
   Q('y-sta-06', 'stationnement', 'sta-interdits',
     ['Puis-je stationner devant mon propre garage, sans plaque indiquée ?', 'Oui, c\'est le mien, sans condition.', 'Non, sauf plaque apposée sur la porte.', 'Oui, de jour, si je laisse un numéro.'],
     ['¿Puedo estacionar delante de mi propio garaje, sin matrícula indicada?', 'Sí, es mío, sin condiciones.', 'No, salvo con mi matrícula en la puerta.', 'Sí, de día, si dejo un número.'],

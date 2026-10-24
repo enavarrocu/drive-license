@@ -1,5 +1,6 @@
 import type { Question } from '../types'
 import { Q } from './q'
+import { panels, signWithPanel } from './signs'
 import { sceneQuestions } from './questions-scenes'
 import { extraQuestions } from './questions-extra'
 import { extraQuestions2 } from './questions-extra2'
@@ -360,10 +361,10 @@ const baseQuestions: Question[] = [
     ['Je tourne à droite ; un cycliste sur la piste cyclable continue tout droit. Qui a la priorité ?', 'Moi, car je suis déjà engagé.', 'Le cycliste qui continue tout droit.', 'Le premier arrivé.'],
     ['Giro a la derecha; un ciclista por el carril bici sigue recto. ¿Quién tiene prioridad?', 'Yo, porque ya estoy girando.', 'El ciclista que sigue recto.', 'El primero que llega.'],
     1, 'Todo conductor que gira cede el paso a los ciclistas que siguen recto por la piste cyclable o la calzada.', true),
-  Q('usa-03', 'usagers-faibles', 'usa-cyclistes',
+  { ...Q('usa-03', 'usagers-faibles', 'usa-cyclistes',
     ['Je m\'engage dans une rue à sens unique portant le panneau additionnel M2 (vélo « excepté »). À quoi dois-je m\'attendre ?', 'À rien de particulier.', 'À croiser des cyclistes roulant en sens inverse.', 'À ce que la rue soit réservée aux vélos.'],
     ['Entro en una calle de sentido único con la placa adicional M2 (bici «excepto»). ¿A qué debo atenerme?', 'A nada en particular.', 'A cruzarme con ciclistas que circulan en sentido contrario.', 'A que la calle esté reservada a las bicis.'],
-    1, 'SUL («sens unique limité»): los ciclistas pueden ir a contramano; extrema la prudencia al girar y al abrir la puerta.'),
+    1, 'SUL («sens unique limité»): los ciclistas pueden ir a contramano; extrema la prudencia al girar y al abrir la puerta.'), image: signWithPanel('F19', panels.exceptCyclists) },
   Q('usa-04', 'usagers-faibles', 'usa-tram',
     ['Un bus est arrêté à un arrêt sans refuge sur une chaussée étroite ; des voyageurs descendent. Je dois :', 'Le dépasser doucement.', 'M\'arrêter et attendre.', 'Klaxonner pour prévenir.'],
     ['Un autobús está parado en una parada sin isleta en una calzada estrecha; bajan viajeros. Debo:', 'Adelantarlo despacio.', 'Detenerme y esperar.', 'Tocar el claxon para avisar.'],
