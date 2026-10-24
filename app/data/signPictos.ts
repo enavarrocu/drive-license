@@ -94,7 +94,7 @@ export const P = {
   arrowTurnRight: (c = WHT) => `<path d="M38 82 v-30 a8 8 0 0 1 8-8 h14 v-10 l18 14 l-18 14 v-10 h-10 v30z" fill="${c}"/>`,
   arrowTurnLeft: (c = WHT) => `<path d="M62 82 v-30 a8 8 0 0 0 -8-8 h-14 v-10 l-18 14 l18 14 v-10 h10 v30z" fill="${c}"/>`,
   arrowUTurn: (c = BLK) => `<path d="M36 78 v-26 a14 14 0 0 1 28 0 v10 M64 62 l-8-8 M64 62 l8-8" stroke="${c}" stroke-width="7" fill="none"/>`,
-  roundabout: (c = WHT) => `<path d="M50 24 a26 26 0 1 1 -22 13" stroke="${c}" stroke-width="7" fill="none"/><path d="M50 16 l10 10 l-12 6z M22 44 l2-14 l10 8z M74 58 l-12 6 l2-14z" fill="${c}"/>`,
+  roundabout: (c = WHT) => `<path d="M45.7 74.6 A25 25 0 0 0 72.7 60.6" stroke="${c}" stroke-width="7" fill="none"/><path d="M77.3 50.6 L79.9 63.9 L65.4 57.2z" fill="${c}"/><path d="M30.8 33.9 A25 25 0 0 0 29.5 64.3" stroke="${c}" stroke-width="7" fill="none"/><path d="M35.8 73.4 L23.0 68.9 L36.1 59.8z" fill="${c}"/><path d="M73.5 41.4 A25 25 0 0 0 47.8 25.1" stroke="${c}" stroke-width="7" fill="none"/><path d="M36.9 26.1 L47.1 17.1 L48.5 33.1z" fill="${c}"/>`,
   parkingP: (c = WHT) => T('P', 70, 54, c),
   house: (c = WHT) => `<path d="M24 52 l26-20 26 20 v26 h-52z" fill="${c}"/>`,
   tunnel: (c = WHT) => `<path d="M24 80 v-26 a26 26 0 0 1 52 0 v26z" fill="${c}"/><path d="M34 80 v-20 a16 16 0 0 1 32 0 v20z" fill="${BLUE}"/>`,
