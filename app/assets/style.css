@@ -242,3 +242,8 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 
 /* Las imágenes oficiales (SVG del SPW) no pintan el fondo blanco de la señal: se muestran sobre una tarjeta blanca. */
 img.sign-img { background: #fff; border-radius: 10px; padding: 4px; box-sizing: border-box; }
+
+/* Señal en miniatura dentro de una respuesta */
+.sign-ref-inline { display: inline-block; vertical-align: middle; margin: 0 2px; background: none; border: none; padding: 0; text-decoration: none; }
+.sign-ref-inline svg, .sign-ref-inline img { width: 3.6em; height: 3.6em; object-fit: contain; display: block; }
+.sign-ref-inline img.sign-img { padding: 2px; border-radius: 6px; }

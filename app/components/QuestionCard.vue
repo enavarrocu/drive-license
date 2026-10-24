@@ -29,9 +29,9 @@ const letters = ['A', 'B', 'C', 'D']
 const sceneSvg = computed(() => (props.question.scene ? renderScene(props.question.scene) : ''))
 /** Señales citadas en el enunciado: se muestran como imagen antes de la pregunta, como en el examen. */
 const questionSigns = computed(() => {
-  const codes = new Set<string>()
+  const codes = new Set<string>(props.question.signs ?? [])
   const q = props.question.fr.q
-  for (const p of splitSignRefs(q)) if (p.type === 'sign') codes.add(p.code)
+  if (!props.question.signs) for (const p of splitSignRefs(q)) if (p.type === 'sign') codes.add(p.code)
   return [...codes]
     .slice(0, 4)
     .map((c) => {
@@ -86,7 +86,7 @@ function classFor(i: number) {
         >
           <span class="idx">{{ letters[i] }}</span>
           <span class="txt">
-            <SignText :text="opt" />
+            <SignText :text="opt" inline />
             <span v-if="showAlt" class="alt"><SignText :text="other.options[i] ?? ''" /></span>
           </span>
         </button>

@@ -46,6 +46,8 @@ export interface Question {
   scene?: Scene
   /** Imagen SVG (señal con placa adicional, etc.) mostrada antes de la pregunta; sustituye a las señales citadas. */
   image?: string
+  /** Señales a mostrar antes de la pregunta (códigos); si falta, se deducen de los códigos citados en el enunciado. */
+  signs?: string[]
 }
 
 export interface KeyTerm {
