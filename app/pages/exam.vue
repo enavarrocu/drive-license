@@ -30,6 +30,8 @@ const saving = ref(false)
 const startedAt = ref(0)
 let tick: number | undefined
 let readTimer: number | undefined
+/** Identifie la lecture en cours : une lecture périmée (question précédente) ne doit jamais lancer le décompte. */
+let readToken = 0
 
 const current = computed(() => exam.value[index.value])
 const pct = computed(() => (remaining.value / answerSeconds.value) * 100)
@@ -49,15 +51,18 @@ function present() {
   const q = current.value
   if (!q) return void finish()
   const text = `${q.fr.q} ${q.fr.options.map((o, i) => `Réponse ${'ABCD'[i]} : ${o}`).join('. ')}`
+  const token = ++readToken
   if (speak.value && canSpeak.value) {
     void speakText(text, 'fr').then(() => {
-      if (phase.value === 'reading') startCountdown()
+      if (token === readToken && phase.value === 'reading') startCountdown()
     })
   } else {
     readTimer = window.setTimeout(startCountdown, EXAM.readSecondsFallback * 1000)
   }
 }
 function startCountdown() {
+  if (phase.value === 'answering') return
+  clearTimers()
   phase.value = 'answering'
   remaining.value = answerSeconds.value
   tick = window.setInterval(() => {
@@ -69,16 +74,15 @@ function startCountdown() {
   }, 100)
 }
 function skipReading() {
+  readToken++
   stopSpeaking()
-  if (phase.value === 'reading') {
-    if (readTimer) clearTimeout(readTimer)
-    startCountdown()
-  }
+  if (phase.value === 'reading') startCountdown()
 }
 function choose(i: number) {
   if (phase.value === 'answering') chosen.value = i
 }
 function commit() {
+  if (phase.value !== 'answering') return
   clearTimers()
   const q = current.value
   if (!q) return
@@ -91,6 +95,7 @@ function commit() {
   }
 }
 async function finish() {
+  readToken++
   clearTimers()
   stopSpeaking()
   const s = score(answers.value, exam.value.length)
@@ -114,6 +119,7 @@ async function finish() {
   }
 }
 function abort() {
+  readToken++
   clearTimers()
   stopSpeaking()
   phase.value = 'setup'

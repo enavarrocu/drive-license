@@ -17,11 +17,19 @@ function pickVoice(lang: string): SpeechSynthesisVoice | undefined {
   )
 }
 
-/** Lit `text` et résout quand la lecture est finie (ou immédiatement si indisponible). */
+/** Lecture en cours : permet de la clore proprement quand une nouvelle lecture commence ou qu'on l'arrête. */
+let pending: (() => void) | undefined
+
+/**
+ * Lit `text` et résout quand la lecture est finie (ou immédiatement si indisponible).
+ * Une lecture précédente encore en attente est résolue tout de suite : son garde-fou
+ * ne peut donc plus se déclencher pendant la question suivante.
+ */
 export function speakText(text: string, lang: 'fr' | 'es' = 'fr'): Promise<void> {
   if (!speechAvailable()) return Promise.resolve()
   return new Promise((resolve) => {
     const synth = window.speechSynthesis
+    pending?.()
     synth.cancel()
     const u = new SpeechSynthesisUtterance(text)
     u.lang = lang === 'fr' ? 'fr-BE' : 'es-ES'
@@ -29,21 +37,25 @@ export function speakText(text: string, lang: 'fr' | 'es' = 'fr'): Promise<void>
     if (voice) u.voice = voice
     u.rate = 0.95
     let done = false
+    let guard: number | undefined
     const finish = () => {
-      if (!done) {
-        done = true
-        resolve()
-      }
+      if (done) return
+      done = true
+      if (guard) clearTimeout(guard)
+      if (pending === finish) pending = undefined
+      resolve()
     }
+    pending = finish
     u.onend = finish
     u.onerror = finish
     synth.speak(u)
     // Garde-fou : certains navigateurs n'émettent jamais onend.
     const words = text.split(/\s+/).length
-    setTimeout(finish, 1500 + words * 450)
+    guard = window.setTimeout(finish, 1500 + words * 450)
   })
 }
 
 export function stopSpeaking() {
+  pending?.()
   if (speechAvailable()) window.speechSynthesis.cancel()
 }
