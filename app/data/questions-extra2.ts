@@ -278,11 +278,6 @@ export const extraQuestions2: Question[] = [
     ['Après avoir fumé du cannabis la veille au soir, puis-je conduire le lendemain matin ?', 'Oui, les effets ont disparu.', 'Oui, si je me sens bien.', 'Non, c\'est encore risqué.'],
     ['Tras fumar cannabis la noche anterior, ¿puedo conducir a la mañana siguiente?', 'Sí, los efectos han desaparecido.', 'Sí, si me siento bien.', 'No, sigue siendo arriesgado.'],
     2, 'Tolerancia cero: cualquier rastro detectable se sanciona. El test de saliva puede seguir siendo positivo y las capacidades siguen alteradas.', true),
-  Q('y-alc-04', 'alcool', 'alc-drogues',
-    ['Je conduis un bus de ligne. Mon taux maximal d\'alcool est :', '0,2 g/l', '0,5 g/l', '0,8 g/l'],
-    ['Conduzco un autobús de línea. Mi tasa máxima de alcohol es:', '0,2 g/l', '0,5 g/l', '0,8 g/l'],
-    0, 'Conductores profesionales (bus, camión, taxi, transporte de personas): 0,2 g/l.', true),
-
   /* ============ SIGNAUX (+6) ============ */
   { ...Q('y-sig-01', 'signaux', 'sig-categories',
     ['Ce signal, placé sous un feu, concerne :', 'Tous les conducteurs.', 'Les bus.', 'Uniquement les cyclistes.'],

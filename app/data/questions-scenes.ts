@@ -170,7 +170,7 @@ export const sceneQuestions: Question[] = [
   QS(Q('sc-29', 'priorite', 'prio-rondpoint',
     ['Je quitte le rond-point par la sortie à droite. Que dois-je faire ?', 'Clignotant droit et céder aux piétons et cyclistes.', 'Rien, je suis prioritaire dans le rond-point.', 'Clignotant gauche et céder aux véhicules.'],
     ['Salgo de la rotonda por la salida de la derecha. ¿Qué debo hacer?', 'Intermitente derecho y ceder a peatones y ciclistas.', 'Nada, soy prioritario en la rotonda.', 'Intermitente izquierdo y ceder a los vehículos.'],
-    0, 'Al salir: intermitente derecho obligatorio y ceder a quien cruza la salida.'),
+    0, 'Al salir: intermitente derecho obligatorio y ceder a quien cruza la salida.', true),
     { type: 'roundabout', signs: { S: 'B1' }, vehicles: [me('S', 'none')], crossing: { arm: 'E', pedestrian: true } }),
 
   /* ---------- manœuvres, insertion, piétons ---------- */
