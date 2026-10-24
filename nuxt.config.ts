@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     'nitro:build:public-assets'(nitro) {
       const publicDir = nitro.options.output.publicDir
       const assetsDir = join(publicDir, '_nuxt')
-      const files = walk(assetsDir)
+      const files = [...walk(assetsDir), ...walk(join(publicDir, 'signs'))]
         .filter((f) => /\.(js|mjs|css|woff2?|svg|png|webp)$/.test(f) && !f.includes(`${join('_nuxt', 'builds')}`))
         .map((f) => '/' + relative(publicDir, f).split('\\').join('/'))
         .sort()

@@ -47,7 +47,7 @@ function nextCard() {
 
     <div v-if="mode === 'grid'" class="signs-grid">
       <div v-for="s in list" :key="s.code" class="sign-card">
-        <div v-html="s.svg"></div>
+        <div><SignImage :sign="s" /></div>
         <div class="code">{{ s.code }}</div>
         <div><b>{{ s.name[lang] }}</b></div>
         <div class="small muted">{{ lang === 'fr' ? s.name.es : s.name.fr }}</div>
@@ -57,7 +57,7 @@ function nextCard() {
 
     <div v-else-if="card" class="card flash">
       <p class="muted small">{{ pos + 1 }} / {{ deck.length }}</p>
-      <div v-html="card.svg"></div>
+      <div><SignImage :sign="card" /></div>
       <div v-if="!flipped">
         <button class="btn primary" type="button" @click="flipped = true">{{ lang === 'fr' ? 'Voir la réponse' : 'Ver la respuesta' }}</button>
       </div>

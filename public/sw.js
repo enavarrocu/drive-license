@@ -11,7 +11,7 @@
  *    (sans ça, hors ligne, nuxt-auth-utils croit l'utilisateur déconnecté et le
  *    middleware renvoie vers /login). Vidé à la déconnexion (DELETE session).
  *  - autres /api/*     → réseau uniquement (jamais en cache)
- *  - /_nuxt/*          → cache d'abord (assets hachés, immuables)
+ *  - /_nuxt/*, /signs/* → cache d'abord (assets hachés / images de signaux, précachés)
  *  - navigations       → réseau d'abord, sinon la page en cache, sinon /offline.html
  *  - icônes, manifest, offline.html → cache puis mise à jour en arrière-plan
  *  - tout autre GET  → réseau, sans cache
@@ -161,7 +161,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(networkFirst(request, PAGES).catch(() => Response.error()))
   } else if (url.pathname.startsWith('/api/')) {
     return
-  } else if (url.pathname.startsWith('/_nuxt/')) {
+  } else if (url.pathname.startsWith('/_nuxt/') || url.pathname.startsWith('/signs/')) {
     event.respondWith(cacheFirst(request, ASSETS))
   } else if (url.pathname.startsWith('/icons/') || PRECACHE.includes(url.pathname)) {
     event.respondWith(staleWhileRevalidate(request, SHELL))

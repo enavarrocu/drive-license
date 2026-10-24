@@ -1,12 +1,16 @@
 import type { Sign, SignCategory } from '../types'
 import { shapes as S_, P, T, g, svg, arrowPanel, SLASH, RED, BLUE, BLK, WHT, GRY } from './signPictos'
+import { signImages } from './signImages'
 
 /**
  * Catálogo de señales belgas (familias A, B, C, D, E, F + placas M).
  * Dibujos esquemáticos propios en SVG inline.
  */
 export interface SignWithSvg extends Sign {
+  /** Dibujo esquemático propio (siempre disponible). */
   svg: string
+  /** Imagen oficial (SPW Wallonie), si existe: se prefiere al dibujo. */
+  img?: string
 }
 
 const tri = (i = '') => svg(S_.triangle(i))
@@ -26,7 +30,7 @@ const tall = (i = '') => svg(S_.tallBlue(i))
 const sub = (txt: string) => `<rect x="14" y="84" width="72" height="13" fill="${WHT}" stroke="#333" stroke-width="1.5"/>${T(txt, 94, 9, BLK)}`
 
 function S(code: string, category: SignCategory, fr: string, es: string, meaning: string, image: string): SignWithSvg {
-  return { code, category, name: { fr, es }, meaning, svg: image }
+  return { code, category, name: { fr, es }, meaning, svg: image, img: signImages.has(code) ? `/signs/${code}.webp` : undefined }
 }
 
 export const signs: SignWithSvg[] = [
@@ -230,7 +234,10 @@ function panel(inner: string): string {
 
 /** Señal con una placa adicional debajo (viewBox 100×150), para mostrarla antes de una pregunta. */
 export function signWithPanel(code: string, panelInner: string): string {
-  const s = signByCode[code]!.svg.replace('<svg viewBox=', '<svg x="0" y="0" width="100" height="100" viewBox=')
+  const sign = signByCode[code]!
+  const s = sign.img
+    ? `<image href="${sign.img}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid meet"/>`
+    : sign.svg.replace('<svg viewBox=', '<svg x="0" y="0" width="100" height="100" viewBox=')
   return `<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg" role="img">${s}${panel(panelInner)}</svg>`
 }
 

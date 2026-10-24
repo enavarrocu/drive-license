@@ -64,7 +64,7 @@ const doneCount = computed(() => course.filter((c) => courseRead.value[c.id]).le
         <div class="md" @click="onClickDelegated" v-html="linkifySignsHtml(renderMd(s.body))"></div>
         <div v-if="signsFor(s.signs).length" class="signs-inline">
           <div v-for="sg in signsFor(s.signs)" :key="sg.code" class="sign-mini">
-            <div v-html="sg.svg"></div>
+            <div><SignImage :sign="sg" /></div>
             <div class="code">{{ sg.code }}</div>
           </div>
         </div>

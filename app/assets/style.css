@@ -153,10 +153,10 @@ input.search { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px
 /* Signs */
 .signs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
 .sign-card { border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: var(--card); text-align: center; color: var(--text); }
-.sign-card svg { width: 84px; height: 84px; }
+.sign-card svg, .sign-card img { width: 84px; height: 84px; object-fit: contain; }
 .sign-card .code { font-weight: 800; font-size: 0.8rem; color: var(--muted); }
 .flash { text-align: center; }
-.flash svg { width: 180px; height: 180px; }
+.flash svg, .flash img { width: 180px; height: 180px; object-fit: contain; }
 .flash .answer { margin-top: 10px; }
 
 .result-big { font-size: 2.4rem; font-weight: 900; }
@@ -189,7 +189,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 .md th { background: var(--accent-soft); }
 .signs-inline { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .sign-mini { text-align: center; }
-.sign-mini svg { width: 56px; height: 56px; }
+.sign-mini svg, .sign-mini img { width: 56px; height: 56px; object-fit: contain; }
 .sign-mini .code { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
 
 /* Scenes */
@@ -212,7 +212,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 .sign-ref:hover { background: var(--accent); color: #fff; }
 .sign-popup-backdrop { position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, 0.55); display: grid; place-items: center; padding: 16px; }
 .sign-popup { position: relative; background: var(--card); color: var(--text); border-radius: 16px; box-shadow: var(--shadow); padding: 22px 20px 18px; width: min(100%, 360px); text-align: center; }
-.sign-popup-img svg { width: 140px; height: 140px; }
+.sign-popup-img svg, .sign-popup-img img { width: 140px; height: 140px; object-fit: contain; }
 .sign-popup .code { font-weight: 800; color: var(--muted); font-size: 0.85rem; margin-top: 4px; }
 .sign-popup h3 { margin: 4px 0 2px; font-size: 1.15rem; }
 .sign-popup p { text-align: left; margin: 10px 0 14px; }
@@ -221,7 +221,7 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 /* Señales mostradas antes del enunciado (como la imagen del examen) */
 .question-signs { display: flex; gap: 10px; justify-content: center; margin: 6px 0 10px; }
 .question-sign { border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 6px; cursor: pointer; }
-.question-sign svg { width: 92px; height: auto; display: block; }
+.question-sign svg, .question-sign img { width: 92px; height: auto; max-height: 140px; display: block; object-fit: contain; }
 
 /* Corrección del examen */
 .review-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }

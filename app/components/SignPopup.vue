@@ -17,7 +17,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
     <div v-if="sign" class="sign-popup-backdrop" @click="close">
       <div class="sign-popup" role="dialog" aria-modal="true" @click.stop>
         <button type="button" class="sign-popup-close" aria-label="Fermer" @click="close">×</button>
-        <div class="sign-popup-img" v-html="sign.svg"></div>
+        <div class="sign-popup-img"><SignImage :sign="sign" /></div>
         <div class="code">{{ sign.code }}</div>
         <h3>{{ sign.name[lang] }}</h3>
         <div class="muted">{{ lang === 'fr' ? sign.name.es : sign.name.fr }}</div>
