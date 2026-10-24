@@ -288,6 +288,20 @@ export const theory: TheoryEntry[] = [
     ],
   },
   {
+    id: 'sta-zones',
+    theme: 'stationnement',
+    title: { fr: 'Zone résidentielle, zone de rencontre, zone piétonne', es: 'Zona residencial, zona de encuentro, zona peatonal' },
+    body:
+      '«Zone résidentielle» y «zone de rencontre» (señales F12a / F12b): la calle es un espacio compartido. Velocidad máxima 20 km/h; los peatones pueden usar toda la anchura de la calzada (y jugar en la zona residencial), pero no obstaculizar inútilmente; los conductores deben ceder el paso a los peatones. ESTACIONAMIENTO: prohibido en toda la zona SALVO en los sitios delimitados por marcas o señalizados con una «P» — da igual que no se moleste o que la calle esté vacía. La parada breve (dejar a alguien, cargar) sí está permitida. Al salir de la zona (F12b) vuelve el límite de la población. «Zone piétonne» (F103 / F105): solo peatones; los vehículos autorizados por la placa circulan al paso y los ciclistas solo si la placa lo permite; estacionar está prohibido.',
+    keyTerms: [
+      { fr: 'zone résidentielle', es: 'zona residencial' },
+      { fr: 'zone de rencontre', es: 'zona de encuentro (compartida)' },
+      { fr: 'emplacement délimité', es: 'plaza delimitada / marcada' },
+      { fr: 'zone piétonne', es: 'zona peatonal' },
+      { fr: 'à l\'allure du pas', es: 'a paso de persona' },
+    ],
+  },
+  {
     id: 'sta-regles',
     theme: 'stationnement',
     title: { fr: 'Comment stationner', es: 'Cómo estacionar' },

@@ -99,7 +99,6 @@ onBeforeUnmount(stopSpeaking)
         <button v-if="!revealed" class="btn" type="button" @click="revealed = true">{{ lang === 'fr' ? 'Voir la réponse' : 'Ver la respuesta' }}</button>
         <button class="btn primary" type="button" @click="next">{{ lang === 'fr' ? 'Suivante →' : 'Siguiente →' }}</button>
       </div>
-      <p class="small muted" style="margin: 10px 0 0">{{ current.id }}</p>
     </div>
   </div>
 </template>
