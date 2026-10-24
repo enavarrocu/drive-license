@@ -23,6 +23,8 @@ export interface SceneVehicle {
   back?: number
   /** Luz azul / sirena (vehículo prioritario). */
   siren?: boolean
+  /** Rotonda: el vehículo ya circula por el anillo (a la altura del brazo `arm`, avanzando en sentido antihorario). */
+  inRing?: boolean
 }
 
 export type SceneSign = 'B1' | 'B5' | 'B9' | 'B15' | 'B17' | 'C1' | 'C3' | 'F19' | 'light-red' | 'light-green' | 'light-orange' | 'light-blink'
@@ -134,6 +136,21 @@ export function renderScene(sc: Scene): string {
     parts.push(`<circle cx="${C}" cy="${C}" r="78" fill="#6b6b6b"/><circle cx="${C}" cy="${C}" r="34" fill="#dfe9d3" stroke="#fff" stroke-width="2"/>`)
     // flechas del anillo
     parts.push(`<path d="M${C + 56} ${C} a56 56 0 0 1 -56 56" stroke="#fff" stroke-width="2" fill="none" stroke-dasharray="6 5"/><path d="M${C - 56} ${C} a56 56 0 0 1 56 -56" stroke="#fff" stroke-width="2" fill="none" stroke-dasharray="6 5"/>`)
+    // vehículos ya dentro del anillo: sobre el anillo, en sentido antihorario, un poco más allá de su brazo
+    for (const v of sc.vehicles.filter((x) => x.inRing)) {
+      const color = v.you ? COLORS.you! : (COLORS[v.id] ?? '#444')
+      arrow(color)
+      const R = 56
+      const base = { S: 90, E: 0, N: 270, W: 180 }[v.arm]
+      const th = ((base - 25) * Math.PI) / 180 // 25° más adelante en el sentido de la marcha
+      const x = C + R * Math.cos(th)
+      const y = C + R * Math.sin(th)
+      const heading = (Math.atan2(-Math.cos(th), Math.sin(th)) * 180) / Math.PI + 90
+      const a0 = th - (20 * Math.PI) / 180
+      const a1 = th - (75 * Math.PI) / 180
+      parts.push(`<path d="M${(C + R * Math.cos(a0)).toFixed(1)} ${(C + R * Math.sin(a0)).toFixed(1)} A${R} ${R} 0 0 0 ${(C + R * Math.cos(a1)).toFixed(1)} ${(C + R * Math.sin(a1)).toFixed(1)}" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`)
+      parts.push(`<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${heading.toFixed(1)})">${vehicleShape(v, color)}<g transform="rotate(${(-heading).toFixed(1)})"><circle r="10" fill="#fff" stroke="${color}" stroke-width="2"/><text x="0" y="3" font-size="${v.you ? 7 : 10}" font-weight="700" text-anchor="middle" fill="${color}" font-family="Arial">${v.you ? 'moi' : v.id}</text></g></g>`)
+    }
   } else if (sc.type === 'merge') {
     // Autopista: dos carriles en el mismo sentido (hacia arriba) + carril de aceleración a la derecha que se funde en el carril derecho.
     const L = C - ROAD / 2
@@ -209,7 +226,7 @@ export function renderScene(sc: Scene): string {
   }
 
   // vehículos
-  for (const v of sc.type === 'merge' ? [] : sc.vehicles) {
+  for (const v of sc.type === 'merge' ? [] : sc.vehicles.filter((x) => !x.inRing)) {
     const color = v.you ? COLORS.you! : (COLORS[v.kind === 'tram' ? 'tram' : v.kind === 'bike' ? 'bike' : v.id] ?? '#444')
     arrow(color)
     const back = v.back ?? 0

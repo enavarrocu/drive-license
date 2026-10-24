@@ -334,7 +334,7 @@ export const extraQuestions2: Question[] = [
     ['Rond-point avec B1. Je suis dans l\'anneau ; la voiture A arrive à l\'entrée suivante, à ma droite. Qui passe ?', 'La voiture A.', 'Aucun des deux.', 'Moi.'],
     ['Rotonda con B1. Estoy en el anillo; el coche A llega a la siguiente entrada, a mi derecha. ¿Quién pasa?', 'El coche A.', 'Ninguno de los dos.', 'Yo.'],
     2, 'Dentro del anillo con B1 en las entradas, la prioridad de la derecha no se aplica. Estoy en el anillo y A tiene un B1.', true),
-    { type: 'roundabout', signs: { E: 'B1', S: 'B1' }, vehicles: [me('S', 'none'), v('A', 'E', 'none')], caption: 'je suis déjà dans l\'anneau' }),
+    { type: 'roundabout', signs: { E: 'B1', S: 'B1' }, vehicles: [{ ...me('S', 'none'), inRing: true }, v('A', 'E', 'none')], caption: 'je suis déjà dans l\'anneau' }),
   QS(Q('y-pri-06', 'priorite', 'prio-vehicules-prioritaires',
     ['Un camion de pompiers arrive derrière moi, feu bleu et sirène, dans une rue où je ne peux pas me ranger. Mon feu est rouge. Que faire ?', 'Rester arrêté quoi qu\'il arrive.', 'Accélérer sur plusieurs rues pour le semer.', 'Libérer le passage si c\'est possible sans danger.'],
     ['Un camión de bomberos llega detrás de mí, con luz azul y sirena, en una calle donde no puedo apartarme. Mi semáforo está en rojo. ¿Qué hacer?', 'Quedarme parado pase lo que pase.', 'Acelerar varias calles para despistarlo.', 'Liberar el paso si es posible sin peligro.'],
