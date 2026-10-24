@@ -4,7 +4,7 @@ const schema = z.object({
   lang: z.enum(['fr', 'es']).optional(),
   speak: z.boolean().optional(),
   helpEs: z.boolean().optional(),
-  answerSeconds: z.number().int().min(5).max(120).optional(),
+  answerSeconds: z.number().int().min(0).max(120).optional(), // 0 = sans limite de temps
 })
 
 export default defineEventHandler(async (event) => {

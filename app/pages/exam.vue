@@ -10,10 +10,6 @@ type Phase = 'setup' | 'reading' | 'answering' | 'result'
 const { lang, prefs, setPrefs, saveExam } = useStore()
 
 const phase = ref<Phase>('setup')
-const { locked: signPopupLocked } = useSignPopup()
-// Sin popups de señales mientras dura el examen (revelarían la respuesta).
-watch(phase, (p) => (signPopupLocked.value = p === 'reading' || p === 'answering'), { immediate: true })
-onBeforeUnmount(() => (signPopupLocked.value = false))
 const helpEs = computed({ get: () => prefs.value.helpEs, set: (v: boolean) => void setPrefs({ helpEs: v }) })
 const speak = computed({ get: () => prefs.value.speak, set: (v: boolean) => void setPrefs({ speak: v }) })
 const answerSeconds = computed({ get: () => prefs.value.answerSeconds, set: (v: number) => void setPrefs({ answerSeconds: v }) })
@@ -34,7 +30,9 @@ let readTimer: number | undefined
 let readToken = 0
 
 const current = computed(() => exam.value[index.value])
-const pct = computed(() => (remaining.value / answerSeconds.value) * 100)
+/** 0 = sans limite : pas de lecture imposée ni de décompte, on répond à son rythme. */
+const untimed = computed(() => answerSeconds.value === 0)
+const pct = computed(() => (untimed.value ? 100 : (remaining.value / answerSeconds.value) * 100))
 
 function start() {
   exam.value = sampleExam(questions, EXAM.questions)
@@ -50,6 +48,11 @@ function present() {
   clearTimers()
   const q = current.value
   if (!q) return void finish()
+  if (untimed.value) {
+    phase.value = 'answering'
+    remaining.value = 0
+    return
+  }
   const text = `${q.fr.q} ${q.fr.options.map((o, i) => `Réponse ${'ABCD'[i]} : ${o}`).join('. ')}`
   const token = ++readToken
   if (speak.value && canSpeak.value) {
@@ -146,8 +149,8 @@ onBeforeUnmount(() => {
       </p>
       <p class="small">
         {{ lang === 'fr'
-          ? 'Comme au centre d\'examen : la question est lue, puis vous avez 15 secondes pour répondre. Une réponse validée ne peut plus être modifiée.'
-          : 'Como en el centro de examen: se lee la pregunta y después tienes 15 segundos para responder. Una respuesta validada no se puede cambiar.' }}
+          ? 'Comme au centre d\'examen : la question est lue, puis vous avez 15 secondes pour répondre. Une réponse validée ne peut plus être modifiée. « Sans limite » : pas de lecture ni de décompte, vous répondez à votre rythme.'
+          : 'Como en el centro de examen: se lee la pregunta y después tienes 15 segundos para responder. Una respuesta validada no se puede cambiar. «Sin límite»: sin lectura ni cuenta atrás, respondes a tu ritmo.' }}
       </p>
       <div class="row small" style="margin: 12px 0">
         <label><input v-model="helpEs" type="checkbox" /> {{ lang === 'fr' ? 'Aide : afficher l\'espagnol sous le français' : 'Ayuda: mostrar el español bajo el francés' }}</label>
@@ -158,6 +161,7 @@ onBeforeUnmount(() => {
             <option :value="15">15 s ({{ lang === 'fr' ? 'réel' : 'real' }})</option>
             <option :value="30">30 s</option>
             <option :value="45">45 s</option>
+            <option :value="0">{{ lang === 'fr' ? 'Sans limite (pas de lecture)' : 'Sin límite (sin lectura)' }}</option>
           </select>
         </label>
       </div>
@@ -169,9 +173,11 @@ onBeforeUnmount(() => {
         <span class="timer-label">{{ index + 1 }} / {{ exam.length }}</span>
         <span class="grow"></span>
         <span v-if="phase === 'reading'" class="pill warn">{{ lang === 'fr' ? 'Lecture…' : 'Lectura…' }}</span>
+        <span v-else-if="untimed" class="muted">{{ lang === 'fr' ? 'sans limite' : 'sin límite' }}</span>
         <span v-else class="timer-label" :style="{ color: remaining < 5 ? 'var(--ko)' : undefined }">{{ Math.ceil(remaining) }} s</span>
       </div>
-      <div class="timer" :class="{ low: remaining < 5 }"><div :style="{ width: (phase === 'answering' ? pct : 100) + '%' }"></div></div>
+      <div v-if="!untimed" class="timer" :class="{ low: remaining < 5 }"><div :style="{ width: (phase === 'answering' ? pct : 100) + '%' }"></div></div>
+      <div v-else class="timer"><div :style="{ width: ((index + 1) / exam.length) * 100 + '%' }"></div></div>
       <QuestionCard v-if="current" :question="current" lang="fr" :show-alt="helpEs" :chosen="chosen" :disabled="phase !== 'answering'" @choose="choose" />
       <div class="row" style="margin-top: 14px">
         <button class="btn sm ghost danger" type="button" @click="abort">{{ lang === 'fr' ? 'Abandonner' : 'Abandonar' }}</button>

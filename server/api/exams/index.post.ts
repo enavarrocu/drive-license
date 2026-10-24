@@ -9,7 +9,7 @@ const schema = z.object({
   minorErrors: z.number().int().min(0),
   durationSec: z.number().int().min(0),
   helpEs: z.boolean(),
-  answerSeconds: z.number().int().min(5).max(120),
+  answerSeconds: z.number().int().min(0).max(120), // 0 = sans limite
   answers: z.array(z.object({ questionId: z.string(), chosen: z.number().int().nullable(), correct: z.boolean(), grave: z.boolean() })).max(50),
 })
 

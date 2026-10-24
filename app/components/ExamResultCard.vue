@@ -32,7 +32,8 @@ function num(a: { questionId: string }) {
         {{ exam.graveErrors }} {{ lang === 'fr' ? 'faute(s) grave(s)' : 'falta(s) grave(s)' }} ·
         {{ Math.floor(exam.durationSec / 60) }} min {{ exam.durationSec % 60 }} s
         <span v-if="exam.helpEs"> · {{ lang === 'fr' ? 'avec aide ES' : 'con ayuda ES' }}</span>
-        <span v-if="exam.answerSeconds !== 15"> · {{ exam.answerSeconds }} s</span>
+        <span v-if="exam.answerSeconds === 0"> · {{ lang === 'fr' ? 'sans limite' : 'sin límite' }}</span>
+        <span v-else-if="exam.answerSeconds !== 15"> · {{ exam.answerSeconds }} s</span>
       </p>
     </div>
 
