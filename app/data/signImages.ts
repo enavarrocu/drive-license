@@ -1,4 +1,4 @@
-/** Señales con imagen oficial (SPW Wallonie, Sécurothèque) en public/signs/ — SVG vectorial extraído de los PDF «Combiné» (WebP cuando no fue posible). Las variantes C43-70, C45-90… son la misma señal con otra cifra. E9c no está en los PDF del SPW: es la E9a oficial con el pictograma de camión añadido. */
+/** Señales con imagen oficial (SPW Wallonie, Sécurothèque) en public/signs/ — SVG vectorial extraído de los PDF «Combiné» (WebP cuando no fue posible). Las variantes C43-70, C45-90… son la misma señal con otra cifra. */
 export const signImages = new Map<string, string>([
   ['A11', '/signs/A11.svg'],
   ['A13', '/signs/A13.svg'],
