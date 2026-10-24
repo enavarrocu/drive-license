@@ -34,8 +34,15 @@ const current = computed(() => exam.value[index.value])
 const untimed = computed(() => answerSeconds.value === 0)
 const pct = computed(() => (untimed.value ? 100 : (remaining.value / answerSeconds.value) * 100))
 
-function start() {
-  exam.value = sampleExam(questions, EXAM.questions)
+async function start() {
+  // Questions les moins vues d'abord (statistiques de tous les examens passés) ; sans réseau, tirage simple.
+  let seen: Record<string, number> = {}
+  try {
+    seen = (await $fetch<{ seen: Record<string, number> }>('/api/exams/stats')).seen
+  } catch {
+    /* hors ligne : tirage aléatoire */
+  }
+  exam.value = sampleExam(questions, EXAM.questions, Math.random, seen)
   index.value = 0
   answers.value = []
   result.value = null

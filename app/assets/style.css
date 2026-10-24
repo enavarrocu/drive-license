@@ -247,3 +247,6 @@ img.sign-img { background: #fff; border-radius: 10px; padding: 4px; box-sizing: 
 .sign-ref-inline { display: inline-block; vertical-align: middle; margin: 0 2px; background: none; border: none; padding: 0; text-decoration: none; }
 .sign-ref-inline svg, .sign-ref-inline img { width: 3.6em; height: 3.6em; object-fit: contain; display: block; }
 .sign-ref-inline img.sign-img { padding: 2px; border-radius: 6px; }
+
+/* Identificadores (pregunta, examen) para localizar problemas */
+.qid { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.72rem; color: var(--muted); background: var(--accent-soft); padding: 1px 6px; border-radius: 6px; opacity: 0.8; }

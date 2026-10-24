@@ -61,6 +61,8 @@ function classFor(i: number) {
       <span v-if="label" class="muted">{{ label }}</span>
       <span class="pill">{{ themeById[question.theme][lang] }}</span>
       <span v-if="question.grave" class="pill grave">{{ lang === 'fr' ? 'faute grave' : 'falta grave' }}</span>
+      <span class="grow"></span>
+      <code class="qid" :title="lang === 'fr' ? 'Identifiant de la question' : 'Identificador de la pregunta'">{{ question.id }}</code>
     </div>
     <div class="q-layout" :class="{ 'has-visual': hasVisual }">
       <div v-if="hasVisual" class="q-visual">

@@ -29,9 +29,12 @@ export function shuffle<T>(items: readonly T[], rng: () => number = Math.random)
  * thème dans la banque (minimum 2 par thème), comme à l'examen réel où la
  * priorité et la vitesse pèsent davantage.
  */
-export function sampleExam(pool: readonly Question[], n: number = EXAM.questions, rng: () => number = Math.random): Question[] {
+export function sampleExam(pool: readonly Question[], n: number = EXAM.questions, rng: () => number = Math.random, seen: Readonly<Record<string, number>> = {}): Question[] {
   const byTheme = new Map<ThemeId, Question[]>()
-  for (const q of shuffle(pool, rng)) {
+  // Mélange, puis les questions les moins souvent sorties en premier : on ne revoit une question
+  // qu'une fois le reste du thème épuisé.
+  const ordered = shuffle(pool, rng).sort((a, b) => (seen[a.id] ?? 0) - (seen[b.id] ?? 0))
+  for (const q of ordered) {
     const list = byTheme.get(q.theme) ?? []
     list.push(q)
     byTheme.set(q.theme, list)

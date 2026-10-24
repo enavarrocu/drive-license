@@ -15,7 +15,7 @@ function fmtDate(iso: string) {
     <p class="small"><NuxtLink to="/exams">← {{ lang === 'fr' ? 'Historique' : 'Historial' }}</NuxtLink></p>
     <div v-if="error" class="card"><p class="muted">{{ lang === 'fr' ? 'Examen introuvable.' : 'Examen no encontrado.' }}</p></div>
     <template v-else-if="exam">
-      <p class="muted small">{{ fmtDate(exam.date) }}</p>
+      <p class="muted small">{{ fmtDate(exam.date) }} · <code class="qid">{{ lang === 'fr' ? 'examen' : 'examen' }} #{{ exam.id }}</code></p>
       <ExamResultCard :exam="exam" :lang="lang" review="all" />
     </template>
   </div>
