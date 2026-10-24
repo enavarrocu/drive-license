@@ -229,6 +229,8 @@ export const signByCode = Object.fromEntries(signs.map((s) => [s.code, s])) as R
 
 /** Placa adicional (rectángulo blanco con borde negro) con un contenido SVG en coordenadas 0..80 × 0..40. */
 function panel(inner: string): string {
+  // Imagen oficial de la placa (ruta /signs/…) o contenido SVG dibujado.
+  if (inner.startsWith('/signs/')) return `<rect x="0" y="104" width="100" height="46" rx="6" fill="${WHT}"/><image href="${inner}" x="4" y="107" width="92" height="40" preserveAspectRatio="xMidYMid meet"/>`
   return `<g transform="translate(10 104)"><rect width="80" height="40" rx="2" fill="${WHT}" stroke="${BLK}" stroke-width="2.5"/>${inner}</g>`
 }
 
@@ -274,12 +276,12 @@ export function signWithValue(code: string, value: string): string {
 
 /** Placas adicionales usadas en las preguntas. */
 export const panels = {
-  /** Duración máxima. */
-  min30: `<text x="40" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">30 min</text>`,
-  /** Longitud del tramo: distancia entre dos flechas verticales. */
-  length2km: `<path d="M14 6 v28 M10 10 l4-4 4 4 M10 30 l4 4 4-4" stroke="${BLK}" stroke-width="2.5" fill="none"/><text x="48" y="25" font-size="13" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">2 km</text>`,
+  /** Duración máxima (placa oficial tipo VII). */
+  min30: '/signs/panel-30min.svg',
+  /** Longitud del tramo (placa oficial tipo II). */
+  length2km: '/signs/M-longueur.svg',
   /** Tres barras rojas oblicuas (paso a nivel a ~150 m). */
   bars3: `<path d="M22 32 l12-24 M38 32 l12-24 M54 32 l12-24" stroke="${RED}" stroke-width="5"/>`,
-  /** Excepto ciclistas (M2). */
-  exceptCyclists: `<text x="40" y="14" font-size="9" text-anchor="middle" fill="${BLK}" font-family="Arial">EXCEPTÉ</text><circle cx="31" cy="27" r="6" fill="none" stroke="${BLK}" stroke-width="2"/><circle cx="49" cy="27" r="6" fill="none" stroke="${BLK}" stroke-width="2"/><path d="M31 27 l9-8 h6 l3 8 M40 19 l-4 8" stroke="${BLK}" stroke-width="2" fill="none"/>`,
+  /** Excepto ciclistas (M2 oficial). */
+  exceptCyclists: '/signs/M2.svg',
 }

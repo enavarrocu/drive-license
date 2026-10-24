@@ -86,7 +86,12 @@ function pathArrow(turn: Turn, color: string, back: number): string {
   return `<path d="M0 ${y0} v-${d + 18} a22 22 0 0 0 -22 -22 h-30" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
 }
 
+/** Señales con imagen oficial: se pintan como imagen sobre una tarjeta blanca; el resto (semáforos) se dibuja. */
+const OFFICIAL: Partial<Record<SceneSign, string>> = { B1: '/signs/B1.svg', B5: '/signs/B5.svg', B9: '/signs/B9.svg', B15: '/signs/B15.svg', B17: '/signs/B17.svg', C1: '/signs/C1.svg', C3: '/signs/C3.svg', F19: '/signs/F19.svg' }
+
 function signSvg(s: SceneSign): string {
+  const img = OFFICIAL[s]
+  if (img) return `<rect x="-13" y="-13" width="26" height="26" rx="3" fill="#fff" stroke="#999" stroke-width="0.5"/><image href="${img}" x="-11.5" y="-11.5" width="23" height="23" preserveAspectRatio="xMidYMid meet"/>`
   switch (s) {
     case 'B1':
       return `<polygon points="-10,-9 10,-9 0,9" fill="#fff" stroke="#d1232a" stroke-width="3"/>`
