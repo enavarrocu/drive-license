@@ -129,10 +129,41 @@ export function renderScene(sc: Scene): string {
     parts.push(`<circle cx="${C}" cy="${C}" r="78" fill="#6b6b6b"/><circle cx="${C}" cy="${C}" r="34" fill="#dfe9d3" stroke="#fff" stroke-width="2"/>`)
     // flechas del anillo
     parts.push(`<path d="M${C + 56} ${C} a56 56 0 0 1 -56 56" stroke="#fff" stroke-width="2" fill="none" stroke-dasharray="6 5"/><path d="M${C - 56} ${C} a56 56 0 0 1 56 -56" stroke="#fff" stroke-width="2" fill="none" stroke-dasharray="6 5"/>`)
-  } else if (sc.type === 'road' || sc.type === 'merge') {
+  } else if (sc.type === 'merge') {
+    // Autopista: dos carriles en el mismo sentido (hacia arriba) + carril de aceleración a la derecha que se funde en el carril derecho.
+    const L = C - ROAD / 2
+    const R = C + ROAD / 2
+    const AW = 46 // ancho del carril de aceleración
+    parts.push(`<rect x="${L}" y="0" width="${ROAD}" height="${W}" fill="#6b6b6b"/>`)
+    parts.push(`<path d="M${R} ${W} h${AW} v-110 L${R} 96 z" fill="#6b6b6b"/>`)
+    parts.push(`<line x1="${L + 3}" y1="0" x2="${L + 3}" y2="${W}" stroke="#fff" stroke-width="2"/>`)
+    parts.push(`<line x1="${C}" y1="0" x2="${C}" y2="${W}" stroke="#fff" stroke-width="2" stroke-dasharray="14 10"/>`)
+    parts.push(`<line x1="${R}" y1="${W}" x2="${R}" y2="96" stroke="#fff" stroke-width="2" stroke-dasharray="8 8"/>`)
+    parts.push(`<line x1="${R + 3}" y1="0" x2="${R + 3}" y2="96" stroke="#fff" stroke-width="2"/>`)
+    parts.push(`<line x1="${R + AW}" y1="${W}" x2="${R + AW}" y2="210" stroke="#fff" stroke-width="2"/>`)
+    // flechas de sentido en los carriles de la autopista
+    for (const x of [L + ROAD / 4, C + ROAD / 4]) parts.push(`<path d="M${x} 40 v-22 M${x - 5} 24 l5 -6 l5 6" stroke="#fff" stroke-width="2" fill="none" opacity="0.8"/>`)
+    for (const v of sc.vehicles) {
+      const color = v.you ? COLORS.you! : (COLORS[v.id] ?? '#444')
+      arrow(color)
+      const label = `<g><circle r="10" fill="#fff" stroke="${color}" stroke-width="2"/><text x="0" y="3" font-size="${v.you ? 7 : 10}" font-weight="700" text-anchor="middle" fill="${color}" font-family="Arial">${v.you ? 'moi' : v.id}</text></g>`
+      if (v.you) {
+        // yo, en el carril de aceleración, insertándome en el carril derecho
+        const x = R + AW / 2
+        const y = 250
+        parts.push(`<path d="M${x} ${y - 18} v-40 q0 -30 -24 -40 l-${x - (C + ROAD / 4) - 24} -10" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`)
+        parts.push(`<g transform="translate(${x} ${y})">${vehicleShape(v, color)}${label}</g>`)
+      } else {
+        // los demás, ya en la autopista (carril derecho), más o menos atrás según `back`
+        const x = C + ROAD / 4
+        const y = 212 + (v.back ?? 0) * 60
+        parts.push(`<path d="M${x} ${y - 18} v-70" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`)
+        parts.push(`<g transform="translate(${x} ${y})">${vehicleShape(v, color)}${label}</g>`)
+      }
+    }
+  } else if (sc.type === 'road') {
     parts.push(`<rect x="${C - ROAD / 2}" y="0" width="${ROAD}" height="${W}" fill="#6b6b6b"/>`)
     parts.push(`<line x1="${C}" y1="0" x2="${C}" y2="${W}" stroke="#fff" stroke-width="2" stroke-dasharray="14 10"/>`)
-    if (sc.type === 'merge') parts.push(`<path d="M${C + ROAD / 2} ${W} v-120 l40 -40 v-10 h30 v10 l-70 70z" fill="#6b6b6b"/>`)
   } else {
     const arms: Arm[] = sc.type === 'T' ? (['N', 'E', 'S', 'W'] as Arm[]).filter((a) => a !== (sc.missing ?? 'N')) : ['N', 'E', 'S', 'W']
     const wide = (axis: 'EW' | 'NS') => (sc.mainAxis === axis ? ROAD + 16 : ROAD)
@@ -172,7 +203,7 @@ export function renderScene(sc: Scene): string {
   }
 
   // vehículos
-  for (const v of sc.vehicles) {
+  for (const v of sc.type === 'merge' ? [] : sc.vehicles) {
     const color = v.you ? COLORS.you! : (COLORS[v.kind === 'tram' ? 'tram' : v.kind === 'bike' ? 'bike' : v.id] ?? '#444')
     arrow(color)
     const back = v.back ?? 0

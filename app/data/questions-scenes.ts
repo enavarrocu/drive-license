@@ -183,7 +183,7 @@ export const sceneQuestions: Question[] = [
     ['Je m\'insère sur l\'autoroute par la bande d\'accélération. ' + WHO_FR, 'Moi, je viens de droite.', 'Les véhicules déjà sur l\'autoroute.', 'Celui qui va le plus vite.'],
     ['Me incorporo a la autopista por el carril de aceleración. ' + WHO_ES, 'Yo, vengo por la derecha.', 'Los vehículos que ya están en la autopista.', 'El que va más rápido.'],
     1, 'Incorporarse es una maniobra: cedes el paso. Usa todo el carril de aceleración para alcanzar la velocidad del tráfico. Cedo y me inserto en un hueco libre.', true),
-    { type: 'merge', vehicles: [{ id: 'moi', arm: 'S', turn: 'none', you: true }], caption: 'bande d\'accélération à droite' }),
+    { type: 'merge', vehicles: [{ id: 'moi', arm: 'S', turn: 'none', you: true }, { id: 'A', arm: 'S', back: 1 }], caption: 'A roule déjà sur l\'autoroute' }),
   QS(Q('sc-32', 'priorite', 'prio-droite',
     ['La voiture A sort d\'un parking privé (à ma droite) pour s\'engager sur ma route. ' + WHO_FR, 'La voiture A.', 'Moi.', 'Aucun des deux.'],
     ['El coche A sale de un aparcamiento privado (a mi derecha) para incorporarse a mi vía. ' + WHO_ES, 'El coche A.', 'Yo.', 'Ninguno de los dos.'],
