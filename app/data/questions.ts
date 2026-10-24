@@ -521,7 +521,7 @@ const baseQuestions: Question[] = [
     ['Quand puis-je utiliser l\'avertisseur sonore (klaxon) en agglomération ?', 'Pour saluer un ami ou un voisin.', 'Uniquement pour éviter un accident.', 'Pour faire avancer la file au feu vert.'],
     ['¿Cuándo puedo usar la bocina en población?', 'Para saludar a un amigo o vecino.', 'Solo para evitar un accidente.', 'Para hacer avanzar la fila en verde.'],
     1, 'La bocina solo para evitar un accidente; de noche se prefiere la ráfaga de luces.'),
-  Q('per-10', 'permis', 'per-general',
+  Q('per-10', 'vehicule', 'veh-entretien',
     ['Il gèle et mon pare-brise est givré. Je dois :', 'Dégager un petit trou et partir.', 'Dégivrer complètement le pare-brise et les vitres avant de partir.', 'Rouler lentement en attendant que le chauffage agisse.'],
     ['Está helando y mi parabrisas está escarchado. Debo:', 'Despejar un pequeño agujero y salir.', 'Deshelar completamente el parabrisas y las ventanillas antes de salir.', 'Circular despacio esperando a que actúe la calefacción.'],
     1, 'Prohibido circular con visibilidad reducida por hielo, vaho o carga que tape.'),

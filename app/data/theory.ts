@@ -478,6 +478,20 @@ export const theory: TheoryEntry[] = [
     ],
   },
   {
+    id: 'veh-entretien',
+    theme: 'vehicule',
+    title: { fr: 'Témoins, niveaux, pneus, visibilité', es: 'Testigos, niveles, neumáticos, visibilidad' },
+    body:
+      'Los «témoins» (testigos) del cuadro siguen un código de colores: rojo = peligro, detenerse en cuanto sea seguro y apagar el motor («pression d\'huile», presión de aceite; «température», temperatura del líquido de refrigeración; freno); naranja = aviso, se puede seguir con prudencia pero hay que hacer revisar pronto («moteur», ABS, airbag); verde/azul = simple información (luces). Sin presión de aceite el motor se gripa en minutos; con el motor sobrecalentado nunca abrir el «radiateur» en caliente. El «niveau d\'huile» se comprueba con el motor frío o parado unos minutos, en llano, entre las marcas MIN y MAX de la «jauge» (varilla). Presión de los «pneus»: más o menos una vez al mes y antes de un viaje largo, en frío; «profondeur des sculptures» mínima 1,6 mm. Visibilidad: parabrisas limpio, sin «buée» (vaho) ni hielo, y luces y matrícula despejadas antes de arrancar; con el cristal empañado no se circula. «Éco-conduite»: cambiar pronto de marcha, anticipar, velocidad estable, no calentar el motor parado.',
+    keyTerms: [
+      { fr: 'témoin (lumineux)', es: 'testigo del cuadro' },
+      { fr: 'pression d\'huile', es: 'presión de aceite' },
+      { fr: 'liquide de refroidissement', es: 'líquido de refrigeración' },
+      { fr: 'jauge', es: 'varilla del aceite' },
+      { fr: 'buée', es: 'vaho' },
+    ],
+  },
+  {
     id: 'veh-masses',
     theme: 'vehicule',
     title: { fr: 'Permis B : masses et remorques', es: 'Permiso B: masas y remolques' },

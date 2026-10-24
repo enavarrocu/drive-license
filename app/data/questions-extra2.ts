@@ -139,7 +139,7 @@ export const extraQuestions2: Question[] = [
     ['Que signifie le panneau additionnel à trois barres rouges obliques sous un A41 ?', 'Trois voies ferrées.', 'Le passage à niveau est à 150 m.', 'Interdiction de dépasser sur 3 km.'],
     ['¿Qué significa la placa con tres barras rojas oblicuas bajo una señal A41?', 'Tres vías férreas.', 'El paso a nivel está a 150 m.', 'Prohibido adelantar durante 3 km.'],
     1, 'Las «balises» cuentan atrás: 3 barras ≈ 150 m, 2 ≈ 100 m, 1 ≈ 50 m. Siguen los paneles de 2 y 1 barras.'), image: signWithPanel('A41', panels.bars3) },
-  Q('y-man-06', 'manoeuvres', 'man-passage-niveau',
+  Q('y-man-06', 'autoroute', 'aut-regles',
     ['Je m\'engage dans un tunnel long. Que dois-je faire avec mon autoradio ?', 'L\'éteindre complètement.', 'Le régler sur la fréquence indiquée (F93).', 'Le laisser tel quel, sans rien changer.'],
     ['Entro en un túnel largo. ¿Qué debo hacer con la radio?', 'Apagarla por completo.', 'Sintonizar la frecuencia indicada (F93).', 'Dejarla como está, sin cambiar nada.'],
     1, 'En caso de incidente, las consignas se emiten por esa frecuencia. Para recibir las consignas de tráfico.'),
