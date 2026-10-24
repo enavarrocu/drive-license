@@ -30,7 +30,7 @@ const tall = (i = '') => svg(S_.tallBlue(i))
 const sub = (txt: string) => `<rect x="14" y="84" width="72" height="13" fill="${WHT}" stroke="#333" stroke-width="1.5"/>${T(txt, 94, 9, BLK)}`
 
 function S(code: string, category: SignCategory, fr: string, es: string, meaning: string, image: string): SignWithSvg {
-  return { code, category, name: { fr, es }, meaning, svg: image, img: signImages.has(code) ? `/signs/${code}.webp` : undefined }
+  return { code, category, name: { fr, es }, meaning, svg: image, img: signImages.get(code) }
 }
 
 export const signs: SignWithSvg[] = [

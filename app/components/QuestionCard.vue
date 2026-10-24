@@ -5,6 +5,7 @@ import { themeById } from '../data/themes'
 import { renderScene } from '../lib/scene'
 import { splitSignRefs } from '../lib/signRefs'
 import { signByCode } from '../data/signs'
+import { signImages } from '../data/signImages'
 
 const props = defineProps<{
   question: Question
@@ -29,8 +30,19 @@ const sceneSvg = computed(() => (props.question.scene ? renderScene(props.questi
 /** Señales citadas en el enunciado: se muestran como imagen antes de la pregunta, como en el examen. */
 const questionSigns = computed(() => {
   const codes = new Set<string>()
-  for (const p of splitSignRefs(props.question.fr.q)) if (p.type === 'sign') codes.add(p.code)
-  return [...codes].slice(0, 4).map((c) => signByCode[c]!).filter(Boolean)
+  const q = props.question.fr.q
+  for (const p of splitSignRefs(q)) if (p.type === 'sign') codes.add(p.code)
+  return [...codes]
+    .slice(0, 4)
+    .map((c) => {
+      const s = signByCode[c]
+      if (!s) return undefined
+      // « C43 « 70 » » / « C43 70 » : variante con esa cifra si existe la imagen oficial (C43-70.svg).
+      const m = new RegExp(`\\b${c}\\s*[«(]?\\s*(\\d{2,3})\\s*[»)]?`).exec(q)
+      const variant = m && signImages.get(`${c}-${m[1]}`)
+      return variant ? { ...s, img: variant } : s
+    })
+    .filter((s): s is NonNullable<typeof s> => !!s)
 })
 const { open } = useSignPopup()
 
