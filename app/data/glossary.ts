@@ -86,6 +86,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'le signal de danger / d\'interdiction / d\'obligation / d\'indication', es: 'señal de peligro / prohibición / obligación / indicación', theme: 'signaux' },
   { fr: 'les marques au sol / le marquage', es: 'las marcas viales', theme: 'signaux' },
   { fr: 'la zone d\'évitement', es: 'la zona excluida (cebreado)', theme: 'signaux' },
+  { fr: 'les chevrons (de distance)', es: 'los chevrones: marcas blancas en V en el carril, en autopista', note: 'Mantén al menos dos chevrones con el vehículo de delante.', theme: 'signaux' },
   { fr: 'le damier', es: 'el ajedrezado (zona reservada)', theme: 'signaux' },
   { fr: 'les flèches de sélection', es: 'las flechas de selección de carril', theme: 'signaux' },
   { fr: 'le passage pour piétons', es: 'el paso de peatones', theme: 'usagers-faibles' },

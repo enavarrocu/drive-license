@@ -14,6 +14,9 @@ const me = (arm: SceneVehicle['arm'], turn: SceneVehicle['turn'] = 'straight', e
 const v = (id: string, arm: SceneVehicle['arm'], turn: SceneVehicle['turn'] = 'straight', extra: Partial<SceneVehicle> = {}): SceneVehicle => ({ id, arm, turn, ...extra })
 const cross = (vehicles: SceneVehicle[], extra: Partial<Scene> = {}): Scene => ({ type: 'cross', vehicles, ...extra })
 
+/** Chevrons de distance sur autoroute : carretera vista desde arriba, chevrones blancos y dos coches. */
+const CHEVRONS_IMG = `<svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" role="img"><rect width="300" height="120" fill="#6b6b6b"/><line x1="0" y1="4" x2="300" y2="4" stroke="#fff" stroke-width="3"/><line x1="0" y1="116" x2="300" y2="116" stroke="#fff" stroke-width="3"/><line x1="0" y1="60" x2="300" y2="60" stroke="#fff" stroke-width="3" stroke-dasharray="20 14"/>${[40, 115, 190, 265].map((x) => `<path d="M${x - 14} 70 L${x} 90 L${x - 14} 110 M${x - 14} 70 L${x - 22} 70 L${x - 8} 90 L${x - 22} 110 L${x - 14} 110" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/>`).join('')}<g transform="translate(58 90)"><rect x="-20" y="-11" width="40" height="22" rx="5" fill="#1d5bbf" stroke="#fff" stroke-width="2"/><text y="4" font-size="9" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">moi</text></g><g transform="translate(230 90)"><rect x="-20" y="-11" width="40" height="22" rx="5" fill="#d1232a" stroke="#fff" stroke-width="2"/><text y="4" font-size="10" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">A</text></g><path d="M265 30 h20 l-6-6 m6 6 l-6 6" stroke="#fff" stroke-width="3" fill="none"/></svg>`
+
 export const extraQuestions2: Question[] = [
   /* ============ ÉCLAIRAGE (+12) ============ */
   Q('y-ecl-01', 'eclairage', 'ecl-feux',
@@ -301,10 +304,10 @@ export const extraQuestions2: Question[] = [
     ['Un feu pour piétons passe au rouge alors qu\'un piéton est déjà au milieu de la chaussée. Il doit :', 'Revenir en arrière.', 'Terminer sa traversée.', 'S\'arrêter sur place.'],
     ['Un semáforo de peatones se pone en rojo cuando un peatón ya está en medio de la calzada. Debe:', 'Volver atrás.', 'Terminar de cruzar.', 'Detenerse en el sitio.'],
     1, 'Quien ya está cruzando termina; el conductor con verde cede. Sin entretenerse; los conductores lo dejan terminar.'),
-  Q('y-sig-06', 'signaux', 'sig-marquages',
+  { ...Q('y-sig-06', 'signaux', 'sig-marquages',
     ['Des chevrons blancs peints sur la bande de droite d\'une autoroute servent à :', 'Indiquer une bande bus.', 'Mesurer la distance de sécurité.', 'Interdire le stationnement.'],
     ['Unos chevrones blancos pintados en el carril derecho de una autopista sirven para:', 'Indicar un carril bus.', 'Medir la distancia de seguridad.', 'Prohibir el estacionamiento.'],
-    1, 'Mantén al menos dos chevrones con el vehículo precedente. Dos chevrones = distancia mínima.'),
+    1, 'Los «chevrons» son marcas blancas en forma de V pintadas en el carril, en algunos tramos de autopista, cada ~35–40 m. Sirven de referencia para la distancia de seguridad: mantén al menos dos chevrones (dos «V») entre tu coche y el de delante. Dos chevrones = distancia mínima.'), image: CHEVRONS_IMG },
 
   /* ============ PRIORITÉ (+6, escenas nuevas) ============ */
   QS(Q('y-pri-01', 'priorite', 'prio-droite',

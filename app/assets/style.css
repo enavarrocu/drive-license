@@ -161,7 +161,6 @@ input.search { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px
 
 .result-big { font-size: 2.4rem; font-weight: 900; }
 .list { margin: 0; padding-left: 18px; }
-.review-item { border-top: 1px solid var(--line); padding: 10px 0; }
 
 footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18px; }
 
@@ -225,6 +224,9 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 
 /* Corrección del examen */
 .review-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
-.review-item { border-left: 4px solid var(--line); }
+.review-item { border-left: 4px solid var(--line); padding-left: 16px; }
 .review-item.review-ok { border-left-color: var(--ok); }
 .review-item.review-ko { border-left-color: var(--ko); }
+
+.question-image { display: flex; justify-content: center; margin: 6px 0 10px; }
+.question-image svg { height: 150px; width: auto; max-width: 100%; display: block; border-radius: 12px; }
