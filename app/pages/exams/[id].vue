@@ -16,7 +16,7 @@ function fmtDate(iso: string) {
     <div v-if="error" class="card"><p class="muted">{{ lang === 'fr' ? 'Examen introuvable.' : 'Examen no encontrado.' }}</p></div>
     <template v-else-if="exam">
       <p class="muted small">{{ fmtDate(exam.date) }}</p>
-      <ExamResultCard :exam="exam" :lang="lang" />
+      <ExamResultCard :exam="exam" :lang="lang" review="all" />
     </template>
   </div>
 </template>

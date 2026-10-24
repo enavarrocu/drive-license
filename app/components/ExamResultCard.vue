@@ -3,8 +3,21 @@ import type { Lang } from '../types'
 import type { ExamSummary } from '../composables/useStore'
 import { questionById } from '../data/questions'
 
-const props = defineProps<{ exam: ExamSummary; lang: Lang; showReview?: boolean }>()
-const wrong = computed(() => (props.exam.answers ?? []).filter((a) => !a.correct))
+const props = defineProps<{
+  exam: ExamSummary
+  lang: Lang
+  /** 'none' = seulement le score ; 'wrong' = les erreurs ; 'all' = les 50 questions (défaut). */
+  review?: 'none' | 'wrong' | 'all'
+}>()
+
+const answers = computed(() => props.exam.answers ?? [])
+const wrong = computed(() => answers.value.filter((a) => !a.correct))
+const onlyWrong = ref(props.review === 'wrong')
+const shown = computed(() => (onlyWrong.value ? wrong.value : answers.value))
+/** Numéro de la question dans l'examen (1..50), même en mode « erreurs ». */
+function num(a: { questionId: string }) {
+  return answers.value.findIndex((x) => x.questionId === a.questionId) + 1
+}
 </script>
 
 <template>
@@ -22,14 +35,33 @@ const wrong = computed(() => (props.exam.answers ?? []).filter((a) => !a.correct
         <span v-if="exam.answerSeconds !== 15"> · {{ exam.answerSeconds }} s</span>
       </p>
     </div>
-    <div v-if="showReview !== false && wrong.length" class="card">
-      <h2>{{ lang === 'fr' ? 'À revoir' : 'Para repasar' }}</h2>
-      <template v-for="a in wrong" :key="a.questionId">
-        <div v-if="questionById[a.questionId]" class="review-item">
-          <QuestionCard :question="questionById[a.questionId]!" :lang="lang" :show-alt="true" :chosen="a.chosen" :revealed="true" />
-          <TheoryPanel :theory-id="questionById[a.questionId]!.theoryId" />
+
+    <template v-if="review !== 'none' && answers.length">
+      <div class="card review-bar">
+        <h2 style="margin: 0">{{ lang === 'fr' ? 'Correction' : 'Corrección' }}</h2>
+        <div class="row">
+          <button type="button" class="btn" :class="{ primary: !onlyWrong }" @click="onlyWrong = false">
+            {{ lang === 'fr' ? 'Toutes' : 'Todas' }} ({{ answers.length }})
+          </button>
+          <button type="button" class="btn" :class="{ primary: onlyWrong }" :disabled="!wrong.length" @click="onlyWrong = true">
+            {{ lang === 'fr' ? 'Erreurs' : 'Errores' }} ({{ wrong.length }})
+          </button>
+        </div>
+      </div>
+      <p v-if="!shown.length" class="muted">{{ lang === 'fr' ? 'Aucune erreur.' : 'Ningún error.' }}</p>
+      <template v-for="a in shown" :key="a.questionId">
+        <div v-if="questionById[a.questionId]" class="card review-item" :class="a.correct ? 'review-ok' : 'review-ko'">
+          <QuestionCard
+            :question="questionById[a.questionId]!"
+            :lang="lang"
+            :show-alt="true"
+            :chosen="a.chosen"
+            :revealed="true"
+            :label="`${num(a)} / ${exam.total}`"
+          />
+          <TheoryPanel v-if="!a.correct" :theory-id="questionById[a.questionId]!.theoryId" />
         </div>
       </template>
-    </div>
+    </template>
   </div>
 </template>

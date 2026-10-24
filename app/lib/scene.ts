@@ -97,7 +97,7 @@ function signSvg(s: SceneSign): string {
     case 'B15':
       return `<polygon points="0,-11 11,9 -11,9" fill="#fff" stroke="#d1232a" stroke-width="2.5"/><rect x="-1.5" y="-4" width="3" height="11" fill="#111"/><rect x="-5" y="2" width="10" height="2" fill="#888"/>`
     case 'B17':
-      return `<polygon points="0,-11 11,9 -11,9" fill="#fff" stroke="#d1232a" stroke-width="2.5"/><path d="M0 -4 v11 M-5 2 h10" stroke="#111" stroke-width="2"/>`
+      return `<polygon points="0,-11 11,9 -11,9" fill="#fff" stroke="#d1232a" stroke-width="2.5"/><path d="M-4.5 -1.5 L4.5 7.5 M4.5 -1.5 L-4.5 7.5" stroke="#111" stroke-width="2.6"/>`
     case 'C1':
       return `<circle r="10" fill="#d1232a"/><rect x="-6" y="-2" width="12" height="4" fill="#fff"/>`
     case 'C3':

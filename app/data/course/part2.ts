@@ -176,8 +176,8 @@ Detalles que caen en el examen:
         body: `- **B1** (triángulo invertido): cede el paso. Marcas en el suelo: triángulos blancos.
 - **B5** (STOP): detente del todo en la línea y cede. Marca: línea ancha continua.
 - **B9** (rombo amarillo): vía prioritaria hasta **B11**. En los cruces laterales hay B1 o B5.
-- **B15** (flecha gruesa): prioridad en el próximo cruce solamente. **B17** (cruz): prioridad de la derecha en el próximo cruce (se pone para avisar tras una serie de cruces prioritarios).
-- **B19** (flecha roja grande): cedes en el paso estrecho. **B21** (azul, flecha blanca grande): tienes prioridad.
+- **B15** (flecha gruesa): prioridad en el próximo cruce solamente. **B17** (cruz negra en X): prioridad de la derecha en el próximo cruce (se pone para avisar tras una serie de cruces prioritarios).
+- **B19** (borde rojo, flecha negra abajo y roja arriba): cedes en el paso estrecho. **B21** (azul, flecha roja abajo y blanca arriba): tienes prioridad. La flecha de tu sentido (hacia arriba) te dice si cedes (roja) o pasas (blanca).
 - **B22 / B23**: solo para ciclistas (girar a la derecha / recto en rojo).
 - Combinaciones: un B1 con **placa de esquema** (líneas gruesas/finas) muestra qué vías son prioritarias en un cruce complejo. Una señal de peligro «carrefour» (A) no da prioridad: anuncia un cruce donde se aplica la derecha.
 

@@ -178,7 +178,7 @@ onBeforeUnmount(() => {
     <div v-else-if="phase === 'result'">
       <div v-if="!result" class="card"><p class="muted">{{ lang === 'fr' ? 'Enregistrement…' : 'Guardando…' }}</p></div>
       <template v-else>
-        <ExamResultCard :exam="result" :lang="lang" />
+        <ExamResultCard :exam="result" :lang="lang" review="wrong" />
         <div class="card">
           <div class="row">
             <button class="btn primary" type="button" @click="phase = 'setup'">{{ lang === 'fr' ? 'Nouvel examen' : 'Nuevo examen' }}</button>

@@ -38,7 +38,7 @@ export const theory: TheoryEntry[] = [
     theme: 'priorite',
     title: { fr: 'Signaux de priorité B1, B5, B9, B15, B17', es: 'Señales de prioridad B1, B5, B9, B15, B17' },
     body:
-      '«B1» (triángulo invertido): «céder le passage», ceder el paso sin obligación de parar. «B5» (octógono STOP): «arrêt obligatoire», parar completamente en la línea (o antes del cruce si no la hay) y ceder el paso. «B9» (rombo amarillo): «voie prioritaire», circulas por una vía con prioridad hasta el «B11» (fin de vía prioritaria). «B15» (triángulo con flecha gruesa): tienes prioridad únicamente en el próximo cruce. «B17» (triángulo con cruz): en el próximo cruce se aplica la «priorité de droite». Truco: B15 y B17 se colocan poco antes del cruce y solo valen para ese cruce.',
+      '«B1» (triángulo invertido): «céder le passage», ceder el paso sin obligación de parar. «B5» (octógono STOP): «arrêt obligatoire», parar completamente en la línea (o antes del cruce si no la hay) y ceder el paso. «B9» (rombo amarillo): «voie prioritaire», circulas por una vía con prioridad hasta el «B11» (fin de vía prioritaria). «B15» (triángulo con flecha gruesa): tienes prioridad únicamente en el próximo cruce. «B17» (triángulo con cruz negra en X): en el próximo cruce se aplica la «priorité de droite». Truco: B15 y B17 se colocan poco antes del cruce y solo valen para ese cruce.',
     keyTerms: [
       { fr: 'arrêt obligatoire', es: 'parada obligatoria (STOP)' },
       { fr: 'voie prioritaire', es: 'vía con prioridad' },
@@ -163,7 +163,7 @@ export const theory: TheoryEntry[] = [
     theme: 'depassement',
     title: { fr: 'Croisement', es: 'Cruce con vehículos de frente' },
     body:
-      'Al «croiser» (cruzarse con un vehículo que viene en sentido contrario) hay que mantenerse lo más a la derecha posible y, si es necesario, reducir la velocidad o pararse. Cuando la vía es estrecha y hay un obstáculo en tu lado, TÚ debes ceder («c\'est à vous de céder»). En una cuesta estrecha, cede el que baja («celui qui descend») frente al que sube, salvo que el que baja esté más cerca de un apartadero. Con señal «B19» (flecha roja gruesa) tú cedes; con «B21» (flecha blanca) tienes prioridad en el paso estrecho.',
+      'Al «croiser» (cruzarse con un vehículo que viene en sentido contrario) hay que mantenerse lo más a la derecha posible y, si es necesario, reducir la velocidad o pararse. Cuando la vía es estrecha y hay un obstáculo en tu lado, TÚ debes ceder («c\'est à vous de céder»). En una cuesta estrecha, cede el que baja («celui qui descend») frente al que sube, salvo que el que baja esté más cerca de un apartadero. Con señal «B19» (disco con borde rojo: flecha negra hacia abajo y flecha roja hacia arriba, la roja eres tú) tú cedes; con «B21» (rectángulo azul: flecha roja hacia abajo y blanca hacia arriba) tienes prioridad en el paso estrecho.',
     keyTerms: [
       { fr: 'croiser / croisement', es: 'cruzarse con un vehículo de frente' },
       { fr: 'obstacle', es: 'obstáculo' },
