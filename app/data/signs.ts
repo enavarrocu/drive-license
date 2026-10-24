@@ -236,7 +236,7 @@ function panel(inner: string): string {
 export function signWithPanel(code: string, panelInner: string): string {
   const sign = signByCode[code]!
   const s = sign.img
-    ? `<image href="${sign.img}" x="0" y="0" width="100" height="100" preserveAspectRatio="xMidYMid meet"/>`
+    ? `<rect x="0" y="0" width="100" height="100" rx="8" fill="${WHT}"/><image href="${sign.img}" x="4" y="4" width="92" height="92" preserveAspectRatio="xMidYMid meet"/>`
     : sign.svg.replace('<svg viewBox=', '<svg x="0" y="0" width="100" height="100" viewBox=')
   return `<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg" role="img">${s}${panel(panelInner)}</svg>`
 }

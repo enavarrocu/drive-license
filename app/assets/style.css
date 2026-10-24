@@ -239,3 +239,6 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
   .q-layout.has-visual .question-image { justify-content: flex-start; margin: 0; }
   .q-layout.has-visual .q-body .q { margin-top: 0; }
 }
+
+/* Las imágenes oficiales (SVG del SPW) no pintan el fondo blanco de la señal: se muestran sobre una tarjeta blanca. */
+img.sign-img { background: #fff; border-radius: 10px; padding: 4px; box-sizing: border-box; }
