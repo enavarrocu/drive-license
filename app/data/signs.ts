@@ -20,6 +20,7 @@ const rWhite = (i = '') => svg(S_.rectWhite(i))
 const rEnd = (i = '') => svg(S_.rectEnd(i))
 const rBlueEnd = (i = '') => svg(S_.rectBlueEnd(i))
 const sq = (i = '') => svg(S_.squareBlue(i))
+const tall = (i = '') => svg(S_.tallBlue(i))
 
 /** Placa adicional debajo (texto pequeño) */
 const sub = (txt: string) => `<rect x="14" y="84" width="72" height="13" fill="${WHT}" stroke="#333" stroke-width="1.5"/>${T(txt, 94, 9, BLK)}`
@@ -129,9 +130,9 @@ export const signs: SignWithSvg[] = [
   S('E3', 'stationnement', 'Arrêt et stationnement interdits', 'Parada y estacionamiento prohibidos', 'Cruz: ni parar ni estacionar.', cPark(`<path d="M22 22 L78 78 M78 22 L22 78" stroke="${RED}" stroke-width="8"/>`)),
   S('E5', 'stationnement', 'Stationnement interdit du 1er au 15', 'Prohibido estacionar del 1 al 15', 'Alterno quincenal: de este lado está prohibido del 1 al 15 (es el lado de los números pares).', cPark(`<line x1="22" y1="22" x2="78" y2="78" stroke="${RED}" stroke-width="8"/>${T('1-15', 42, 16, WHT)}`)),
   S('E7', 'stationnement', 'Stationnement interdit du 16 à la fin du mois', 'Prohibido estacionar del 16 al final', 'Alterno quincenal: de este lado está prohibido del 16 al final de mes (lado de los impares).', cPark(`<line x1="22" y1="22" x2="78" y2="78" stroke="${RED}" stroke-width="8"/>${T('16-31', 42, 16, WHT)}`)),
-  S('E9a', 'stationnement', 'Stationnement autorisé', 'Estacionamiento autorizado', 'P blanca sobre azul: se puede estacionar; las placas indican cómo y para quién (disco, PMR, horario).', sq(P.parkingP())),
-  S('E9a-disque', 'stationnement', 'Stationnement avec disque (zone bleue)', 'Estacionamiento con disco (zona azul)', 'E9a con el disco: obligatorio colocar el disco horario; 2 h máx. salvo indicación, laborables 9–18 h.', sq(P.parkingP() + `<circle cx="78" cy="78" r="12" fill="${WHT}"/><path d="M78 70 v8 h6" stroke="${BLUE}" stroke-width="3" fill="none"/>`)),
-  S('E9a-pmr', 'stationnement', 'Stationnement réservé aux PMR', 'Reservado a personas con movilidad reducida', 'Solo con la tarjeta azul europea visible; para los demás, multa y grúa.', sq(P.parkingP() + `<g transform="translate(60,58) scale(0.35)"><circle cx="50" cy="26" r="9" fill="${WHT}"/><path d="M40 40 h20 l6 24 h16 v8 h-22 l-4-16 h-12 a16 16 0 1 0 14 24 l6 6 a24 24 0 1 1 -24-46z" fill="${WHT}"/></g>`)),
+  S('E9a', 'stationnement', 'Stationnement autorisé', 'Estacionamiento autorizado', 'P blanca sobre azul: se puede estacionar; las placas indican cómo y para quién (disco, PMR, horario).', tall(P.parkingPTall())),
+  S('E9a-disque', 'stationnement', 'Stationnement avec disque (zone bleue)', 'Estacionamiento con disco (zona azul)', 'E9a con el disco: obligatorio colocar el disco horario; 2 h máx. salvo indicación, laborables 9–18 h.', tall(P.parkingPTall() + g(P.parkingDisc(), 'translate(47 62)'))),
+  S('E9a-pmr', 'stationnement', 'Stationnement réservé aux PMR', 'Reservado a personas con movilidad reducida', 'Solo con la tarjeta azul europea visible; para los demás, multa y grúa.', tall(P.parkingPTall() + g(P.wheelchair(), 'translate(42 58) scale(0.4)'))),
   S('E9b', 'stationnement', 'Stationnement réservé aux voitures', 'Reservado a coches', 'Solo motos, coches, coches mixtos y minibuses.', sq(T('P', 56, 40, WHT) + g(P.car(WHT), 'translate(0,24) scale(0.5) translate(50,40)'))),
   S('E9c', 'stationnement', 'Stationnement réservé aux camions', 'Reservado a camiones y furgonetas', 'Solo vehículos de mercancías.', sq(T('P', 56, 40, WHT) + g(P.truck(WHT), 'translate(0,24) scale(0.5) translate(50,40)'))),
   S('E9d', 'stationnement', 'Stationnement réservé aux autocars', 'Reservado a autocares', 'Solo autobuses y autocares.', sq(T('P', 56, 40, WHT) + g(P.bus(WHT), 'translate(0,24) scale(0.5) translate(50,40)'))),
@@ -235,8 +236,8 @@ export function signWithPanel(code: string, panelInner: string): string {
 
 /** Placas adicionales usadas en las preguntas. */
 export const panels = {
-  /** Disco de estacionamiento + duración. */
-  disc30: `<circle cx="20" cy="20" r="12" fill="${BLUE}"/><circle cx="20" cy="20" r="8" fill="${WHT}"/><path d="M20 20 v-5 M20 20 l4 2" stroke="${BLK}" stroke-width="1.5"/><text x="56" y="25" font-size="13" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">30 min</text>`,
+  /** Duración máxima. */
+  min30: `<text x="40" y="26" font-size="15" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">30 min</text>`,
   /** Longitud del tramo: distancia entre dos flechas verticales. */
   length2km: `<path d="M14 6 v28 M10 10 l4-4 4 4 M10 30 l4 4 4-4" stroke="${BLK}" stroke-width="2.5" fill="none"/><text x="48" y="25" font-size="13" font-weight="700" text-anchor="middle" fill="${BLK}" font-family="Arial">2 km</text>`,
   /** Tres barras rojas oblicuas (paso a nivel a ~150 m). */

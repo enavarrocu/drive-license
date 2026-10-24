@@ -24,6 +24,8 @@ export const shapes = {
   rectBlue: (i: string) => `<rect x="6" y="6" width="88" height="88" rx="6" fill="${BLUE}" stroke="${WHT}" stroke-width="3"/>${i}`,
   rectWhite: (i: string) => `<rect x="6" y="6" width="88" height="88" rx="6" fill="${WHT}" stroke="#333" stroke-width="3"/>${i}`,
   rectGreen: (i: string) => `<rect x="6" y="6" width="88" height="88" rx="6" fill="#1f7a3a" stroke="${WHT}" stroke-width="3"/>${i}`,
+  /** Señal E9 real: rectángulo azul vertical, P grande arriba a la izquierda, pictograma abajo a la derecha. */
+  tallBlue: (i: string) => `<rect x="24" y="2" width="52" height="96" rx="6" fill="${BLUE}"/>${i}`,
   squareBlue: (i: string) => `<rect x="6" y="6" width="88" height="88" fill="${BLUE}" stroke="${WHT}" stroke-width="3"/>${i}`,
   /** Fin de prohibición: círculo gris con barras */
   circleEnd: (i: string) => `<circle cx="50" cy="50" r="45" fill="${WHT}" stroke="${GRY}" stroke-width="5"/>${i}<line x1="22" y1="78" x2="78" y2="22" stroke="${GRY}" stroke-width="6"/><line x1="30" y1="86" x2="86" y2="30" stroke="${GRY}" stroke-width="3"/><line x1="14" y1="70" x2="70" y2="14" stroke="${GRY}" stroke-width="3"/>`,
@@ -96,6 +98,12 @@ export const P = {
   arrowUTurn: (c = BLK) => `<path d="M36 78 v-26 a14 14 0 0 1 28 0 v10 M64 62 l-8-8 M64 62 l8-8" stroke="${c}" stroke-width="7" fill="none"/>`,
   roundabout: (c = WHT) => `<path d="M45.7 74.6 A25 25 0 0 0 72.7 60.6" stroke="${c}" stroke-width="7" fill="none"/><path d="M77.3 50.6 L79.9 63.9 L65.4 57.2z" fill="${c}"/><path d="M30.8 33.9 A25 25 0 0 0 29.5 64.3" stroke="${c}" stroke-width="7" fill="none"/><path d="M35.8 73.4 L23.0 68.9 L36.1 59.8z" fill="${c}"/><path d="M73.5 41.4 A25 25 0 0 0 47.8 25.1" stroke="${c}" stroke-width="7" fill="none"/><path d="M36.9 26.1 L47.1 17.1 L48.5 33.1z" fill="${c}"/>`,
   parkingP: (c = WHT) => T('P', 70, 54, c),
+  /** P de las E9 verticales (arriba a la izquierda). */
+  parkingPTall: (c = WHT) => T('P', 64, 64, c, 44),
+  /** Disco de estacionamiento: tarjeta blanca con muesca, sector y «P». */
+  parkingDisc: (c = WHT) => `<path d="M0 4 q0-4 4-4 h6 l3 3 h2 l3-3 h6 q4 0 4 4 v24 q0 4-4 4 h-20 q-4 0-4-4z" fill="${c}"/><path d="M8 8 h12 l-6 9z" fill="${BLUE}"/><rect x="9" y="19" width="10" height="9" fill="none" stroke="${BLUE}" stroke-width="1.5"/><text x="14" y="26.5" font-size="7" font-weight="700" text-anchor="middle" fill="${BLUE}" font-family="Arial">P</text>`,
+  /** Silla de ruedas (PMR). */
+  wheelchair: (c = WHT) => `<circle cx="50" cy="26" r="9" fill="${c}"/><path d="M40 40 h20 l6 24 h16 v8 h-22 l-4-16 h-12 a16 16 0 1 0 14 24 l6 6 a24 24 0 1 1 -24-46z" fill="${c}"/>`,
   house: (c = WHT) => `<path d="M24 52 l26-20 26 20 v26 h-52z" fill="${c}"/>`,
   tunnel: (c = WHT) => `<path d="M24 80 v-26 a26 26 0 0 1 52 0 v26z" fill="${c}"/><path d="M34 80 v-20 a16 16 0 0 1 32 0 v20z" fill="${BLUE}"/>`,
   crossSaintAndre: () => `<path d="M15 25 L85 75 M85 25 L15 75" stroke="${RED}" stroke-width="10"/>`,
