@@ -1,7 +1,7 @@
 import type { Question } from '../types'
 import type { Scene, SceneVehicle } from '../lib/scene'
 import { Q, QS } from './q'
-import { panels, signWithPanel } from './signs'
+import { panels, signWithPanel, signWithValue } from './signs'
 
 /**
  * Tercer bloque: refuerza los temas con menos cobertura (alumbrado, usuarios
@@ -244,10 +244,10 @@ export const extraQuestions2: Question[] = [
     ['Sur une route à 2×2 bandes séparées par une berme centrale, hors agglomération, la vitesse maximale est de :', '90 km/h', '100 km/h', '120 km/h'],
     ['En una carretera de 2×2 carriles separados por una mediana, fuera de población, la velocidad máxima es:', '90 km/h', '100 km/h', '120 km/h'],
     2, 'Como en autopista (120), pero sin velocidad mínima y con cruces posibles; una señal puede bajarla.', true),
-  Q('y-vit-02', 'vitesse', 'vit-limites',
-    ['Je vois le signal C43 « 70 » puis je passe un carrefour sans nouveau signal. Quelle est la limite après le carrefour ?', 'La limite générale du lieu.', 'Toujours 70, jusqu\'au prochain signal.', '50, comme en agglomération.'],
-    ['Veo la señal C43 «70» y después paso un cruce sin nueva señal. ¿Cuál es el límite tras el cruce?', 'El límite general del lugar.', 'Sigue siendo 70, hasta la siguiente señal.', '50, como en población.'],
-    0, 'Salvo placa de distancia o «zone», una C43 vale hasta el próximo cruce. El C43 deja de aplicarse en el siguiente cruce.', true),
+  { ...Q('y-vit-02', 'vitesse', 'vit-limites',
+    ['Je vois ce signal, puis je passe un carrefour sans nouveau signal. Quelle est la limite après le carrefour ?', 'La limite générale du lieu.', 'Toujours 70, jusqu\'au prochain signal C43.', '50, comme en agglomération.'],
+    ['Veo esta señal y después paso un cruce sin nueva señal. ¿Cuál es el límite tras el cruce?', 'El límite general del lugar.', 'Sigue siendo 70, hasta la siguiente señal.', '50, como en población.'],
+    0, 'Salvo placa de distancia o «zone», una C43 vale hasta el próximo cruce. El C43 deja de aplicarse en el siguiente cruce.', true), image: signWithValue('C43', '70') },
   Q('y-vit-03', 'vitesse', 'vit-adaptee',
     ['Quel est le temps de réaction moyen d\'un conducteur attentif ?', '0,2 seconde', '3 secondes', '1 seconde'],
     ['¿Cuál es el tiempo de reacción medio de un conductor atento?', '0,2 segundos', '3 segundos', '1 segundo'],

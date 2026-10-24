@@ -1,6 +1,6 @@
 import type { Question } from '../types'
 import { Q } from './q'
-import { panels, signWithPanel } from './signs'
+import { panels, signWithPanel, signWithValue } from './signs'
 import { sceneQuestions } from './questions-scenes'
 import { extraQuestions } from './questions-extra'
 import { extraQuestions2 } from './questions-extra2'
@@ -113,14 +113,14 @@ const baseQuestions: Question[] = [
     ['À 50 km/h sur chaussée sèche, la distance d\'arrêt totale (réaction + freinage) est d\'environ :', '15 m', '40 m', '80 m'],
     ['A 50 km/h en calzada seca, la distancia de detención total (reacción + frenado) es aproximadamente:', '15 m', '40 m', '80 m'],
     1, '≈15 m de reacción (1 s) + ≈25 m de frenado = ≈40 m.'),
-  Q('vit-10', 'vitesse', 'vit-adaptee',
-    ['Il pleut fort et la visibilité est réduite, mais le signal indique 90 km/h. Je dois :', 'Rouler à 90 km/h, c\'est la limite autorisée.', 'Adapter ma vitesse, même en dessous de 90.', 'Allumer les feux de route pour mieux voir.'],
-    ['Llueve fuerte y la visibilidad es reducida, pero la señal indica 90 km/h. Debo:', 'Circular a 90 km/h, es el límite permitido.', 'Adaptar la velocidad, incluso por debajo de 90.', 'Encender las luces largas para ver mejor.'],
-    1, 'El límite es un máximo; la ley obliga a adaptar la velocidad a la visibilidad y al estado de la vía.', true),
-  Q('vit-11', 'vitesse', 'vit-limites',
-    ['Un panneau F4a « zone 30 » : jusqu\'où s\'applique la limitation ?', 'Jusqu\'au prochain carrefour.', 'Jusqu\'au signal de fin de zone F4b.', 'Sur 100 mètres.'],
-    ['Una señal F4a «zona 30»: ¿hasta dónde se aplica la limitación?', 'Hasta el próximo cruce.', 'Hasta la señal de fin de zona F4b.', 'Durante 100 metros.'],
-    1, 'Las señales de zona (zone 30, zone résidentielle, zone piétonne) valen en toda la zona hasta la señal de fin.'),
+  { ...Q('vit-10', 'vitesse', 'vit-adaptee',
+    ['Il pleut fort et la visibilité est réduite, mais ce signal est en place. Je dois :', 'Rouler à 90 km/h, c\'est la limite autorisée.', 'Adapter ma vitesse, même en dessous de 90.', 'Allumer les feux de route pour mieux voir.'],
+    ['Llueve fuerte y la visibilidad es reducida, pero está esta señal. Debo:', 'Circular a 90 km/h, es el límite permitido.', 'Adaptar la velocidad, incluso por debajo de 90.', 'Encender las luces largas para ver mejor.'],
+    1, 'El límite es un máximo; la ley obliga a adaptar la velocidad a la visibilidad y al estado de la vía.', true), image: signWithValue('C43', '90') },
+  { ...Q('vit-11', 'vitesse', 'vit-limites',
+    ['Je rencontre ce panneau : jusqu\'où s\'applique la limitation ?', 'Jusqu\'au prochain carrefour.', 'Jusqu\'au signal de fin de zone F4b.', 'Sur 100 mètres.'],
+    ['Encuentro esta señal: ¿hasta dónde se aplica la limitación?', 'Hasta el próximo cruce.', 'Hasta la señal de fin de zona F4b.', 'Durante 100 metros.'],
+    1, 'Las señales de zona (zone 30, zone résidentielle, zone piétonne) valen en toda la zona hasta la señal de fin.'), image: signWithValue('F4a', '30') },
   Q('vit-12', 'vitesse', 'vit-adaptee',
     ['Un camion de plus de 7,5 tonnes roule hors agglomération. Quelle distance doit-il laisser avec le véhicule qui le précède ?', 'Au moins 50 m.', 'Au moins 20 m.', 'Au moins 100 m.'],
     ['Un camión de más de 7,5 toneladas circula fuera de población. ¿Qué distancia debe dejar con el vehículo que le precede?', 'Al menos 50 m.', 'Al menos 20 m.', 'Al menos 100 m.'],

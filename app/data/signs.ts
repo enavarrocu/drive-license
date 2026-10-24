@@ -241,6 +241,37 @@ export function signWithPanel(code: string, panelInner: string): string {
   return `<svg viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg" role="img">${s}${panel(panelInner)}</svg>`
 }
 
+/**
+ * Señal con un valor concreto (velocidad, masa, longitud…) para mostrarla antes de una pregunta
+ * sin tener que citar la cifra en el enunciado, como en el examen real. Usa la imagen oficial
+ * si existe esa variante (C43-70, C45-90…), si no la dibuja.
+ */
+export function signWithValue(code: string, value: string): string {
+  const official = signImages.get(`${code}-${value}`)
+  if (official) return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img"><rect width="100" height="100" rx="8" fill="${WHT}"/><image href="${official}" x="1" y="1" width="98" height="98" preserveAspectRatio="xMidYMid meet"/></svg>`
+  const size = value.length <= 2 ? 40 : value.length <= 3 ? 32 : 24
+  switch (code) {
+    case 'C43':
+      return cRed(T(value, 50 + size * 0.36, size))
+    case 'C45':
+      return cEnd(T(value, 50 + size * 0.36, size, GRY))
+    case 'C21':
+      return cRed(T(`${value} t`, 60, 24))
+    case 'C25':
+      return cRed(`<rect x="26" y="46" width="48" height="12" fill="${BLK}"/>${T(`${value} m`, 74, 14)}`)
+    case 'C27':
+      return cRed(`<path d="M16 50 l8-6 v12z M84 50 l-8-6 v12z" fill="${BLK}"/>${T(`${value} m`, 56, 15)}`)
+    case 'C29':
+      return cRed(`<path d="M50 24 l-6 8 h12z M50 76 l-6-8 h12z" fill="${BLK}"/>${T(`${value} m`, 58, 16)}`)
+    case 'F4a':
+      return rWhite(`${T('ZONE', 24, 11, BLK, 50, 700)}<circle cx="50" cy="56" r="28" fill="${WHT}" stroke="${RED}" stroke-width="7"/>${T(value, 65, 24)}`)
+    case 'F4b':
+      return rEnd(`${T('ZONE', 24, 11, GRY, 50, 700)}<circle cx="50" cy="56" r="28" fill="${WHT}" stroke="${GRY}" stroke-width="5"/>${T(value, 65, 24, GRY)}`)
+    default:
+      return signByCode[code]?.svg ?? ''
+  }
+}
+
 /** Placas adicionales usadas en las preguntas. */
 export const panels = {
   /** Duración máxima. */
