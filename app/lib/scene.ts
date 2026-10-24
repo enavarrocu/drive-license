@@ -192,7 +192,8 @@ export function renderScene(sc: Scene): string {
 
   // sentido único: flecha blanca grande en el brazo
   for (const a of sc.oneWay ?? []) {
-    parts.push(`<g transform="translate(${C} ${C}) rotate(${rot(a)}) translate(0 -110)"><path d="M-10 10 h20 v-14 h8 l-18 -18 l-18 18 h8z" fill="#fff" opacity="0.9"/></g>`)
+    // Flecha blanca sobre el brazo en cuestión, apuntando hacia fuera del cruce: el tráfico solo sale por ahí, nadie puede entrar.
+    parts.push(`<g transform="translate(${C} ${C}) rotate(${rot(a)}) translate(0 112)"><path d="M-10 -12 h20 v14 h8 l-18 18 l-18 -18 h8z" fill="#fff" opacity="0.9"/></g>`)
   }
 
   // paso de peatones
