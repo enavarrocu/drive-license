@@ -76,8 +76,25 @@ Dockerfile · DEPLOYMENT.md · README.md
 - El banco es **original** (no copiar preguntas de Feu Vert, GOCA u otras apps).
 - El curso (`app/data/course/`) usa markdown ligero renderizado por `lib/md.ts`
   (párrafos, `###`, listas `- `, tablas `|`, `**negrita**`, términos FR entre « »).
-- Señales: SVG inline construidos con `signPictos.ts` (viewBox 100×100). Esquemáticas a
-  propósito; no intentes descargar imágenes oficiales (sin red para eso aquí).
+- **Señales: imágenes oficiales del SPW (Sécurothèque Wallonie)** en `public/signs/<código>.svg`
+  (168 señales + variantes `C43-70`, `C45-90`… + placas `M-distance`, `M-longueur`, `M-horaire`,
+  `panel-30min`), listadas en `app/data/signImages.ts` (generado). Se extrajeron de los PDF
+  «Combiné» (página en color, `pdftocairo -svg`, recorte por bbox ignorando el marco, `svgo`); los
+  PDF están en `~/Downloads/drive-license`. Los SVG **no pintan el blanco** de la señal, por eso
+  `img.sign-img` lleva fondo blanco. Los dibujos de `signPictos.ts` solo son respaldo
+  (`SignImage.vue` elige imagen oficial si existe) y sirven para `signWithValue(code, valor)`
+  cuando no hay variante oficial con esa cifra.
+- **Como en el examen real**: el enunciado no cita códigos («ce signal», «ce panneau»); la señal
+  se muestra encima con `signs: ['C43']` (o se deduce de los códigos del texto) o con `image`
+  (`signWithPanel`, `signWithValue`, SVG propio). En las opciones, los códigos se renderizan como
+  miniaturas (`SignText inline`). Las escenas pintan las señales oficiales en los brazos
+  (`signs: { E: 'B1' }`), con `oneWay`, `inRing` (vehículo ya en la rotonda), `type: 'merge'`.
+- **Opciones**: tres, de longitud parecida, sin justificación ni «:» solo en la correcta (la
+  explicación va en `why`); la respuesta correcta repartida ~1/3 entre A/B/C (hoy 113/113/113 → al
+  añadir, no pongas siempre la buena en el medio). Nada de preguntas «¿quién tiene la culpa?»: se
+  pregunta la regla.
+- No dupliques preguntas: antes de añadir, busca si ya existe en versión texto o escena (hubo 7
+  pares; se eliminaron las versiones texto).
 
 ## Reglas del código
 
@@ -118,9 +135,20 @@ Dockerfile · DEPLOYMENT.md · README.md
 4. Historia del proyecto: v0.1/v0.2 fueron una SPA Vite (`../permis-trainer`, estática, localStorage);
    v0.3 es esta migración a Nuxt + SQLite. No mezcles las dos.
 
+## Estado (24 oct 2026) y herramientas de diagnóstico
+
+- 332 preguntas (questions, -scenes, -extra, -extra2). Siguiente bloque: `questions-extra3.ts`,
+  ids `z-<tema>-NN`.
+- Examen: modo «Sans limite» (`answerSeconds = 0`, sin lectura ni cuenta atrás); el sorteo
+  (`sampleExam(..., seen)`) prioriza las preguntas menos vistas según `GET /api/exams/stats`.
+- Diagnóstico: cada pregunta muestra su id (`code.qid`) y cada examen su `#id`; en «Historial»
+  hay una tabla de frecuencia por pregunta. El usuario reporta problemas con esos ids.
+- Corrección completa del examen en `/exams/[id]` (`ExamResultCard review="all"`).
+- Teoría: entradas nuevas `veh-entretien`, `sta-zones`. Cada pregunta debe apuntar a la entrada
+  que realmente explica lo que pregunta (revisar al añadir).
+
 ## Pendientes conocidos / ideas
 
-- Seguir ampliando el banco (hoy ~340 preguntas en cuatro ficheros: questions, -scenes, -extra, -extra2;
-  el siguiente bloque va en `questions-extra3.ts` con ids `z-<tema>-NN`) y añadir escenas a más temas.
+- Seguir ampliando el banco y añadir escenas a más temas (ver «Estado»).
 - Exportar/importar progreso (JSON) y estadísticas por tema en el historial.
 - Descartado: panel de administración de preguntas (se editan en `app/data`).
