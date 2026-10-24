@@ -45,6 +45,7 @@ const questionSigns = computed(() => {
     .filter((s): s is NonNullable<typeof s> => !!s)
 })
 const { open } = useSignPopup()
+const hasVisual = computed(() => !!sceneSvg.value || !!props.question.image || questionSigns.value.length > 0)
 
 function classFor(i: number) {
   if (!props.revealed) return { chosen: props.chosen === i }
@@ -61,13 +62,17 @@ function classFor(i: number) {
       <span class="pill">{{ themeById[question.theme][lang] }}</span>
       <span v-if="question.grave" class="pill grave">{{ lang === 'fr' ? 'faute grave' : 'falta grave' }}</span>
     </div>
-    <div v-if="sceneSvg" class="scene-wrap" v-html="sceneSvg"></div>
-    <div v-if="question.image" class="question-image" v-html="question.image"></div>
-    <div v-else-if="questionSigns.length" class="question-signs">
-      <button v-for="s in questionSigns" :key="s.code" type="button" class="question-sign" :title="s.code" @click="open(s.code)">
-        <SignImage :sign="s" />
-      </button>
-    </div>
+    <div class="q-layout" :class="{ 'has-visual': hasVisual }">
+      <div v-if="hasVisual" class="q-visual">
+        <div v-if="sceneSvg" class="scene-wrap" v-html="sceneSvg"></div>
+        <div v-if="question.image" class="question-image" v-html="question.image"></div>
+        <div v-else-if="questionSigns.length" class="question-signs">
+          <button v-for="s in questionSigns" :key="s.code" type="button" class="question-sign" :title="s.code" @click="open(s.code)">
+            <SignImage :sign="s" />
+          </button>
+        </div>
+      </div>
+      <div class="q-body">
     <p class="q"><SignText :text="main.q" /></p>
     <p v-if="showAlt" class="q alt"><SignText :text="other.q" /></p>
     <ul class="options">
@@ -94,6 +99,8 @@ function classFor(i: number) {
       <b v-if="chosen !== question.answer">&nbsp;{{ lang === 'fr' ? 'Bonne réponse' : 'Respuesta correcta' }} : {{ letters[question.answer] }}.</b>
       {{ ' ' }}
       <SignText :text="question.why" />
+    </div>
+      </div>
     </div>
   </div>
 </template>
