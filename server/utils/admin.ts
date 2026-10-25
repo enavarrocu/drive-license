@@ -11,6 +11,6 @@ export function isAdmin(username: string): boolean {
 
 export async function requireAdmin(event: H3Event) {
   const session = await requireUserSession(event)
-  if (!isAdmin(session.user.username)) throw createError({ statusCode: 403, statusMessage: 'Réservé aux administrateurs' })
+  if (!isAdmin(session.user.username)) throw createError({ statusCode: 403, message: 'Réservé aux administrateurs' })
   return session
 }

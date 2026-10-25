@@ -50,6 +50,8 @@ En la pestaña **Environment Variables** del recurso:
 | `NUXT_DB_PATH` | `/data/permis.db` | ya viene en el Dockerfile; ponla también aquí para que quede explícita |
 | `NUXT_ALLOW_REGISTRATION` | `true` | pásala a `false` cuando hayas creado las cuentas |
 | `NUXT_ADMIN_USERS` | tu nombre de usuario | administradores, separados por comas: ven la pestaña «⚑ Avisos» (`/reports`) con los errores que avisan los usuarios |
+| `NUXT_BACKUP_DISABLED` | `false` (opcional) | `true` desactiva las copias automáticas de la base (sección 8) |
+| `NUXT_BACKUP_KEEP` | `14` (opcional) | número de copias diarias que se conservan en `/data/backups` |
 | `NODE_ENV` | `production` | ya viene en el Dockerfile |
 
 Márcalas como variables **de runtime** (no solo de build). `NUXT_SESSION_PASSWORD` no se
@@ -109,30 +111,109 @@ ls -la /data
 
 ## 8. Copias de seguridad
 
-El estado completo es el fichero `permis.db`. Dos formas:
+Todo el progreso de los usuarios está en un único fichero, `/data/permis.db`. La app hace
+copias automáticas; aun así, **guarda también copias fuera del servidor** (ver abajo).
 
-**Desde el contenedor (recomendada, coherente con la WAL):**
+### Copias automáticas
+
+- Al arrancar, si la última copia tiene más de 24 h (o no hay ninguna), y después cada vez que
+  se cumplen 24 h desde la anterior (se comprueba cada hora), el servidor copia la base con
+  `better-sqlite3 .backup()`, que es coherente aunque haya escrituras en curso (WAL).
+- Destino: `<directorio de la BD>/backups/permis-AAAA-MM-DD.db`, es decir
+  **`/data/backups/`** en Coolify (dentro del mismo volumen). Una copia por día (UTC): si se
+  fuerza otra el mismo día, sustituye a la de ese día.
+- Cada copia es un fichero SQLite autónomo (modo de diario clásico, sin `-wal`/`-shm`).
+- Tras cada copia se ejecuta `PRAGMA integrity_check` sobre ella (abierta en solo lectura).
+- Rotación: se conservan las **14** más recientes y se borran las anteriores.
+- Si una copia falla, se registra en el log y el servidor sigue funcionando.
+- En `pnpm dev` no se hacen copias (solo con el build de producción).
+
+| Variable | Por defecto | Efecto |
+|---|---|---|
+| `NUXT_BACKUP_DISABLED` | `false` | `true` desactiva las copias automáticas |
+| `NUXT_BACKUP_KEEP` | `14` | número de copias diarias que se conservan |
+
+Para administradores (`NUXT_ADMIN_USERS`), con la sesión iniciada:
+
+- `GET /api/admin/backups` → lista de copias (nombre, tamaño, fecha) y la configuración.
+- `POST /api/admin/backup` → fuerza una copia ahora (útil antes de un cambio delicado).
+
+Desde el navegador, con la sesión de administrador abierta, en la consola:
+`await (await fetch('/api/admin/backup', { method: 'POST' })).json()`.
+
+### Descargar una copia
+
+Desde el servidor (SSH), con el nombre del contenedor que muestra Coolify (`docker ps`):
 
 ```bash
-docker exec <contenedor> sh -c 'cd /app/.output/server && node -e "
-const D=require(\"better-sqlite3\");
-new D(\"/data/permis.db\").backup(\"/data/backup-\"+Date.now()+\".db\").then(()=>console.log(\"ok\"))"'
+docker exec <contenedor> ls -la /data/backups
+docker cp <contenedor>:/data/backups/permis-2026-10-25.db ./permis-2026-10-25.db
+# y desde tu máquina:
+scp servidor:permis-2026-10-25.db .
 ```
 
-La imagen no incluye el cliente `sqlite3`, pero `better-sqlite3` sí está (en
-`/app/.output/server/node_modules`) y su método `.backup()` hace una copia coherente con
-el contenedor en marcha. Después copia el fichero `backup-*.db` fuera del volumen
-(`docker cp <contenedor>:/data/backup-….db .`) y bórralo del volumen.
+### Copias fuera del servidor (recomendado)
 
-**Desde el host:** copiar `permis.db` **junto con** `permis.db-wal` y `permis.db-shm`, o
-parar el contenedor antes de copiar. Copiar solo `permis.db` con el contenedor en marcha
-puede dejar fuera las últimas escrituras.
+Las copias automáticas viven en el mismo volumen que la base: protegen de un error de la app
+o de un borrado accidental, **no** de perder el disco o el servidor. Añade al menos una de:
 
-Restaurar: parar el contenedor, sustituir los tres ficheros en `/data` por la copia
-(borrando `-wal` y `-shm` si la copia es un `.backup`), arrancar.
+- **Backup del volumen en Coolify** (si tu versión lo ofrece para el recurso, o un *Scheduled
+  Task* que copie `/data/backups` a un destino S3). Basta con incluir `/data/backups/`: esos
+  ficheros son autónomos y coherentes.
+- **rsync / cron en otra máquina**, por ejemplo cada noche:
 
-Coolify también puede programar backups de volúmenes; si lo usas, aplica la misma
-regla (incluir los tres ficheros o hacerlo con el contenedor parado).
+  ```bash
+  # en el host de Coolify: ruta del volumen
+  docker volume inspect <volumen> --format '{{ .Mountpoint }}'
+  # desde otra máquina (NAS, portátil…):
+  rsync -av servidor:/var/lib/docker/volumes/<volumen>/_data/backups/ ~/backups/permis/
+  ```
+
+No copies `permis.db` «en caliente» sin sus `-wal`/`-shm`: usa los ficheros de `backups/`.
+
+### Restaurar
+
+1. Para el contenedor en Coolify (**Stop**). No restaures con la app en marcha.
+2. En el volumen, sustituye la base por la copia y **borra los ficheros `-wal` y `-shm`**
+   (pertenecen a la base antigua; si se quedan, SQLite intentaría aplicarlos a la copia):
+
+   ```bash
+   # con un contenedor auxiliar que monte el mismo volumen
+   docker run --rm -v <volumen>:/data alpine sh -c '
+     cp /data/permis.db /data/permis.db.antes-de-restaurar &&
+     cp /data/backups/permis-2026-10-25.db /data/permis.db &&
+     rm -f /data/permis.db-wal /data/permis.db-shm &&
+     chown 1000:1000 /data/permis.db'
+   ```
+
+   (Para restaurar una copia descargada: `docker cp ./permis-….db <contenedor>:/data/…` antes de
+   parar, o cópiala directamente en la ruta del volumen en el host.)
+3. Arranca (**Start**). Al abrir la base la app vuelve a ponerla en modo WAL y aplica las
+   migraciones idempotentes si la copia es de una versión anterior.
+
+### Errores en producción (logs)
+
+El servidor escribe **una línea JSON por error** en la salida estándar (logs del contenedor en
+Coolify → *Logs*, o `docker logs <contenedor>`), sin servicios externos:
+
+```json
+{"level":"error","type":"server-error","time":"…","status":500,"method":"POST","path":"/api/progress/record","user":"ana#3","message":"…","stack":["at …"],"tags":["request"]}
+```
+
+- Se registran las excepciones no capturadas (API y render), las respuestas 5xx y las promesas
+  rechazadas fuera de una petición. Los 4xx (sesión caducada, 403, 404, validación) no.
+- Las copias usan el mismo formato: `"type":"backup"` (ruta, tamaño, duración, copias borradas),
+  `"type":"backup-failed"` y `"type":"backup-integrity"` (la copia no pasó `integrity_check`).
+
+Filtrar:
+
+```bash
+docker logs <contenedor> 2>&1 | grep '"type":"server-error"'
+docker logs <contenedor> 2>&1 | grep '"type":"backup'          # todas las de copias
+docker logs --since 24h <contenedor> 2>&1 | grep '"level":"error"'
+```
+
+En la pantalla de logs de Coolify sirve el buscador con `server-error` o `backup-failed`.
 
 ## 9. Alternativa sin Coolify: Docker Compose
 
@@ -214,5 +295,6 @@ Dominio           https://…  (obligatorio HTTPS)
 Env               NUXT_SESSION_PASSWORD, NUXT_DB_PATH=/data/permis.db, NUXT_ALLOW_REGISTRATION
 Volumen           /data  (volume mount)
 Tras 1.ª cuenta   NUXT_ALLOW_REGISTRATION=false + redeploy
-Backup            permis.db + -wal + -shm (o .backup desde el contenedor)
+Backup            automático diario en /data/backups (14 copias) + copia fuera del servidor
+Errores           docker logs … | grep server-error
 ```

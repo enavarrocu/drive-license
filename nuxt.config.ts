@@ -57,6 +57,9 @@ export default defineNuxtConfig({
     allowRegistration: 'true',
     /** Noms d'utilisateur administrateurs (séparés par des virgules) : voient les erreurs signalées. */
     adminUsers: '',
+    /** Copies de sauvegarde quotidiennes de la base (NUXT_BACKUP_DISABLED, NUXT_BACKUP_KEEP). */
+    backupDisabled: 'false',
+    backupKeep: '14',
     session: {
       password: process.env.NUXT_SESSION_PASSWORD || '',
       maxAge: 60 * 60 * 24 * 90, // 90 jours

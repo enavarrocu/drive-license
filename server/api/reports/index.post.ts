@@ -13,10 +13,10 @@ const DAILY_LIMIT = 30
 export default defineEventHandler(async (event) => {
   const { user } = await requireUserSession(event)
   const { questionId, message, lang } = await readValidatedBody(event, schema.parse)
-  if (!questionById[questionId]) throw createError({ statusCode: 400, statusMessage: 'Question inconnue' })
+  if (!questionById[questionId]) throw createError({ statusCode: 400, message: 'Question inconnue' })
   const db = useDb()
   const { n } = db.prepare("SELECT COUNT(*) AS n FROM reports WHERE user_id = ? AND created_at > datetime('now', '-1 day')").get(user.id) as { n: number }
-  if (n >= DAILY_LIMIT) throw createError({ statusCode: 429, statusMessage: 'Trop de signalements aujourd\'hui' })
+  if (n >= DAILY_LIMIT) throw createError({ statusCode: 429, message: 'Trop de signalements aujourd\'hui' })
   db.prepare('INSERT INTO reports (user_id, question_id, message, lang) VALUES (?, ?, ?, ?)').run(user.id, questionId, message, lang)
   return { ok: true }
 })
