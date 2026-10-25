@@ -32,7 +32,7 @@ pnpm validate     # coherencia del banco de preguntas (ids, temas, teoría, bare
 ```
 
 Variables: `NUXT_SESSION_PASSWORD` (≥ 32 chars, obligatoria), `NUXT_DB_PATH`,
-`NUXT_ALLOW_REGISTRATION`, `NUXT_ADMIN_USERS` (usuarios admin, separados por comas: ven `/reports`). Ver `.env.example` y `DEPLOYMENT.md`.
+`NUXT_ALLOW_REGISTRATION` (además, `REGISTRATION_OPEN` en `server/utils/registration.ts` las cierra en código mientras la app no sea pública: hoy `false`), `NUXT_ADMIN_USERS` (usuarios admin, separados por comas: ven `/reports`). Ver `.env.example` y `DEPLOYMENT.md`.
 
 ## Mapa del repo
 
@@ -203,6 +203,6 @@ Dockerfile · DEPLOYMENT.md · README.md
      - ~~Portada sin sesión~~ (hecho: `/bienvenue`, solo presentación, sin enlace al registro: la app
        aún no está abierta; «Se connecter» para los usuarios existentes).
      - Pendiente: recuperar contraseña (requiere email + servicio de envío), borrar cuenta y
-       exportar datos (RGPD). Al abrir: enlazar el registro desde la portada.
+       exportar datos (RGPD). Al abrir: `REGISTRATION_OPEN = true` y enlazar el registro desde la portada.
   7. Móvil: deslizar para pasar a la siguiente pregunta.
 - Descartado: panel de administración de preguntas (se editan en `app/data`).

@@ -8,8 +8,7 @@ const schema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig()
-  if (String(config.allowRegistration) !== 'true') {
+  if (!registrationAllowed()) {
     throw createError({ statusCode: 403, statusMessage: 'Les inscriptions sont fermées' })
   }
   const body = await readValidatedBody(event, schema.parse)
