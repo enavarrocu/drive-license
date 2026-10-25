@@ -152,7 +152,7 @@ useHotkeys((key) => {
     </div>
 
     <div v-else class="card">
-      <QuestionCard :question="current" :lang="lang" :show-alt="showAlt" :chosen="chosen" :revealed="revealed" :label="`${index + 1} / ${pool.length}`" @choose="choose" />
+      <QuestionCard :question="current" :lang="lang" :show-alt="showAlt" gloss :chosen="chosen" :revealed="revealed" :label="`${index + 1} / ${pool.length}`" @choose="choose" />
       <TheoryPanel v-if="revealed && showTheory" :theory-id="current.theoryId" />
       <div class="row" style="margin-top: 14px">
         <button class="btn sm ghost" type="button" @click="toggleFlag(current.id)">{{ isFlagged ? '★' : '☆' }} {{ lang === 'fr' ? 'À revoir' : 'Repasar' }}</button>

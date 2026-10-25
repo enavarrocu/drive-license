@@ -274,3 +274,10 @@ a.theme-tile:hover { border-color: var(--accent); }
 .checklist li { padding: 2px 0; }
 .checklist li::before { content: '○ '; color: var(--muted); }
 .checklist li.done::before { content: '✓ '; color: var(--ok); font-weight: 700; }
+
+/* Termes du glossaire dans les questions (étude) : pointillé, bulle de traduction au clic. */
+.gloss { position: relative; text-decoration: underline dotted var(--muted); text-underline-offset: 3px; cursor: help; }
+.gloss.open, .gloss:focus-visible { text-decoration-color: var(--accent); outline: none; }
+.gloss-tip { position: absolute; left: 0; top: calc(100% + 6px); z-index: 20; width: max-content; max-width: min(320px, 80vw); padding: 8px 10px; border-radius: 10px; background: var(--text); color: var(--card); font-size: 0.85rem; font-weight: 400; line-height: 1.35; text-align: left; box-shadow: var(--shadow); cursor: auto; white-space: normal; }
+.gloss-tip b { font-weight: 700; }
+.gloss-note { display: block; margin-top: 4px; opacity: 0.8; }

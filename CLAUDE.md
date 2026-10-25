@@ -190,7 +190,10 @@ Dockerfile · DEPLOYMENT.md · README.md
      (`streak > 0`), % de acierto estudio + exámenes (`/api/exams/stats`), pendientes de repaso, enlace
      al tema; «Suis-je prêt ?» con criterios explícitos: ≥ 3 simulacros, los 3 últimos ≥ 45/50 y sin
      faltas graves, ≥ 70 % del banco visto; puntos débiles = 3 temas con menos acierto).
-  5. Glosario dentro de la pregunta: tocar un término FR del glosario y ver su traducción.
+  5. ~~Glosario dentro de la pregunta~~ (hecho: `lib/glossRefs.ts` deduce formas buscables de
+     `glossary.ts` — sin artículo, variantes «/», sin fragmentos —; `GlossTerm.vue` muestra la burbuja;
+     activo en `/study` y en el simulacro solo con la ayuda ES. Para que un término nuevo se resalte,
+     basta con añadirlo al glosario).
   6. Antes de abrir al público: botón «signaler une erreur» (id + comentario en BD, lista para el
      admin), aviso «outil non officiel — la référence est le Code de la route», recuperar
      contraseña, borrar cuenta y exportar datos (RGPD), página de portada sin sesión.

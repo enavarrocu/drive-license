@@ -18,6 +18,8 @@ const props = defineProps<{
   /** Numéro affiché (ex. « 12 / 50 »). */
   label?: string
   disabled?: boolean
+  /** Termes du glossaire cliquables dans le texte français. */
+  gloss?: boolean
 }>()
 
 const emit = defineEmits<{ choose: [index: number] }>()
@@ -45,6 +47,12 @@ const questionSigns = computed(() => {
     .filter((s): s is NonNullable<typeof s> => !!s)
 })
 const { open } = useSignPopup()
+// Une bulle de glossaire ouverte se ferme en touchant ailleurs ou en changeant de question.
+const glossOpen = useState<string | null>('glossOpen', () => null)
+const closeGloss = () => (glossOpen.value = null)
+watch(() => props.question.id, closeGloss)
+onMounted(() => document.addEventListener('click', closeGloss))
+onBeforeUnmount(() => document.removeEventListener('click', closeGloss))
 const hasVisual = computed(() => !!sceneSvg.value || !!props.question.image || questionSigns.value.length > 0)
 
 function classFor(i: number) {
@@ -75,8 +83,8 @@ function classFor(i: number) {
         </div>
       </div>
       <div class="q-body">
-    <p class="q"><SignText :text="main.q" /></p>
-    <p v-if="showAlt" class="q alt"><SignText :text="other.q" /></p>
+    <p class="q"><SignText :text="main.q" :gloss="gloss && lang === 'fr'" /></p>
+    <p v-if="showAlt" class="q alt"><SignText :text="other.q" :gloss="gloss && lang === 'es'" /></p>
     <ul class="options">
       <li v-for="(opt, i) in main.options" :key="i">
         <button
@@ -88,8 +96,8 @@ function classFor(i: number) {
         >
           <span class="idx">{{ letters[i] }}</span>
           <span class="txt">
-            <SignText :text="opt" inline />
-            <span v-if="showAlt" class="alt"><SignText :text="other.options[i] ?? ''" /></span>
+            <SignText :text="opt" inline :gloss="gloss && lang === 'fr'" />
+            <span v-if="showAlt" class="alt"><SignText :text="other.options[i] ?? ''" :gloss="gloss && lang === 'es'" /></span>
           </span>
         </button>
       </li>

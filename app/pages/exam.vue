@@ -237,7 +237,7 @@ onBeforeUnmount(() => {
       </div>
       <div v-if="!untimed" class="timer" :class="{ low: remaining < 5 }"><div :style="{ width: (phase === 'answering' ? pct : 100) + '%' }"></div></div>
       <div v-else class="timer"><div :style="{ width: ((index + 1) / exam.length) * 100 + '%' }"></div></div>
-      <QuestionCard v-if="current" :question="current" lang="fr" :show-alt="helpEs" :chosen="chosen" :disabled="phase !== 'answering'" @choose="choose" />
+      <QuestionCard v-if="current" :question="current" lang="fr" :show-alt="helpEs" :gloss="helpEs" :chosen="chosen" :disabled="phase !== 'answering'" @choose="choose" />
       <div class="row" style="margin-top: 14px">
         <button class="btn sm ghost danger" type="button" @click="abort">{{ lang === 'fr' ? 'Abandonner' : 'Abandonar' }}</button>
         <span class="grow"></span>
