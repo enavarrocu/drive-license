@@ -6,6 +6,7 @@ import { renderScene } from '../lib/scene'
 import { splitSignRefs } from '../lib/signRefs'
 import { signByCode } from '../data/signs'
 import { signImages } from '../data/signImages'
+import { optionNotes } from '../data/optionNotes'
 
 const props = defineProps<{
   question: Question
@@ -66,6 +67,19 @@ onMounted(() => document.addEventListener('click', closeGloss))
 onBeforeUnmount(() => document.removeEventListener('click', closeGloss))
 const hasVisual = computed(() => !!sceneSvg.value || !!props.question.image || questionSigns.value.length > 0)
 
+/** Notes par option (pourquoi chaque mauvaise réponse est fausse), si la question en a. */
+const notes = computed(() => optionNotes[props.question.id])
+/** Note de l'option choisie, si elle est fausse. */
+const chosenNote = computed(() => {
+  const c = props.chosen
+  if (c === null || c === props.question.answer) return null
+  return notes.value?.[c] ?? null
+})
+/** Mode neutre : toutes les notes, avec la lettre de leur option. */
+const allNotes = computed(() =>
+  (notes.value ?? []).flatMap((n, i) => (n && i !== props.question.answer ? [{ letter: letters[i] ?? '', text: n }] : [])),
+)
+
 function classFor(i: number) {
   if (!props.revealed) return { chosen: props.chosen === i }
   if (i === props.question.answer) return { correct: true }
@@ -121,6 +135,9 @@ function classFor(i: number) {
       <b>{{ lang === 'fr' ? 'Bonne réponse' : 'Respuesta correcta' }} : {{ letters[question.answer] }}.</b>
       {{ ' ' }}
       <SignText :text="question.why" />
+      <ul v-if="allNotes.length" class="opt-notes">
+        <li v-for="n in allNotes" :key="n.letter"><b>{{ n.letter }}</b> — <SignText :text="n.text" /></li>
+      </ul>
     </div>
     <div v-else-if="revealed" class="feedback" :class="chosen === question.answer ? 'ok' : 'ko'">
       <b v-if="chosen === null">{{ lang === 'fr' ? 'Pas de réponse' : 'Sin respuesta' }} — </b>
@@ -129,8 +146,19 @@ function classFor(i: number) {
       <b v-if="chosen !== question.answer">&nbsp;{{ lang === 'fr' ? 'Bonne réponse' : 'Respuesta correcta' }} : {{ letters[question.answer] }}.</b>
       {{ ' ' }}
       <SignText :text="question.why" />
+      <p v-if="chosenNote" class="opt-note">
+        <b>{{ lang === 'fr' ? 'Votre réponse' : 'Tu respuesta' }} ({{ letters[chosen ?? 0] }}) :</b>
+        {{ ' ' }}
+        <SignText :text="chosenNote" />
+      </p>
     </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.opt-note { margin: 8px 0 0; padding-top: 8px; border-top: 1px dashed var(--line); }
+.opt-notes { margin: 8px 0 0; padding: 8px 0 0 18px; border-top: 1px dashed var(--line); }
+.opt-notes li + li { margin-top: 4px; }
+</style>
