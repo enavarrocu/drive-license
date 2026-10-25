@@ -38,13 +38,13 @@ Variables: `NUXT_SESSION_PASSWORD` (≥ 32 chars, obligatoria), `NUXT_DB_PATH`,
 
 ```
 app/
-  pages/          index, course, study, exam, exams/index, exams/[id], glossary, signs, reports (admin), login, register
+  pages/          bienvenue (portada pública), index, course, study, exam, exams/index, exams/[id], glossary, signs, reports (admin), login, register
   components/     QuestionCard, TheoryPanel, LangToggle, ExamResultCard (auto-importados)
   composables/    useStore.ts  ← ÚNICA fuente de estado de usuario (prefs, progreso, curso, exámenes) ↔ API
                   useHotkeys.ts (atajos de teclado de /study y /exam), useSignPopup.ts
                   usePwa.ts (instalación, online/offline; lo alimenta plugins/pwa.client.ts)
   plugins/        pwa.client.ts (registra public/sw.js?v=<buildId> en prod; en dev desregistra)
-  middleware/     auth.global.ts (todo requiere sesión salvo /login y /register)
+  middleware/     auth.global.ts (todo requiere sesión salvo /bienvenue, /login y /register; sin sesión `/` → /bienvenue)
   layouts/        default.vue (cabecera, nav, logout)
   data/           CONTENIDO: themes (16), theory, questions*.ts, q.ts (helpers), course/ (part1–4, 20 cap.), glossary, signs, signImages, signPictos
   lib/            exam.ts (baremo, muestreo), scene.ts (SVG de cruces), md.ts (markdown ligero), speech.ts (voz)
@@ -200,7 +200,9 @@ Dockerfile · DEPLOYMENT.md · README.md
        corrección de exámenes, mort subite; nunca durante el examen—, tabla `reports`, máx. 30 por
        usuario y día, página `/reports` para los admins de `NUXT_ADMIN_USERS`).
      - ~~Aviso «outil non officiel»~~ (hecho: pie de página con enlace al Code de la route).
+     - ~~Portada sin sesión~~ (hecho: `/bienvenue`, solo presentación, sin enlace al registro: la app
+       aún no está abierta; «Se connecter» para los usuarios existentes).
      - Pendiente: recuperar contraseña (requiere email + servicio de envío), borrar cuenta y
-       exportar datos (RGPD), página de portada sin sesión.
+       exportar datos (RGPD). Al abrir: enlazar el registro desde la portada.
   7. Móvil: deslizar para pasar a la siguiente pregunta.
 - Descartado: panel de administración de preguntas (se editan en `app/data`).

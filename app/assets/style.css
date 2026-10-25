@@ -289,3 +289,18 @@ a.theme-tile:hover { border-color: var(--accent); }
 .report-form textarea { width: 100%; font: inherit; padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); resize: vertical; }
 .report-message { white-space: pre-wrap; font-weight: 600; }
 footer p { margin: 0 0 6px; }
+
+/* Portada pública (/bienvenue) */
+.landing-hero h1 { font-size: clamp(1.4rem, 4vw, 2rem); line-height: 1.2; margin: 10px 0; }
+.landing-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-top: 16px; }
+.landing-stats > div { display: flex; flex-direction: column; padding: 10px; border: 1px solid var(--line); border-radius: 12px; }
+.landing-stats b { font-size: 1.5rem; color: var(--accent); }
+.landing-demo { display: grid; gap: 16px; align-items: center; }
+@media (min-width: 720px) { .landing-demo { grid-template-columns: 320px 1fr; } .landing-demo .scene-wrap { margin: 0; } }
+.landing-signs { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.landing-signs > * { width: 56px; height: 56px; }
+.landing-features { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.landing-features .card { margin: 0; }
+.landing-features h3 { margin: 6px 0 4px; }
+.landing-icon { font-size: 1.6rem; }
+.landing-access { text-align: center; margin-top: 14px; }
