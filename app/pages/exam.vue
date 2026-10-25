@@ -140,6 +140,23 @@ function clearTimers() {
   tick = undefined
   readTimer = undefined
 }
+useHotkeys((key) => {
+  if (phase.value === 'reading' && (key === 'enter' || key === 'space')) {
+    skipReading()
+    return true
+  }
+  if (phase.value !== 'answering' || !current.value) return
+  const i = answerIndex(key)
+  if (i !== null) {
+    if (i < current.value.fr.options.length) choose(i)
+    return true
+  }
+  // Comme au centre d'examen : la lettre sélectionne, Entrée valide.
+  if (key === 'enter' && chosen.value !== null) {
+    commit()
+    return true
+  }
+})
 onBeforeUnmount(() => {
   clearTimers()
   stopSpeaking()
@@ -192,6 +209,9 @@ onBeforeUnmount(() => {
         <button v-if="phase === 'reading'" class="btn" type="button" @click="skipReading">{{ lang === 'fr' ? 'Passer la lecture' : 'Saltar la lectura' }}</button>
         <button v-else class="btn primary" type="button" :disabled="chosen === null" @click="commit">{{ lang === 'fr' ? 'Valider' : 'Validar' }}</button>
       </div>
+      <p class="kbd-hint small muted">
+        <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> {{ lang === 'fr' ? 'choisir' : 'elegir' }} · <kbd>{{ lang === 'fr' ? 'Entrée' : 'Intro' }}</kbd> {{ lang === 'fr' ? 'valider (ou passer la lecture)' : 'validar (o saltar la lectura)' }}
+      </p>
     </div>
 
     <div v-else-if="phase === 'result'">

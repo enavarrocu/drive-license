@@ -61,6 +61,23 @@ function readCurrent() {
   void speakText(`${t.q} ${t.options.map((o, i) => `Réponse ${'ABCD'[i]} : ${o}`).join('. ')}`, 'fr')
 }
 onBeforeUnmount(stopSpeaking)
+
+useHotkeys((key) => {
+  if (!current.value) return
+  const i = answerIndex(key)
+  if (i !== null) {
+    if (i < current.value.fr.options.length) choose(i)
+    return true
+  }
+  if (key === 'enter' || key === 'space' || key === 'arrowright') {
+    if (revealed.value) next()
+    else revealed.value = true
+    return true
+  }
+  if (key === 'm') return void toggleFlag(current.value.id)
+  if (key === 't') return void (showAlt.value = !showAlt.value)
+  if (key === 'l' && canSpeak.value) return void readCurrent()
+})
 </script>
 
 <template>
@@ -99,6 +116,11 @@ onBeforeUnmount(stopSpeaking)
         <button v-if="!revealed" class="btn" type="button" @click="revealed = true">{{ lang === 'fr' ? 'Voir la réponse' : 'Ver la respuesta' }}</button>
         <button class="btn primary" type="button" @click="next">{{ lang === 'fr' ? 'Suivante →' : 'Siguiente →' }}</button>
       </div>
+      <p class="kbd-hint small muted">
+        <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> {{ lang === 'fr' ? 'répondre' : 'responder' }} ·
+        <kbd>{{ lang === 'fr' ? 'Entrée' : 'Intro' }}</kbd> {{ lang === 'fr' ? 'réponse / suivante' : 'respuesta / siguiente' }} ·
+        <kbd>M</kbd> {{ lang === 'fr' ? 'à revoir' : 'repasar' }} · <kbd>T</kbd> {{ lang === 'fr' ? 'traduction' : 'traducción' }}<template v-if="canSpeak"> · <kbd>L</kbd> {{ lang === 'fr' ? 'relire' : 'releer' }}</template>
+      </p>
     </div>
   </div>
 </template>

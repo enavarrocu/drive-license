@@ -250,3 +250,8 @@ img.sign-img { background: #fff; border-radius: 10px; padding: 4px; box-sizing: 
 
 /* Identificadores (pregunta, examen) para localizar problemas */
 .qid { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.72rem; color: var(--muted); background: var(--accent-soft); padding: 1px 6px; border-radius: 6px; opacity: 0.8; }
+
+/* Aide des raccourcis clavier : seulement sur les appareils avec clavier et souris. */
+.kbd-hint { display: none; margin: 10px 0 0; }
+@media (hover: hover) and (pointer: fine) { .kbd-hint { display: block; } }
+kbd { font: 0.8em ui-monospace, monospace; padding: 1px 5px; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; background: var(--card); }
