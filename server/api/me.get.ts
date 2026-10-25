@@ -10,9 +10,10 @@ export default defineEventHandler(async (event) => {
   return {
     user: { id: user.id, username: user.username },
     isAdmin: isAdmin(user.username),
-    prefs: { lang: prefs.lang, speak: !!prefs.speak, helpEs: !!prefs.help_es, answerSeconds: prefs.answer_seconds },
+    prefs: { lang: prefs.lang, speak: !!prefs.speak, helpEs: !!prefs.help_es, answerSeconds: prefs.answer_seconds, dailyGoal: prefs.daily_goal },
     progress: Object.fromEntries(progress.map((p) => [p.question_id, { ok: p.ok, ko: p.ko, flagged: !!p.flagged, streak: p.streak, seenAt: p.seen_at }])),
     courseRead,
     exams: exams.map(serializeExam),
+    daily: getDaily(user.id, prefs.daily_goal),
   }
 })

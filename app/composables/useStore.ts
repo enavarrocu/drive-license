@@ -15,7 +15,19 @@ export interface Prefs {
   speak: boolean
   helpEs: boolean
   answerSeconds: number
+  /** Objectif quotidien : réponses en mode étude par jour (10, 20, 30 ou 50). */
+  dailyGoal: number
 }
+/** Objectif quotidien et série de jours (jours civils de Bruxelles). */
+export interface Daily {
+  goal: number
+  today: number
+  /** Jours consécutifs avec l'objectif atteint, jusqu'à aujourd'hui (ou hier si aujourd'hui n'est pas encore atteint). */
+  streak: number
+  /** 7 derniers jours, du plus ancien à aujourd'hui. */
+  last7: { day: string; answers: number }[]
+}
+export const DAILY_GOALS = [10, 20, 30, 50] as const
 export interface ProgressEntry {
   ok: number
   ko: number
@@ -45,21 +57,39 @@ interface Me {
   progress: Record<string, ProgressEntry>
   courseRead: string[]
   exams: ExamSummary[]
+  daily: Daily
 }
 
 const emptyEntry = (): ProgressEntry => ({ ok: 0, ko: 0, flagged: false, streak: 0, seenAt: null })
+
+const dayFmt = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Brussels', year: 'numeric', month: '2-digit', day: '2-digit' })
+/** Jour civil à Bruxelles (YYYY-MM-DD), comme côté serveur. */
+function brusselsDay(at: Date = new Date()): string {
+  const p = Object.fromEntries(dayFmt.formatToParts(at).map((x) => [x.type, x.value]))
+  return `${p.year}-${p.month}-${p.day}`
+}
+function shiftDay(day: string, n: number): string {
+  const d = new Date(`${day}T12:00:00Z`)
+  d.setUTCDate(d.getUTCDate() + n)
+  return d.toISOString().slice(0, 10)
+}
+const emptyDaily = (goal = 20): Daily => {
+  const today = brusselsDay()
+  return { goal, today: 0, streak: 0, last7: Array.from({ length: 7 }, (_, i) => ({ day: shiftDay(today, i - 6), answers: 0 })) }
+}
 
 export function useStore() {
   // Idioma elegido en este dispositivo, también antes de iniciar sesión (login/registro).
   // Al cargar el usuario se sincroniza con sus preferencias en el servidor.
   const langCookie = useCookie<Lang>('lang', { default: () => 'fr', maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' })
   const { loggedIn, user } = useUserSession()
-  const prefs = useState<Prefs>('prefs', () => ({ lang: langCookie.value === 'es' ? 'es' : 'fr', speak: true, helpEs: false, answerSeconds: 15 }))
+  const prefs = useState<Prefs>('prefs', () => ({ lang: langCookie.value === 'es' ? 'es' : 'fr', speak: true, helpEs: false, answerSeconds: 15, dailyGoal: 20 }))
   const progress = useState<Record<string, ProgressEntry>>('progress', () => ({}))
   const courseRead = useState<Record<string, true>>('courseRead', () => ({}))
   const exams = useState<ExamSummary[]>('exams', () => [])
   const loaded = useState<boolean>('storeLoaded', () => false)
   const isAdmin = useState<boolean>('isAdmin', () => false)
+  const daily = useState<Daily>('daily', () => emptyDaily())
   // Côté serveur, $fetch n'envoie pas les cookies de la requête : useRequestFetch les transmet.
   const requestFetch = useRequestFetch()
 
@@ -72,6 +102,7 @@ export function useStore() {
     courseRead.value = Object.fromEntries(me.courseRead.map((c) => [c, true]))
     exams.value = me.exams
     isAdmin.value = me.isAdmin
+    daily.value = me.daily
     loaded.value = true
     if (import.meta.client) void refreshPending(me.user.id)
   }
@@ -82,6 +113,7 @@ export function useStore() {
     courseRead.value = {}
     exams.value = []
     isAdmin.value = false
+    daily.value = emptyDaily()
     pendingCount.value = 0
   }
 
@@ -109,8 +141,39 @@ export function useStore() {
   async function setPrefs(patch: Partial<Prefs>) {
     prefs.value = { ...prefs.value, ...patch }
     if (patch.lang) langCookie.value = patch.lang
+    if (patch.dailyGoal && patch.dailyGoal !== daily.value.goal) {
+      // La série dépend de l'objectif sur tout l'historique : on change l'objectif localement,
+      // puis on recharge le résumé exact (série comprise) depuis le serveur.
+      daily.value = { ...daily.value, goal: patch.dailyGoal }
+    }
     await send('/api/prefs', 'PUT', patch)
+    if (patch.dailyGoal && loggedIn.value) {
+      const me = await $fetch<Me>('/api/me').catch(() => null)
+      if (me) daily.value = me.daily
+    }
   }
+
+  /** Compte une réponse d'étude pour l'objectif du jour (optimiste, change de jour si minuit est passé). */
+  function bumpDaily(at: Date) {
+    const day = brusselsDay(at)
+    let d = daily.value
+    const last = d.last7[d.last7.length - 1]?.day
+    if (last && day > last) {
+      // Nouveau jour depuis le chargement : on décale la fenêtre ; la série survit si hier était atteint.
+      const known = new Map(d.last7.map((x) => [x.day, x.answers]))
+      const last7 = Array.from({ length: 7 }, (_, i) => {
+        const k = shiftDay(day, i - 6)
+        return { day: k, answers: known.get(k) ?? 0 }
+      })
+      const yesterday = known.get(shiftDay(day, -1)) ?? 0
+      d = { ...d, today: 0, last7, streak: yesterday >= d.goal ? d.streak : 0 }
+    } else if (last && day < last) return // horloge incohérente : le serveur tranchera
+    const today = d.today + 1
+    const streak = d.today < d.goal && today >= d.goal ? d.streak + 1 : d.streak
+    const last7 = d.last7.map((x, i) => (i === d.last7.length - 1 ? { ...x, answers: today } : x))
+    daily.value = { ...d, today, streak, last7 }
+  }
+
 
   const lang = computed<Lang>({
     get: () => prefs.value.lang,
@@ -119,7 +182,9 @@ export function useStore() {
 
   async function recordStudy(questionId: string, ok: boolean) {
     const cur = progress.value[questionId] ?? emptyEntry()
-    const at = new Date().toISOString()
+    const now = new Date()
+    const at = now.toISOString()
+    bumpDaily(now)
     progress.value = {
       ...progress.value,
       [questionId]: { ...cur, ok: cur.ok + (ok ? 1 : 0), ko: cur.ko + (ok ? 0 : 1), streak: ok ? cur.streak + 1 : 0, seenAt: at },
@@ -177,7 +242,8 @@ export function useStore() {
     progress.value = {}
     courseRead.value = {}
     exams.value = []
+    daily.value = emptyDaily(prefs.value.dailyGoal)
   }
 
-  return { prefs, lang, progress, courseRead, exams, loaded, isAdmin, pendingCount, load, reset, setPrefs, recordStudy, toggleFlag, markChapter, saveExam, reportQuestion, resetAll, syncOutbox }
+  return { prefs, lang, progress, courseRead, exams, daily, loaded, isAdmin, pendingCount, load, reset, setPrefs, recordStudy, toggleFlag, markChapter, saveExam, reportQuestion, resetAll, syncOutbox }
 }

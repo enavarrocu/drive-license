@@ -21,5 +21,7 @@ export default defineEventHandler(async (event) => {
          seen_at = excluded.seen_at, updated_at = datetime('now')`,
     )
     .run(user.id, questionId, ok ? 1 : 0, ok ? 0 : 1, ok ? 1 : 0, seenAt)
+  // Objectif quotidien : le jour est celui de Bruxelles au moment de la réponse (pas UTC).
+  addStudyAnswer(user.id, new Date(seenAt))
   return { ok: true }
 })

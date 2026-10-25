@@ -66,6 +66,13 @@ CREATE TABLE IF NOT EXISTS reports (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS reports_status ON reports(status, created_at DESC);
+-- Objectif quotidien : réponses en mode étude par jour civil de Bruxelles (YYYY-MM-DD).
+CREATE TABLE IF NOT EXISTS study_days (
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  day TEXT NOT NULL,
+  answers INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (user_id, day)
+);
 `
 
 export function useDb(): Database.Database {
@@ -86,6 +93,9 @@ function migrate(d: Database.Database) {
   // Révision espacée : bonnes réponses consécutives (remis à 0 sur une erreur) et date de la dernière réponse.
   if (!cols.has('streak')) d.exec('ALTER TABLE progress ADD COLUMN streak INTEGER NOT NULL DEFAULT 0')
   if (!cols.has('seen_at')) d.exec('ALTER TABLE progress ADD COLUMN seen_at TEXT')
+  const prefCols = new Set((d.prepare('PRAGMA table_info(prefs)').all() as { name: string }[]).map((c) => c.name))
+  // Objectif quotidien (réponses par jour en mode étude).
+  if (!prefCols.has('daily_goal')) d.exec('ALTER TABLE prefs ADD COLUMN daily_goal INTEGER NOT NULL DEFAULT 20')
 }
 
 /* ---------- types des lignes ---------- */
@@ -101,6 +111,7 @@ export interface PrefsRow {
   speak: number
   help_es: number
   answer_seconds: number
+  daily_goal: number
 }
 export interface ProgressRow {
   question_id: string
@@ -156,4 +167,57 @@ export function getCourseRead(userId: number): string[] {
 
 export function requireUserId(event: Parameters<typeof requireUserSession>[0]): Promise<number> {
   return requireUserSession(event).then((s) => s.user.id)
+}
+
+/* ---------- objectif quotidien ---------- */
+const TZ = 'Europe/Brussels'
+const dayFmt = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' })
+
+/** Jour civil à Bruxelles (YYYY-MM-DD) d'un instant donné. */
+export function brusselsDay(at: Date | number = Date.now()): string {
+  // en-CA formate déjà en AAAA-MM-JJ ; formatToParts évite de dépendre de ce détail.
+  const parts = Object.fromEntries(dayFmt.formatToParts(at).map((p) => [p.type, p.value]))
+  return `${parts.year}-${parts.month}-${parts.day}`
+}
+
+/** Jour précédent d'une date YYYY-MM-DD (arithmétique sur le calendrier, sans fuseau). */
+function prevDay(day: string, n = 1): string {
+  const d = new Date(`${day}T12:00:00Z`)
+  d.setUTCDate(d.getUTCDate() - n)
+  return d.toISOString().slice(0, 10)
+}
+
+export interface DailySummary {
+  goal: number
+  today: number
+  /** Jours consécutifs avec answers ≥ goal, finissant aujourd'hui (ou hier si aujourd'hui n'est pas encore atteint). */
+  streak: number
+  /** 7 derniers jours, du plus ancien à aujourd'hui. */
+  last7: { day: string; answers: number }[]
+}
+
+export function addStudyAnswer(userId: number, at: Date) {
+  useDb()
+    .prepare('INSERT INTO study_days (user_id, day, answers) VALUES (?, ?, 1) ON CONFLICT(user_id, day) DO UPDATE SET answers = answers + 1')
+    .run(userId, brusselsDay(at))
+}
+
+export function getDaily(userId: number, goal: number): DailySummary {
+  const today = brusselsDay()
+  const rows = useDb()
+    .prepare('SELECT day, answers FROM study_days WHERE user_id = ? AND day <= ? ORDER BY day DESC LIMIT 400')
+    .all(userId, today) as { day: string; answers: number }[]
+  const byDay = new Map(rows.map((r) => [r.day, r.answers]))
+  const todayCount = byDay.get(today) ?? 0
+  let streak = 0
+  let day = todayCount >= goal ? today : prevDay(today)
+  while ((byDay.get(day) ?? 0) >= goal) {
+    streak++
+    day = prevDay(day)
+  }
+  const last7 = Array.from({ length: 7 }, (_, i) => {
+    const d = prevDay(today, 6 - i)
+    return { day: d, answers: byDay.get(d) ?? 0 }
+  })
+  return { goal, today: todayCount, streak, last7 }
 }

@@ -4,8 +4,9 @@ import { themes } from '../data/themes'
 import { course } from '../data/course'
 import { EXAM } from '../lib/exam'
 import { reviewPlan } from '../lib/srs'
+import { DAILY_GOALS } from '../composables/useStore'
 
-const { lang, progress, exams, courseRead, resetAll } = useStore()
+const { lang, progress, exams, courseRead, daily, setPrefs, resetAll } = useStore()
 const { user } = useUserSession()
 const pwa = usePwa()
 const installHintHidden = ref(true)
@@ -103,6 +104,17 @@ const grave = computed(() => {
     recentGrave: recent.reduce((n, e) => n + e.graveErrors, 0),
   }
 })
+/** Objectif du jour : barre, série et mini-histogramme des 7 derniers jours. */
+const dailyPct = computed(() => Math.min(100, Math.round((daily.value.today / daily.value.goal) * 100)))
+const dailyMax = computed(() => Math.max(daily.value.goal, ...daily.value.last7.map((d) => d.answers)))
+const dailyGoal = computed({
+  get: () => daily.value.goal,
+  set: (v: number) => void setPrefs({ dailyGoal: v }),
+})
+function dayLabel(day: string) {
+  return new Date(`${day}T12:00:00Z`).toLocaleDateString(lang.value === 'fr' ? 'fr-BE' : 'es-ES', { weekday: 'narrow', timeZone: 'UTC' })
+}
+
 const chaptersRead = computed(() => course.filter((c) => courseRead.value[c.id]).length)
 
 function fmtDate(iso: string) {
@@ -127,6 +139,37 @@ async function confirmReset() {
         <NuxtLink to="/study" class="btn">{{ lang === 'fr' ? 'Questions par thème' : 'Preguntas por tema' }}</NuxtLink>
         <NuxtLink to="/exam" class="btn">{{ lang === 'fr' ? 'Simulation d\'examen' : 'Simulacro de examen' }}</NuxtLink>
       </div>
+    </div>
+
+    <div class="card daily-card">
+      <div class="daily-head">
+        <h2>{{ lang === 'fr' ? 'Objectif du jour' : 'Objetivo del día' }}</h2>
+        <span class="daily-streak" :class="{ off: !daily.streak }" :title="lang === 'fr' ? 'Jours de suite avec l\'objectif atteint' : 'Días seguidos con el objetivo cumplido'">
+          🔥 {{ daily.streak }} {{ lang === 'fr' ? (daily.streak > 1 ? 'jours' : 'jour') : (daily.streak === 1 ? 'día' : 'días') }}
+        </span>
+      </div>
+      <div class="daily-body">
+        <div class="grow">
+          <div class="bar" :class="{ done: daily.today >= daily.goal }"><div :style="{ width: dailyPct + '%' }"></div></div>
+          <p class="small" style="margin: 6px 0 0">
+            <b>{{ daily.today }} / {{ daily.goal }}</b> {{ lang === 'fr' ? 'réponses aujourd\'hui' : 'respuestas hoy' }}
+            <span v-if="daily.today >= daily.goal" style="color: var(--ok)"> · {{ lang === 'fr' ? 'objectif atteint !' : '¡objetivo cumplido!' }}</span>
+            <NuxtLink v-else to="/study"> · {{ lang === 'fr' ? `encore ${daily.goal - daily.today}` : `faltan ${daily.goal - daily.today}` }}</NuxtLink>
+          </p>
+        </div>
+        <div class="daily-week" :aria-label="lang === 'fr' ? '7 derniers jours' : 'Últimos 7 días'">
+          <div v-for="d in daily.last7" :key="d.day" class="daily-day" :title="`${d.day} : ${d.answers}`">
+            <div class="daily-col"><div :class="{ met: d.answers >= daily.goal }" :style="{ height: (d.answers / dailyMax) * 100 + '%' }"></div></div>
+            <span>{{ dayLabel(d.day) }}</span>
+          </div>
+        </div>
+      </div>
+      <label class="small muted daily-goal">
+        {{ lang === 'fr' ? 'Objectif :' : 'Objetivo:' }}
+        <select v-model.number="dailyGoal">
+          <option v-for="g in DAILY_GOALS" :key="g" :value="g">{{ g }} {{ lang === 'fr' ? 'questions / jour' : 'preguntas / día' }}</option>
+        </select>
+      </label>
     </div>
 
     <div class="card ready-card" :class="ready.level">

@@ -311,3 +311,48 @@ footer p { margin: 0 0 6px; }
 .swipe-card { touch-action: pan-y; transition: transform 0.15s ease-out, opacity 0.15s ease-out; }
 .swipe-hint { display: none; margin: 10px 0 0; text-align: center; }
 @media (hover: none) and (pointer: coarse) { .swipe-hint { display: block; } }
+
+/* Mini-test de chapitre */
+.chapter-quiz { margin-top: 24px; padding-top: 14px; border-top: 1px solid var(--line); }
+.chapter-quiz h3 { margin: 0 0 4px; font-size: 1.15rem; }
+.chapter-quiz .quiz-actions { margin-top: 12px; gap: 8px; flex-wrap: wrap; }
+.chapter-quiz .quiz-result { text-align: center; padding: 8px 0; }
+.chapter-quiz .quiz-result .quiz-actions { justify-content: center; }
+.quiz-score { font-size: 2.2rem; font-weight: 800; color: var(--accent); }
+.quiz-score.ok { color: var(--ok); }
+.quiz-score.ko { color: var(--ko); }
+
+/* Objectif quotidien */
+.daily-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.daily-head h2 { margin: 0; }
+.daily-streak { font-weight: 700; white-space: nowrap; }
+.daily-streak.off { opacity: 0.55; filter: grayscale(1); }
+.daily-body { display: flex; align-items: flex-end; gap: 16px; margin-top: 10px; }
+.daily-card .bar { height: 10px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.daily-card .bar > div { height: 100%; background: var(--accent); transition: width 0.3s; }
+.daily-card .bar.done > div { background: var(--ok); }
+.daily-week { display: flex; gap: 4px; flex-shrink: 0; }
+.daily-day { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 0.65rem; color: var(--muted); }
+.daily-col { width: 12px; height: 40px; display: flex; align-items: flex-end; background: var(--line); border-radius: 3px; overflow: hidden; }
+.daily-col > div { width: 100%; min-height: 0; background: var(--accent); opacity: 0.6; }
+.daily-col > div.met { background: var(--ok); opacity: 1; }
+.daily-goal { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; }
+.daily-goal select { font: inherit; font-size: 0.8rem; padding: 2px 4px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); }
+@media (max-width: 420px) { .daily-body { flex-direction: column; align-items: stretch; } .daily-week { justify-content: space-between; } }
+
+/* Quiz de signaux */
+.sq-head { padding-top: 10px; padding-bottom: 10px; }
+.sq-head label { display: inline-flex; gap: 6px; align-items: center; }
+.sq-ok { color: var(--ok); }
+.sq-ko { color: var(--ko); }
+.sign-quiz .sq-count { margin: 0 0 6px; }
+.sq-sign { text-align: center; margin: 4px 0 10px; }
+.sq-sign svg, .sq-sign img { width: 170px; height: 170px; object-fit: contain; }
+.sq-code { display: inline-block; font-weight: 800; font-size: 0.78rem; color: var(--muted); margin-left: 6px; }
+.option .sq-code { margin-left: 0; display: block; margin-top: 2px; }
+.sq-images { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sq-image-opt { flex-direction: column; align-items: center; height: 100%; text-align: center; padding: 10px 6px; }
+.sq-image-opt .idx { align-self: flex-start; width: 26px; }
+.sq-image-opt svg, .sq-image-opt img { width: 100%; max-width: 120px; aspect-ratio: 1; height: auto; object-fit: contain; }
+.sq-feedback p { color: var(--text); }
+.tabs-inline { display: inline-flex; gap: 6px; flex-wrap: wrap; }
