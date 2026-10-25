@@ -42,7 +42,7 @@ function fmtDate(sqlite: string) {
         #{{ r.id }} · {{ fmtDate(r.createdAt) }} · {{ r.username }} · {{ r.lang.toUpperCase() }}
       </p>
       <p class="report-message">{{ r.message }}</p>
-      <QuestionCard v-if="questionById[r.questionId]" :question="questionById[r.questionId]!" :lang="lang" show-alt :chosen="null" revealed />
+      <QuestionCard v-if="questionById[r.questionId]" :question="questionById[r.questionId]!" :lang="lang" show-alt :chosen="null" revealed neutral />
       <p v-else class="muted">{{ lang === 'fr' ? 'Question supprimée' : 'Pregunta eliminada' }} ({{ r.questionId }})</p>
       <div class="row" style="margin-top: 10px">
         <button v-if="r.status === 'open'" class="btn sm primary" type="button" @click="setStatus(r, 'done')">{{ lang === 'fr' ? 'Marquer comme traité' : 'Marcar como resuelto' }}</button>

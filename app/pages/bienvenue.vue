@@ -60,6 +60,11 @@ const features = [
     es: ['Repaso inteligente', 'Las preguntas falladas vuelven en el momento justo (repaso espaciado) y sabes cuándo estás listo.'],
   },
   {
+    icon: '✅',
+    fr: ['Vérifié avec le Code de la route', 'Chaque règle, chiffre et signal a été contrôlé avec le texte officiel ; une erreur se signale en un clic.'],
+    es: ['Revisado con el Code de la route', 'Cada regla, cifra y señal se ha contrastado con el texto oficial; un error se avisa con un clic.'],
+  },
+  {
     icon: '📱',
     fr: ['Sur le téléphone, même hors ligne', 'S\'installe comme une application ; la progression se synchronise au retour du réseau.'],
     es: ['En el móvil, incluso sin conexión', 'Se instala como una aplicación; el progreso se sincroniza cuando vuelve la red.'],

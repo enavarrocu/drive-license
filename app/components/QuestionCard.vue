@@ -22,6 +22,8 @@ const props = defineProps<{
   gloss?: boolean
   /** Affiche « signaler une erreur » (pas pendant l'examen). */
   reportable?: boolean
+  /** Correction sans verdict (pas de « réponse fausse ») : consultation, page des signalements. */
+  neutral?: boolean
 }>()
 
 const emit = defineEmits<{ choose: [index: number] }>()
@@ -115,7 +117,12 @@ function classFor(i: number) {
         </button>
       </li>
     </ul>
-    <div v-if="revealed" class="feedback" :class="chosen === question.answer ? 'ok' : 'ko'">
+    <div v-if="revealed && neutral" class="feedback ok">
+      <b>{{ lang === 'fr' ? 'Bonne réponse' : 'Respuesta correcta' }} : {{ letters[question.answer] }}.</b>
+      {{ ' ' }}
+      <SignText :text="question.why" />
+    </div>
+    <div v-else-if="revealed" class="feedback" :class="chosen === question.answer ? 'ok' : 'ko'">
       <b v-if="chosen === null">{{ lang === 'fr' ? 'Pas de réponse' : 'Sin respuesta' }} — </b>
       <b v-else-if="chosen === question.answer">{{ lang === 'fr' ? 'Correct.' : 'Correcto.' }}</b>
       <b v-else>{{ lang === 'fr' ? 'Incorrect.' : 'Incorrecto.' }}</b>
