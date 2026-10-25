@@ -265,3 +265,12 @@ kbd { font: 0.8em ui-monospace, monospace; padding: 1px 5px; border: 1px solid v
 .mode-switch input { margin: 0 4px 0 0; }
 .sudden-ok { border-left: 4px solid var(--ok); }
 .sudden-ko { border-left: 4px solid var(--ko); }
+a.theme-tile { text-decoration: none; }
+a.theme-tile:hover { border-color: var(--accent); }
+.ready-card.ready { border-left: 4px solid var(--ok); }
+.ready-card.close { border-left: 4px solid var(--warn); }
+.ready-card.notyet { border-left: 4px solid var(--line); }
+.checklist { list-style: none; padding: 0; margin: 8px 0; }
+.checklist li { padding: 2px 0; }
+.checklist li::before { content: '○ '; color: var(--muted); }
+.checklist li.done::before { content: '✓ '; color: var(--ok); font-weight: 700; }

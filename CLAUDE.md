@@ -186,7 +186,10 @@ Dockerfile · DEPLOYMENT.md · README.md
      menos vistas; termina al primer fallo; no se guarda en el historial ni usa el baremo).
   3. ~~«Repasar los fallos de este examen»~~ (hecho: botón en `ExamResultCard` → `/study?ids=…`, faltas
      graves primero; una pregunta fallada vuelve 5 preguntas después).
-  4. Progreso por tema (acierto %, vistas) y un indicador «¿estoy listo?» a partir de los últimos simulacros.
+  4. ~~Progreso por tema e indicador «¿estoy listo?»~~ (hecho en la portada: por tema, dominadas
+     (`streak > 0`), % de acierto estudio + exámenes (`/api/exams/stats`), pendientes de repaso, enlace
+     al tema; «Suis-je prêt ?» con criterios explícitos: ≥ 3 simulacros, los 3 últimos ≥ 45/50 y sin
+     faltas graves, ≥ 70 % del banco visto; puntos débiles = 3 temas con menos acierto).
   5. Glosario dentro de la pregunta: tocar un término FR del glosario y ver su traducción.
   6. Antes de abrir al público: botón «signaler une erreur» (id + comentario en BD, lista para el
      admin), aviso «outil non officiel — la référence est le Code de la route», recuperar
