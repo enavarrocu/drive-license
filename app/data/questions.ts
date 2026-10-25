@@ -28,7 +28,7 @@ const baseQuestions: Question[] = [
   Q('prio-02', 'priorite', 'prio-droite',
     ['Le conducteur venant de droite s\'est arrêté au carrefour. Conserve-t-il sa priorité ?', 'Oui, il conserve sa priorité même s\'il s\'est arrêté.', 'Non, en s\'arrêtant il a renoncé à sa priorité.', 'Seulement s\'il fait un signe de la main.'],
     ['El conductor que viene por la derecha se ha detenido en el cruce. ¿Conserva su prioridad?', 'Sí, conserva su prioridad aunque se haya detenido.', 'No, al pararse ha renunciado a su prioridad.', 'Solo si hace una señal con la mano.'],
-    0, 'En Bélgica el que viene por la derecha conserva la prioridad aunque se haya parado. Solo la pierde si circula en sentido prohibido.', true),
+    0, 'En Bélgica el que viene por la derecha conserva la prioridad aunque se haya parado (art. 12.3.1). Solo la pierde si circula en sentido prohibido, si tiene una señal B1/B5 o si sale de un camino de tierra.', true),
   Q('prio-03', 'priorite', 'prio-droite',
     ['Je sors d\'un parking privé pour m\'engager sur la chaussée. Qui a la priorité ?', 'Moi, je viens de droite.', 'Les usagers de la chaussée.', 'Le premier arrivé.'],
     ['Salgo de un aparcamiento privado para incorporarme a la calzada. ¿Quién tiene prioridad?', 'Yo, vengo por la derecha.', 'Los usuarios de la calzada.', 'El primero que llega.'],

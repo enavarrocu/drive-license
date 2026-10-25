@@ -324,8 +324,8 @@ export const panneauxQuestions: Question[] = [
     0, 'F45b: vía sin salida, salvo para los usuarios dibujados en la señal, que pueden continuar: en el código, peatones y ciclistas (el dibujo puede añadir otros, como aquí los vehículos agrícolas).'), signs: ['F45b'] },
 
   { ...Q('z-pan-62', 'panneaux', 'pan-indication',
-    ['Que signifie ce signal ?', 'Fin de route pour automobiles.', 'Interdit aux voitures.', 'Fin de l\'autoroute.'],
-    ['¿Qué significa esta señal?', 'Fin de vía para automóviles.', 'Prohibido a los coches.', 'Fin de la autopista.'],
+    ['Que signifie ce signal ?', 'Fin de route pour automobiles.', 'Accès interdit aux voitures.', 'Fin de l\'autoroute ici.'],
+    ['¿Qué significa esta señal?', 'Fin de vía para automóviles.', 'Acceso prohibido a los coches.', 'Fin de la autopista aquí.'],
     0, 'F11 (el coche de F9 tachado): fin de la vía para automóviles y de sus reglas especiales. El fin de autopista es F7.'), signs: ['F11'] },
 
   { ...Q('z-pan-63', 'panneaux', 'pan-indication',
