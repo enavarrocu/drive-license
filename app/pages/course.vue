@@ -70,6 +70,8 @@ const doneCount = computed(() => course.filter((c) => courseRead.value[c.id]).le
         </div>
       </section>
 
+      <ChapterQuiz :key="chapter.id" :chapter-id="chapter.id" :theme="chapter.theme" />
+
       <div class="row" style="margin-top: 18px">
         <button class="btn" type="button" :disabled="!prev" @click="prev && go(prev.id)">← {{ prev ? prev.title[lang] : '' }}</button>
         <span class="grow"></span>
