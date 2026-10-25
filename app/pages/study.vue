@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ThemeId } from '../types'
-import { questions } from '../data/questions'
+import { questionById, questions } from '../data/questions'
 import { themes } from '../data/themes'
 import { shuffle } from '../lib/exam'
 import { RELEARN_GAP, reviewPlan } from '../lib/srs'
@@ -9,12 +9,17 @@ import { speakText, stopSpeaking, speechAvailable } from '../lib/speech'
 /** Questions «faute grave» (−5 à l'examen), pour le mode dédié. */
 const graveQuestions = questions.filter((q) => q.grave)
 
-type Filter = ThemeId | 'smart' | 'grave' | 'all' | 'flagged' | 'weak' | 'scene'
+type Filter = ThemeId | 'smart' | 'grave' | 'list' | 'all' | 'flagged' | 'weak' | 'scene'
 
 const { lang, prefs, progress, recordStudy, toggleFlag, setPrefs } = useStore()
 const route = useRoute()
 
-const filter = ref<Filter>(typeof route.query.theme === 'string' ? (route.query.theme as Filter) : 'smart')
+/** Liste explicite (« revoir les erreurs de cet examen ») : /study?ids=a,b,c — fautes graves d'abord. */
+const listQuestions = (typeof route.query.ids === 'string' ? route.query.ids.split(',') : [])
+  .map((id) => questionById[id])
+  .filter((q): q is NonNullable<typeof q> => !!q)
+  .sort((a, b) => Number(!!b.grave) - Number(!!a.grave))
+const filter = ref<Filter>(listQuestions.length ? 'list' : typeof route.query.theme === 'string' ? (route.query.theme as Filter) : 'smart')
 const showAlt = ref(true)
 const showTheory = ref(true)
 const speak = computed({ get: () => prefs.value.speak, set: (v: boolean) => void setPrefs({ speak: v }) })
@@ -42,6 +47,7 @@ const nextDueLabel = computed(() => {
 function buildPool() {
   if (filter.value === 'smart') return reviewPlan(questions, progress.value).queue
   if (filter.value === 'grave') return reviewPlan(graveQuestions, progress.value).queue
+  if (filter.value === 'list') return listQuestions.slice()
   let list = questions
   if (filter.value === 'flagged') list = questions.filter((q) => progress.value[q.id]?.flagged)
   else if (filter.value === 'weak') list = questions.filter((q) => (progress.value[q.id]?.ko ?? 0) > 0)
@@ -65,7 +71,7 @@ function choose(i: number) {
   const ok = i === current.value.answer
   void recordStudy(current.value.id, ok)
   // Révision intelligente : une erreur revient quelques questions plus tard dans la même séance.
-  if (spaced.value && !ok) {
+  if ((spaced.value || filter.value === 'list') && !ok) {
     const q = current.value
     const rest = pool.value.slice(index.value + 1).filter((x) => x.id !== q.id)
     rest.splice(Math.min(RELEARN_GAP - 1, rest.length), 0, q)
@@ -113,6 +119,7 @@ useHotkeys((key) => {
         <label class="grow">
           <span class="small muted">{{ lang === 'fr' ? 'Thème' : 'Tema' }}</span><br />
           <select v-model="filter" class="search">
+            <option v-if="listQuestions.length" value="list">{{ lang === 'fr' ? 'Erreurs de l\'examen' : 'Errores del examen' }} ({{ listQuestions.length }})</option>
             <option value="smart">{{ lang === 'fr' ? 'Révision intelligente' : 'Repaso inteligente' }} ({{ plan.due }} {{ lang === 'fr' ? 'à revoir' : 'para repasar' }} · {{ plan.fresh }} {{ lang === 'fr' ? 'nouvelles' : 'nuevas' }})</option>
             <option value="grave">{{ lang === 'fr' ? 'Fautes graves (−5)' : 'Faltas graves (−5)' }} ({{ gravePlan.due }} {{ lang === 'fr' ? 'à revoir' : 'para repasar' }} · {{ gravePlan.fresh }} {{ lang === 'fr' ? 'nouvelles' : 'nuevas' }})</option>
             <option value="all">{{ lang === 'fr' ? 'Tous les thèmes' : 'Todos los temas' }} ({{ questions.length }})</option>

@@ -184,7 +184,8 @@ Dockerfile · DEPLOYMENT.md · README.md
      faltas graves de los 5 últimos exámenes).
   2c. ~~Mort subite~~ (hecho: modo de `/exam` — `?mode=sudden` —, 20 preguntas `grave` priorizando las
      menos vistas; termina al primer fallo; no se guarda en el historial ni usa el baremo).
-  3. «Repasar los fallos de este examen» desde el resultado del simulacro.
+  3. ~~«Repasar los fallos de este examen»~~ (hecho: botón en `ExamResultCard` → `/study?ids=…`, faltas
+     graves primero; una pregunta fallada vuelve 5 preguntas después).
   4. Progreso por tema (acierto %, vistas) y un indicador «¿estoy listo?» a partir de los últimos simulacros.
   5. Glosario dentro de la pregunta: tocar un término FR del glosario y ver su traducción.
   6. Antes de abrir al público: botón «signaler une erreur» (id + comentario en BD, lista para el

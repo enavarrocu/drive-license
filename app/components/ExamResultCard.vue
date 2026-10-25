@@ -14,6 +14,8 @@ const answers = computed(() => props.exam.answers ?? [])
 const wrong = computed(() => answers.value.filter((a) => !a.correct))
 const onlyWrong = ref(props.review === 'wrong')
 const shown = computed(() => (onlyWrong.value ? wrong.value : answers.value))
+/** Ouvre l'étude avec uniquement les questions ratées de cet examen. */
+const reviewLink = computed(() => ({ path: '/study', query: { ids: wrong.value.map((a) => a.questionId).join(',') } }))
 /** Numéro de la question dans l'examen (1..50), même en mode « erreurs ». */
 function num(a: { questionId: string }) {
   return answers.value.findIndex((x) => x.questionId === a.questionId) + 1
@@ -35,6 +37,9 @@ function num(a: { questionId: string }) {
         <span v-if="exam.answerSeconds === 0"> · {{ lang === 'fr' ? 'sans limite' : 'sin límite' }}</span>
         <span v-else-if="exam.answerSeconds !== 15"> · {{ exam.answerSeconds }} s</span>
       </p>
+      <NuxtLink v-if="wrong.length" :to="reviewLink" class="btn primary" style="margin-top: 12px">
+        {{ lang === 'fr' ? `Retravailler mes ${wrong.length} erreur(s)` : `Practicar mis ${wrong.length} error(es)` }}
+      </NuxtLink>
     </div>
 
     <template v-if="review !== 'none' && answers.length">
