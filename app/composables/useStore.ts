@@ -20,6 +20,10 @@ export interface ProgressEntry {
   ok: number
   ko: number
   flagged: boolean
+  /** Bonnes réponses consécutives en mode étude (0 après une erreur). */
+  streak: number
+  /** Dernière réponse en mode étude (ISO), null si jamais ou avant la révision espacée. */
+  seenAt: string | null
 }
 export interface ExamSummary {
   id: number
@@ -41,6 +45,8 @@ interface Me {
   courseRead: string[]
   exams: ExamSummary[]
 }
+
+const emptyEntry = (): ProgressEntry => ({ ok: 0, ko: 0, flagged: false, streak: 0, seenAt: null })
 
 export function useStore() {
   // Idioma elegido en este dispositivo, también antes de iniciar sesión (login/registro).
@@ -108,13 +114,17 @@ export function useStore() {
   })
 
   async function recordStudy(questionId: string, ok: boolean) {
-    const cur = progress.value[questionId] ?? { ok: 0, ko: 0, flagged: false }
-    progress.value = { ...progress.value, [questionId]: { ...cur, ok: cur.ok + (ok ? 1 : 0), ko: cur.ko + (ok ? 0 : 1) } }
-    await send('/api/progress/record', 'POST', { questionId, ok })
+    const cur = progress.value[questionId] ?? emptyEntry()
+    const at = new Date().toISOString()
+    progress.value = {
+      ...progress.value,
+      [questionId]: { ...cur, ok: cur.ok + (ok ? 1 : 0), ko: cur.ko + (ok ? 0 : 1), streak: ok ? cur.streak + 1 : 0, seenAt: at },
+    }
+    await send('/api/progress/record', 'POST', { questionId, ok, at })
   }
 
   async function toggleFlag(questionId: string) {
-    const cur = progress.value[questionId] ?? { ok: 0, ko: 0, flagged: false }
+    const cur = progress.value[questionId] ?? emptyEntry()
     const flagged = !cur.flagged
     progress.value = { ...progress.value, [questionId]: { ...cur, flagged } }
     await send('/api/progress/flag', 'POST', { questionId, flagged })

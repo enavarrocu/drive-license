@@ -65,7 +65,16 @@ export function useDb(): Database.Database {
   db.pragma('journal_mode = WAL')
   db.pragma('foreign_keys = ON')
   db.exec(SCHEMA)
+  migrate(db)
   return db
+}
+
+/** Migrations idempotentes (colonnes ajoutées après la création des tables). */
+function migrate(d: Database.Database) {
+  const cols = new Set((d.prepare('PRAGMA table_info(progress)').all() as { name: string }[]).map((c) => c.name))
+  // Révision espacée : bonnes réponses consécutives (remis à 0 sur une erreur) et date de la dernière réponse.
+  if (!cols.has('streak')) d.exec('ALTER TABLE progress ADD COLUMN streak INTEGER NOT NULL DEFAULT 0')
+  if (!cols.has('seen_at')) d.exec('ALTER TABLE progress ADD COLUMN seen_at TEXT')
 }
 
 /* ---------- types des lignes ---------- */
@@ -87,6 +96,9 @@ export interface ProgressRow {
   ok: number
   ko: number
   flagged: number
+  streak: number
+  /** ISO (UTC) de la dernière réponse en mode étude ; null pour les lignes antérieures. */
+  seen_at: string | null
 }
 export interface ExamRow {
   id: number
@@ -115,7 +127,7 @@ export function getPrefs(userId: number): PrefsRow {
 }
 
 export function getProgress(userId: number): ProgressRow[] {
-  return useDb().prepare('SELECT question_id, ok, ko, flagged FROM progress WHERE user_id = ?').all(userId) as ProgressRow[]
+  return useDb().prepare('SELECT question_id, ok, ko, flagged, streak, seen_at FROM progress WHERE user_id = ?').all(userId) as ProgressRow[]
 }
 
 export function getCourseRead(userId: number): string[] {

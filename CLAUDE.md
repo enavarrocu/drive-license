@@ -176,8 +176,9 @@ Dockerfile · DEPLOYMENT.md · README.md
 - Mejoras de experiencia de usuario (propuestas el 25 oct 2026, en este orden):
   1. ~~Atajos de teclado~~ (hecho: `composables/useHotkeys.ts`; A/B/C o 1/2/3 responden, Entrée
      revela/siguiente en estudio y valida en el examen, M marca, T traducción, L relee).
-  2. Repaso inteligente en `/study`: priorizar falladas y no vistas hace tiempo (repetición espaciada
-     con `progress.ok/ko`; sin cambio de esquema).
+  2. ~~Repaso inteligente~~ (hecho: modo por defecto de `/study`, `lib/srs.ts`, Leitner con intervalos
+     0/1/3/7/16/35 días según `progress.streak`; columnas `streak` y `seen_at` añadidas con ALTER
+     idempotente en `server/utils/db.ts`; una pregunta fallada vuelve 5 preguntas después en la sesión).
   3. «Repasar los fallos de este examen» desde el resultado del simulacro.
   4. Progreso por tema (acierto %, vistas) y un indicador «¿estoy listo?» a partir de los últimos simulacros.
   5. Glosario dentro de la pregunta: tocar un término FR del glosario y ver su traducción.
