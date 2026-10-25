@@ -6,6 +6,7 @@ import { extraQuestions } from './questions-extra'
 import { extraQuestions2 } from './questions-extra2'
 import { extraQuestions3 } from './questions-extra3'
 import { extraQuestions4 } from './questions-extra4'
+import { extraQuestions5 } from './questions-extra5'
 import { panneauxQuestions } from './questions-panneaux'
 import { mecaniqueQuestions } from './questions-mecanique'
 import { accidentsQuestions } from './questions-accidents'
@@ -512,6 +513,6 @@ const baseQuestions: Question[] = [
     1, 'Obligación de identificarse; abandonar el lugar = «délit de fuite». Sin desacuerdo basta el constat amiable.'),
 ]
 
-export const questions: Question[] = [...baseQuestions, ...sceneQuestions, ...extraQuestions, ...extraQuestions2, ...extraQuestions3, ...extraQuestions4, ...panneauxQuestions, ...mecaniqueQuestions, ...accidentsQuestions, ...comportementQuestions]
+export const questions: Question[] = [...baseQuestions, ...sceneQuestions, ...extraQuestions, ...extraQuestions2, ...extraQuestions3, ...extraQuestions4, ...extraQuestions5, ...panneauxQuestions, ...mecaniqueQuestions, ...accidentsQuestions, ...comportementQuestions]
 
 export const questionById = Object.fromEntries(questions.map((q) => [q.id, q])) as Record<string, Question>

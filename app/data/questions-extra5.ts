@@ -1,0 +1,273 @@
+import type { Question } from '../types'
+import type { Lane, LaneLine, RoadLayout, SceneVehicle } from '../lib/scene'
+import { Q, QS } from './q'
+
+/**
+ * Preguntas con escena fuera de la prioridad pura: adelantamiento, colocación
+ * para girar, carriles de preselección, rotondas de dos carriles, cremallera,
+ * pasos de peatones y ciclistas, tranvía y autobús, estacionamiento, autopista.
+ * Tramos rectos dibujados con `layout` (carriles de izquierda a derecha;
+ * 'up' = hacia arriba, el sentido del candidato salvo indicación).
+ */
+
+const me = (extra: Partial<SceneVehicle>): SceneVehicle => ({ id: 'moi', arm: 'S', you: true, turn: 'straight', ...extra })
+const v = (id: string, extra: Partial<SceneVehicle>): SceneVehicle => ({ id, arm: 'S', turn: 'straight', ...extra })
+const parked = (id: string, extra: Partial<SceneVehicle>): SceneVehicle => v(id, { turn: 'none', ...extra })
+
+const SW: Lane = { kind: 'sidewalk' }
+const DOWN: Lane = { dir: 'down' }
+const UP: Lane = { dir: 'up' }
+/** Calle de doble sentido con aceras: carriles 1 (bajada, x = 140) y 2 (subida, x = 180). */
+const street = (extra: Partial<RoadLayout> = {}, center: LaneLine | [LaneLine, number, LaneLine] = 'dashed'): RoadLayout => ({ lanes: [SW, DOWN, UP, SW], lines: ['none', center, 'none'], ...extra })
+/** Carretera sin aceras: carriles 0 (bajada, x = 140) y 1 (subida, x = 180). */
+const rural = (center: LaneLine | [LaneLine, number, LaneLine] = 'dashed', extra: Partial<RoadLayout> = {}): RoadLayout => ({ lanes: [DOWN, UP], lines: [center], ...extra })
+
+const B1_ALL = { S: 'B1', E: 'B1', N: 'B1', W: 'B1' } as const
+
+export const extraQuestions5: Question[] = [
+  /* ============ DÉPASSEMENT ============ */
+  QS(Q('z5-dep-01', 'depassement', 'x4-sig-marques',
+    ['Une ligne continue et une ligne discontinue sont accolées au milieu de la chaussée. Je veux dépasser la voiture A, qui roule lentement. Puis-je le faire ?', 'Non, la ligne continue est de mon côté.', 'Oui, la ligne discontinue le permet.', 'Oui, si personne ne vient en face.'],
+    ['Una línea continua y una discontinua van juntas en el centro de la calzada. Quiero adelantar al coche A, que circula despacio. ¿Puedo hacerlo?', 'No, la línea continua está de mi lado.', 'Sí, la línea discontinua lo permite.', 'Sí, si no viene nadie de frente.'],
+    0, 'Con una línea continua y una discontinua juntas, solo cuenta la que está de tu lado (art. 72.4). Aquí la continua está de mi lado: no puedo cruzarla (art. 72.2), aunque no venga nadie.', true),
+    { type: 'road', layout: street({}, 'dashed-solid'), vehicles: [me({ lane: 2, y: 270, turn: 'none' }), v('A', { lane: 2, y: 170 })] }),
+  QS(Q('z5-dep-02', 'depassement', 'x4-sig-marques',
+    ['Je viens de dépasser la voiture A en franchissant la ligne discontinue, qui était de mon côté. Puis-je franchir la ligne continue pour reprendre ma place à droite ?', 'Non, je reste à gauche jusqu\'à sa fin.', 'Oui, pour terminer mon dépassement.', 'Seulement si A me fait un appel de phares.'],
+    ['Acabo de adelantar al coche A cruzando la línea discontinua, que estaba de mi lado. ¿Puedo cruzar la línea continua para volver a mi sitio a la derecha?', 'No, me quedo a la izquierda hasta que acabe la línea.', 'Sí, para terminar mi adelantamiento.', 'Solo si A me hace una ráfaga de luces.'],
+    1, 'Con dos líneas juntas cuenta la de tu lado, y quien las ha cruzado para adelantar puede volver a cruzarlas para retomar su sitio normal (art. 72.4). Quedarse a la izquierda sería circular a la izquierda de una línea continua (art. 72.2).', true),
+    { type: 'road', layout: street({}, 'solid-dashed'), vehicles: [me({ lane: 1, heading: 'up', y: 140, turn: 'lane-right' }), v('A', { lane: 2, y: 240 })] }),
+  QS(Q('z5-dep-03', 'depassement', 'dep-regles',
+    ['Hors agglomération, je rattrape le cycliste A. La voiture B arrive en face. Pour dépasser A, je devrais lui laisser moins de 1,5 m. Que dois-je faire ?', 'Dépasser A en lui laissant 1 m.', 'Dépasser vite, avant l\'arrivée de B.', 'Rester derrière A jusqu\'au passage de B.'],
+    ['Fuera de población alcanzo al ciclista A. El coche B viene de frente. Para adelantar a A, tendría que dejarle menos de 1,5 m. ¿Qué debo hacer?', 'Adelantar a A dejándole 1 m.', 'Adelantar rápido, antes de que llegue B.', 'Quedarme detrás de A hasta que pase B.'],
+    2, 'Fuera de población hay que dejar al ciclista al menos 1,5 m de distancia lateral (art. 40ter), y solo se adelanta si la vía está libre a suficiente distancia (art. 16.4 1° a). Mientras B viene de frente, espero detrás de A.', true),
+    { type: 'road', layout: rural(), vehicles: [me({ lane: 1, y: 272, turn: 'none' }), v('A', { lane: 1, y: 196, dx: 10, kind: 'bike' }), v('B', { lane: 0, y: 70 })], caption: 'hors agglomération' }),
+  QS(Q('z5-dep-04', 'depassement', 'dep-interdit',
+    ['J\'approche du sommet d\'une côte, sans visibilité. Dans mon sens, il y a deux bandes ; une ligne continue me sépare de l\'autre sens. Puis-je dépasser la camionnette A ?', 'Oui, par la bande de gauche de mon sens.', 'Non, jamais à l\'approche d\'un sommet.', 'Seulement si A met son clignotant droit.'],
+    ['Me acerco a la cima de una cuesta, sin visibilidad. En mi sentido hay dos carriles; una línea continua me separa del otro sentido. ¿Puedo adelantar a la furgoneta A?', 'Sí, por el carril izquierdo de mi sentido.', 'No, nunca al acercarse a una cima.', 'Solo si A pone el intermitente derecho.'],
+    0, 'La prohibición de adelantar al acercarse a la cima de una cuesta sin visibilidad no se aplica si se puede adelantar sin cruzar la línea continua que separa los dos sentidos (art. 17.2 3°). Aquí tengo un segundo carril en mi sentido: no invado el de los que vienen de frente.', true),
+    { type: 'road', layout: { lanes: [DOWN, UP, UP], lines: ['solid', 'dashed'] }, marks: [{ t: 'crest', y: 96 }], vehicles: [me({ lane: 2, y: 278, turn: 'overtake' }), v('A', { lane: 2, y: 196, kind: 'truck', turn: 'none' })] }),
+  QS(Q('z5-dep-05', 'depassement', 'x4-sig-marques',
+    ['Les traits de la ligne médiane deviennent plus courts et plus rapprochés. Je suis derrière A, qui roule lentement. Que dois-je faire ?', 'Dépasser vite, avant le début de la ligne continue.', 'Ne commencer aucun dépassement maintenant.', 'Dépasser, puis me rabattre après la ligne continue.'],
+    ['Los trazos de la línea central se vuelven más cortos y más juntos. Voy detrás de A, que circula despacio. ¿Qué debo hacer?', 'Adelantar rápido, antes de que empiece la línea continua.', 'No empezar ahora ningún adelantamiento.', 'Adelantar y volver a mi carril después de la línea continua.'],
+    1, 'Los trazos cortos y juntos anuncian una línea continua (art. 72.3). Solo se empieza un adelantamiento si se puede terminar en muy poco tiempo y volver a la derecha sin molestar (art. 16.4 1° c y d), y la continua no se cruza (art. 72.2). Aquí empieza justo delante de A: ya no da tiempo.', true),
+    { type: 'road', layout: rural(['short-dashed', 120, 'solid']), vehicles: [me({ lane: 1, y: 272, turn: 'none' }), v('A', { lane: 1, y: 196 })] }),
+  QS(Q('z5-dep-06', 'depassement', 'z5-dep-situations',
+    ['La voiture A ralentit à l\'approche d\'un passage pour cyclistes sans feux ; le cycliste C attend au bord. Puis-je dépasser A par la gauche ?', 'Oui, si aucun cycliste n\'y est engagé.', 'Oui, en ralentissant à hauteur du passage.', 'Non, c\'est interdit à cet endroit.'],
+    ['El coche A reduce la velocidad al acercarse a un paso para ciclistas sin semáforos; el ciclista C espera en el borde. ¿Puedo adelantar a A por la izquierda?', 'Sí, si no hay ningún ciclista cruzando.', 'Sí, reduciendo la velocidad a la altura del paso.', 'No, está prohibido en ese lugar.'],
+    2, 'Está prohibido adelantar por la izquierda a un vehículo que se acerca a un paso para ciclistas (o de peatones) o que se detiene ante él, donde no hay agente ni semáforos (art. 17.2 5°), haya o no alguien cruzando ya.', true),
+    { type: 'road', layout: street({ zebras: [{ y: 104, bike: true }] }), vehicles: [me({ lane: 2, y: 280, turn: 'overtake' }), v('A', { lane: 2, y: 176 }), v('C', { kind: 'bike', turn: 'none', pos: { x: 108, y: 104, dir: 'E' } })] }),
+  QS(Q('z5-dep-07', 'depassement', 'dep-tram',
+    ['Le tram roule devant moi. À sa droite, des véhicules stationnés ne laissent aucune place. Rien ne vient en face. Puis-je le dépasser ?', 'Non, un tram se dépasse toujours par la droite.', 'Oui, par la gauche, sans gêner ceux d\'en face.', 'Oui, par la droite, en roulant sur le trottoir.'],
+    ['El tranvía circula delante de mí. A su derecha, los vehículos estacionados no dejan sitio. No viene nadie de frente. ¿Puedo adelantarlo?', 'No, a un tranvía siempre se le adelanta por la derecha.', 'Sí, por la izquierda, sin molestar a los que vienen de frente.', 'Sí, por la derecha, circulando por la acera.'],
+    1, 'Al tranvía se le adelanta por la derecha, pero se puede hacer por la izquierda si a la derecha no hay espacio, por ejemplo por vehículos estacionados, siempre que no se moleste ni se ponga en peligro a los que vienen de frente (art. 16.9).', true),
+    {
+      type: 'road',
+      layout: { lanes: [SW, DOWN, { dir: 'up', rails: true }, { kind: 'parking' }, SW] },
+      vehicles: [me({ lane: 2, y: 284, turn: 'overtake' }), v('T', { lane: 2, y: 168, kind: 'tram' }), parked('P', { lane: 3, y: 92 }), parked('P', { lane: 3, y: 150 }), parked('P', { lane: 3, y: 208 })],
+    }),
+  QS(Q('z5-dep-08', 'depassement', 'z5-placement',
+    ['En agglomération, rue à sens unique à deux bandes. A roule plus lentement sur la bande de gauche ; je suis sur celle de droite. Puis-je continuer à ma vitesse et passer à côté de lui ?', 'Oui, ici ce n\'est pas un dépassement.', 'Non, ce serait dépasser par la droite.', 'Oui, mais en klaxonnant pour l\'avertir.'],
+    ['En población, calle de sentido único con dos carriles. A circula más despacio por el carril izquierdo; yo voy por el derecho. ¿Puedo seguir a mi velocidad y pasar a su lado?', 'Sí, aquí no es un adelantamiento.', 'No, sería adelantar por la derecha.', 'Sí, pero tocando el claxon para avisarle.'],
+    0, 'En población, en una calzada de sentido único dividida en carriles, cada uno usa el carril que convenga a su destino (art. 9.4) y que un carril avance más rápido que otro no se considera adelantamiento (art. 16.2). Cambiarse de carril para pasar y volver delante sí sería una maniobra (art. 12.4). En población, el claxon solo sirve para evitar un accidente (art. 33.2).', true),
+    { type: 'road', layout: { lanes: [SW, UP, UP, SW] }, vehicles: [me({ lane: 2, y: 262 }), v('A', { lane: 1, y: 196 })], caption: 'sens unique, en agglomération' }),
+  QS(Q('z5-dep-09', 'depassement', 'z5-dep-situations',
+    ['Avant un carrefour à priorité de droite, une camionnette est arrêtée devant moi, feux de détresse allumés, pour une livraison. Rien ne vient en face. Puis-je la contourner ?', 'Non, il est interdit de dépasser ici.', 'Oui, ce n\'est pas un dépassement.', 'Non, je dois attendre qu\'elle reparte.'],
+    ['Antes de un cruce con prioridad de la derecha, una furgoneta está parada delante de mí, con los warnings encendidos, para hacer una entrega. No viene nadie de frente. ¿Puedo rodearla?', 'No, aquí está prohibido adelantar.', 'Sí, no es un adelantamiento.', 'No, debo esperar a que vuelva a arrancar.'],
+    1, 'El adelantamiento solo concierne a los conductores en movimiento (art. 16.1): rodear un vehículo parado no es adelantar, así que la prohibición de adelantar en un cruce con prioridad de la derecha (art. 17.2 2°) no se aplica. Como el obstáculo está en mi lado, cedo el paso a los que vienen de frente (art. 15.2) y, al llegar al cruce, a los que vienen por mi derecha.', true),
+    { type: 'road', layout: street({ crossStreet: { y: 50 } }), marks: [{ t: 'sign', x: 238, y: 150, sign: 'B17' }], vehicles: [me({ lane: 2, y: 282, turn: 'overtake' }), parked('A', { lane: 2, y: 182, kind: 'truck', blink: 'both' })] }),
+
+  /* ============ MANŒUVRES : placement, bandes, ronds-points ============ */
+  QS(Q('z5-man-01', 'manoeuvres', 'z5-placement',
+    ['En agglomération, il y a deux bandes dans chaque sens. Je veux tourner à gauche au prochain carrefour. Où dois-je me placer ?', 'Sur la bande 1, la plus à droite.', 'Sur l\'une ou l\'autre, avec le clignotant.', 'Sur la bande 2, à gauche de mon sens.'],
+    ['En población hay dos carriles en cada sentido. Quiero girar a la izquierda en el próximo cruce. ¿Dónde debo colocarme?', 'En el carril 1, el de más a la derecha.', 'En cualquiera de los dos, con el intermitente.', 'En el carril 2, a la izquierda de mi sentido.'],
+    2, 'Con dos carriles o más por sentido en población, cada uno elige el carril según su destino (art. 9.4), y entonces solo se gira a la izquierda desde el carril izquierdo (art. 19.6). Además, para girar a la izquierda hay que colocarse hacia la izquierda sin molestar a los que vienen de frente (art. 19.3 2°).'),
+    {
+      type: 'road',
+      layout: { lanes: [{ kind: 'sidewalk', w: 20 }, { dir: 'down', w: 36 }, { dir: 'down', w: 36 }, { dir: 'up', w: 36 }, { dir: 'up', w: 36 }, { kind: 'sidewalk', w: 20 }], lines: ['none', 'dashed', 'solid', 'dashed', 'none'], crossStreet: { y: 50 } },
+      marks: [{ t: 'spot', x: 178, y: 170, label: '2' }, { t: 'spot', x: 214, y: 170, label: '1' }],
+      vehicles: [me({ lane: 4, y: 282, turn: 'none' })],
+      caption: 'je veux tourner à gauche',
+    }),
+  QS(Q('z5-man-02', 'manoeuvres', 'z5-placement',
+    ['Je tourne à gauche au carrefour, dans une rue à double sens. Quelle trajectoire dois-je suivre ?', 'La trajectoire 1.', 'La trajectoire 2.', 'L\'une ou l\'autre, selon la circulation.'],
+    ['Giro a la izquierda en el cruce, hacia una calle de doble sentido. ¿Qué trayectoria debo seguir?', 'La trayectoria 1.', 'La trayectoria 2.', 'Cualquiera de las dos, según el tráfico.'],
+    1, 'Al girar a la izquierda en un cruce, el giro se hace lo más amplio posible para entrar por la derecha en la calzada a la que voy (art. 19.3 5°). La trayectoria 1 corta la curva y me lleva al lado izquierdo de la nueva calle, el de los que vienen de frente.'),
+    {
+      type: 'road',
+      layout: street({ crossStreet: { y: 90 } }),
+      marks: [
+        { t: 'path', d: 'M180 236 V158 Q180 106 132 106 H34', label: '1', lx: 22, ly: 106 },
+        { t: 'path', d: 'M180 236 V122 Q180 74 146 74 H34', label: '2', lx: 22, ly: 74 },
+      ],
+      vehicles: [me({ lane: 2, y: 262, turn: 'none' })],
+    }),
+  QS(Q('z5-man-03', 'manoeuvres', 'z5-placement',
+    ['Je veux aller tout droit au carrefour. Quelles bandes puis-je utiliser ?', 'Uniquement la bande du milieu.', 'La bande du milieu ou celle de droite.', 'N\'importe laquelle des trois bandes.'],
+    ['Quiero seguir recto en el cruce. ¿Qué carriles puedo usar?', 'Solo el carril central.', 'El carril central o el de la derecha.', 'Cualquiera de los tres carriles.'],
+    1, 'Las «flèches de sélection» indican el carril que hay que tomar para cada dirección, y en el cruce hay que seguir una de las direcciones marcadas en tu carril (art. 77.1). Recto lo permiten la flecha recta (centro) y la flecha recto-derecha (derecha).'),
+    {
+      type: 'road',
+      layout: {
+        lanes: [{ kind: 'sidewalk', w: 20 }, { dir: 'down', w: 38 }, { dir: 'up', w: 38, arrow: 'left' }, { dir: 'up', w: 38, arrow: 'straight' }, { dir: 'up', w: 38, arrow: 'straight-right' }, { kind: 'sidewalk', w: 20 }],
+        lines: ['none', 'solid', 'dashed', 'dashed', 'none'],
+        crossStreet: { y: 50 },
+        arrowsY: 190,
+      },
+      vehicles: [me({ lane: 2, y: 286, turn: 'none' })],
+    }),
+  QS(Q('z5-man-04', 'manoeuvres', 'z5-placement',
+    ['Je suis sur la bande marquée d\'une flèche vers la gauche, mais je voulais aller tout droit. Les bandes sont séparées par une ligne continue. Que dois-je faire ?', 'Suivre la flèche et tourner à gauche.', 'Continuer tout droit avec prudence.', 'Franchir la ligne avec le clignotant.'],
+    ['Estoy en el carril marcado con una flecha hacia la izquierda, pero quería seguir recto. Los carriles están separados por una línea continua. ¿Qué debo hacer?', 'Seguir la flecha y girar a la izquierda.', 'Seguir recto con prudencia.', 'Cruzar la línea con el intermitente.'],
+    0, 'En el cruce hay que seguir la dirección marcada en el carril en el que estás (art. 77.1), y la línea continua no se cruza (art. 72.2). Me he equivocado de carril: giro a la izquierda y busco otro camino.'),
+    {
+      type: 'road',
+      layout: {
+        lanes: [{ kind: 'sidewalk', w: 20 }, { dir: 'down', w: 38 }, { dir: 'up', w: 38, arrow: 'left' }, { dir: 'up', w: 38, arrow: 'straight' }, { dir: 'up', w: 38, arrow: 'straight-right' }, { kind: 'sidewalk', w: 20 }],
+        lines: ['none', 'solid', 'solid', 'solid', 'none'],
+        crossStreet: { y: 50 },
+        arrowsY: 170,
+      },
+      vehicles: [me({ lane: 2, y: 250, turn: 'none' })],
+    }),
+  QS(Q('z5-man-05', 'manoeuvres', 'z5-placement',
+    ['En agglomération, rue à sens unique à deux bandes. Je suis sur la bande de gauche et je voudrais tourner à droite au carrefour. A roule à ma hauteur sur la bande de droite. Puis-je tourner ?', 'Oui, si je mets mon clignotant à temps.', 'Oui, A doit me laisser passer.', 'Non, je dois être sur la bande de droite.'],
+    ['En población, calle de sentido único con dos carriles. Estoy en el carril izquierdo y quiero girar a la derecha en el cruce. A circula a mi altura por el carril derecho. ¿Puedo girar?', 'Sí, si pongo el intermitente a tiempo.', 'Sí, A debe dejarme pasar.', 'No, tengo que estar en el carril derecho.'],
+    2, 'Cuando se circula por carriles según el art. 9.4 (sentido único con carriles, en población), solo se puede girar a la derecha desde el carril derecho (art. 19.6). Desde el izquierdo cortaría el paso a A: sigo recto y vuelvo por otro camino.'),
+    {
+      type: 'road',
+      layout: { lanes: [SW, UP, UP, SW], crossStreet: { y: 60 } },
+      vehicles: [me({ lane: 1, y: 200, path: 'M140 176 V112 Q140 76 176 76 H300' }), v('A', { lane: 2, y: 206 })],
+      caption: 'sens unique, en agglomération',
+    }),
+  QS(Q('z5-man-06', 'manoeuvres', 'z5-rondpoint-bandes',
+    ['Rond-point à deux bandes. Je roule sur la bande intérieure et je veux prendre la prochaine sortie. A roule sur la bande extérieure, juste à côté de moi. Que dois-je faire ?', 'Sortir : A doit me laisser passer.', 'Laisser passer A ou faire un tour de plus.', 'Sortir en klaxonnant pour prévenir A.'],
+    ['Rotonda de dos carriles. Circulo por el carril interior y quiero tomar la próxima salida. A circula por el carril exterior, justo a mi lado. ¿Qué debo hacer?', 'Salir: A debe dejarme pasar.', 'Dejar pasar a A o dar otra vuelta.', 'Salir tocando el claxon para avisar a A.'],
+    1, 'Pasar del carril interior al exterior para salir es un cambio de carril, es decir, una maniobra: cedo el paso a quien circula por el carril exterior (art. 12.4). Si no hay hueco, doy otra vuelta. Para salir, intermitente derecho (art. 19.2).'),
+    {
+      type: 'roundabout',
+      ringLanes: 2,
+      signs: B1_ALL,
+      vehicles: [
+        { ...me({ turn: 'none', inRing: true, ringLane: 'inner', ringAt: 64, blink: 'right' }), path: 'M210 166 Q226 172 246 182 H312' },
+        { ...v('A', { turn: 'none', inRing: true, ringLane: 'outer', ringAt: 68 }) },
+      ],
+      caption: 'je veux sortir ici, à droite',
+    }),
+  QS(Q('z5-man-07', 'manoeuvres', 'z5-rondpoint-bandes',
+    ['Rond-point à deux bandes. Je vais prendre la première sortie, à droite. Quelle bande convient le mieux dans l\'anneau ?', 'La bande extérieure.', 'La bande intérieure.', 'Celle qui est libre, peu importe.'],
+    ['Rotonda de dos carriles. Voy a tomar la primera salida, a la derecha. ¿Qué carril conviene más en el anillo?', 'El carril exterior.', 'El carril interior.', 'El que esté libre, da igual.'],
+    0, 'En el anillo se usa el carril que mejor convenga al destino (art. 9.3.1). Para salir enseguida, el exterior: desde el interior habría que cambiar de carril justo antes de la salida, cediendo el paso a los del exterior (art. 12.4). Para salir, intermitente derecho (art. 19.2).'),
+    { type: 'roundabout', ringLanes: 2, signs: B1_ALL, vehicles: [me({ turn: 'none', blink: 'right' })], caption: 'je prends la 1re sortie' }),
+  QS(Q('z5-man-08', 'manoeuvres', 'z5-placement',
+    ['La circulation est fluide. Ma bande se termine un peu plus loin. A roule sur la bande de droite, presque à ma hauteur. Qui doit céder le passage ?', 'A, c\'est le principe de la tirette.', 'Le premier qui arrive au rétrécissement.', 'Moi, je change de bande.'],
+    ['El tráfico es fluido. Mi carril termina un poco más adelante. A circula por el carril derecho, casi a mi altura. ¿Quién debe ceder el paso?', 'A, es el principio de la cremallera.', 'El primero que llega al estrechamiento.', 'Yo, que cambio de carril.'],
+    2, 'La «tirette» (cremallera) solo se aplica cuando el tráfico está fuertemente ralentizado (art. 12bis). Con tráfico fluido, pasar al carril de al lado es un cambio de carril, es decir, una maniobra: cedo el paso a A (art. 12.4).'),
+    { type: 'road', layout: { lanes: [{ dir: 'up', end: 96 }, UP] }, vehicles: [me({ lane: 0, y: 236, turn: 'lane-right' }), v('A', { lane: 1, y: 222, turn: 'none' })], caption: 'circulation fluide' }),
+
+  /* ============ BUS, TRAMS, PIÉTONS, CYCLISTES ============ */
+  QS(Q('z5-usa-01', 'priorite', 'z5-arrets-passages',
+    ['En agglomération, le bus B a mis son clignotant gauche pour quitter son arrêt. Le bus doit-il me céder le passage ?', 'Oui, comme tout conducteur qui démarre.', 'Oui, car je suis déjà sur la chaussée.', 'Non, je dois le laisser quitter son arrêt.'],
+    ['En población, el autobús B ha puesto el intermitente izquierdo para salir de su parada. ¿Debe el autobús cederme el paso?', 'Sí, como todo conductor que arranca.', 'Sí, porque yo ya estoy en la calzada.', 'No, debo dejarle salir de su parada.'],
+    2, 'En población, quien sigue la misma dirección debe dejar salir al autobús que ha señalado con el intermitente que reanuda la marcha: reducir y, si hace falta, parar. Por excepción al art. 12.4, el autobús no tiene que cederle el paso (art. 39).', true),
+    { type: 'road', layout: street(), marks: [{ t: 'stop', x: 214, y: 112, label: 'BUS' }], vehicles: [me({ lane: 2, y: 276, turn: 'none' }), parked('B', { lane: 2, y: 150, dx: 4, kind: 'bus', blink: 'left' })], caption: 'en agglomération' }),
+  QS(Q('z5-usa-02', 'usagers-faibles', 'z5-arrets-passages',
+    ['Le tram, qui roule en sens inverse, est arrêté à un arrêt sans refuge. Les voyageurs descendent de son côté droit, vers le trottoir d\'en face. Que dois-je faire ?', 'Passer à côté du tram à allure modérée.', 'M\'arrêter jusqu\'au départ du tram.', 'Passer sans changer ma vitesse.'],
+    ['El tranvía, que circula en sentido contrario, está parado en una parada sin isleta. Los viajeros bajan por su lado derecho, hacia la acera de enfrente. ¿Qué debo hacer?', 'Pasar junto al tranvía a velocidad moderada.', 'Detenerme hasta que salga el tranvía.', 'Pasar sin cambiar mi velocidad.'],
+    0, 'Para pasar junto a un tranvía o un autobús parado para que suban o bajen viajeros hay que moderar la velocidad (art. 40.3.1). La obligación de detenerse en una parada sin isleta solo concierne a quien circula por el lado por donde suben y bajan los viajeros (art. 40.3.2), que aquí es el otro lado.'),
+    {
+      type: 'road',
+      layout: { lanes: [{ kind: 'sidewalk', w: 20 }, { dir: 'down', w: 36 }, { dir: 'down', w: 36, rails: true }, { dir: 'up', w: 36, rails: true }, { dir: 'up', w: 36 }, { kind: 'sidewalk', w: 20 }], lines: ['none', 'dashed', 'dashed', 'dashed', 'none'] },
+      marks: [{ t: 'stop', x: 78, y: 112, label: 'TRAM' }, { t: 'person', x: 106, y: 150 }, { t: 'person', x: 100, y: 178 }, { t: 'person', x: 78, y: 160 }],
+      vehicles: [parked('T', { lane: 2, y: 160, kind: 'tram' }), me({ lane: 4, y: 270 })],
+    }),
+  QS(Q('z5-usa-03', 'usagers-faibles', 'z5-arrets-passages',
+    ['Il n\'y a pas de feux. Un piéton est déjà engagé sur le passage, mais sur l\'autre moitié de la chaussée. Que dois-je faire ?', 'Passer : il n\'est pas sur ma moitié.', 'M\'arrêter et lui céder le passage.', 'Passer vite, avant qu\'il n\'arrive.'],
+    ['No hay semáforos. Un peatón ya ha empezado a cruzar por el paso, pero por la otra mitad de la calzada. ¿Qué debo hacer?', 'Pasar: no está en mi mitad.', 'Detenerme y cederle el paso.', 'Pasar rápido, antes de que llegue.'],
+    1, 'Donde no hay agente ni semáforos, el conductor se acerca al paso de peatones a velocidad moderada y cede el paso a los peatones que ya están cruzando, en cualquier parte del paso, o que van a hacerlo (art. 40.4.2).'),
+    { type: 'road', layout: street({ zebras: [{ y: 120 }] }), marks: [{ t: 'person', x: 142, y: 124, label: 'piéton' }, { t: 'path', d: 'M150 106 H170', color: '#111111' }], vehicles: [me({ lane: 2, y: 256 })] }),
+  QS(Q('z5-usa-04', 'usagers-faibles', 'z5-arrets-passages',
+    ['La file devant moi est arrêtée juste après le passage pour piétons. Que dois-je faire ?', 'M\'arrêter avant le passage.', 'Avancer et m\'arrêter sur le passage.', 'Avancer pour ne pas bloquer la rue.'],
+    ['La fila de delante está parada justo después del paso de peatones. ¿Qué debo hacer?', 'Detenerme antes del paso.', 'Avanzar y detenerme sobre el paso.', 'Avanzar para no bloquear la calle.'],
+    0, 'No se puede entrar en un paso de peatones si el atasco hace probable quedarse parado encima (art. 40.5): espero antes del paso hasta que haya sitio al otro lado.'),
+    { type: 'road', layout: street({ zebras: [{ y: 166 }] }), vehicles: [parked('A', { lane: 2, y: 128 }), parked('B', { lane: 2, y: 72 }), parked('C', { lane: 2, y: 16 }), me({ lane: 2, y: 262, turn: 'none' })] }),
+  QS(Q('z5-usa-05', 'usagers-faibles', 'z5-arrets-passages',
+    ['Le cycliste C traverse sur le passage pour cyclistes. Il n\'y a pas de feux. Que dois-je faire ?', 'Passer : c\'est au cycliste de céder.', 'Passer derrière lui sans ralentir.', 'Le laisser achever sa traversée.'],
+    ['El ciclista C cruza por el paso para ciclistas. No hay semáforos. ¿Qué debo hacer?', 'Pasar: es el ciclista quien debe ceder.', 'Pasar por detrás de él sin reducir.', 'Dejarle terminar de cruzar.'],
+    2, 'Me acerco al paso para ciclistas a velocidad moderada, sin poner en peligro a los que ya lo cruzan ni molestarles mientras terminan de cruzar; si hace falta, me detengo (art. 40ter).'),
+    { type: 'road', layout: street({ zebras: [{ y: 128, bike: true }] }), vehicles: [v('C', { kind: 'bike', turn: 'none', pos: { x: 156, y: 128, dir: 'E' } }), me({ lane: 2, y: 262 })] }),
+  QS(Q('z5-usa-06', 'usagers-faibles', 'usa-cyclistes',
+    ['Je tourne à gauche. Le cycliste A arrive en face sur la piste cyclable et continue tout droit. Que dois-je faire ?', 'Tourner avant lui, il roule lentement.', 'Le laisser passer, puis tourner.', 'Tourner : il circule sur une piste séparée.'],
+    ['Giro a la izquierda. El ciclista A viene de frente por el carril bici y sigue recto. ¿Qué debo hacer?', 'Girar antes que él, va despacio.', 'Dejarle pasar y luego girar.', 'Girar: circula por una pista separada.'],
+    1, 'Al girar a la izquierda cedo el paso a los que vienen de frente (art. 19.3 3°) y, al cambiar de dirección, a los que circulan por otras partes de la misma vía pública, como la «piste cyclable» (art. 19.4).'),
+    {
+      type: 'road',
+      layout: { lanes: [{ kind: 'sidewalk', w: 18 }, { dir: 'down', kind: 'bike', w: 22 }, { dir: 'down', w: 38 }, { dir: 'up', w: 38 }, { dir: 'up', kind: 'bike', w: 22 }, { kind: 'sidewalk', w: 18 }], lines: ['none', 'dashed', 'dashed', 'dashed', 'none'], crossStreet: { y: 90, side: 'left' } },
+      vehicles: [me({ lane: 3, y: 250, path: 'M179 226 V130 Q179 74 136 74 H12' }), v('A', { lane: 1, y: 22, kind: 'bike' })],
+    }),
+
+  /* ============ ARRÊT ET STATIONNEMENT ============ */
+  QS(Q('z5-sta-01', 'stationnement', 'z5-sta-lieux',
+    ['Où puis-je stationner ?', 'À l\'emplacement 1.', 'À l\'emplacement 2.', 'À l\'emplacement 3.'],
+    ['¿Dónde puedo estacionar?', 'En el lugar 1.', 'En el lugar 2.', 'En el lugar 3.'],
+    2, 'Están prohibidos la parada y el estacionamiento a menos de 5 m del borde de la calzada transversal de un cruce (art. 24 7°) y en la calzada a menos de 5 m antes de un paso de peatones (art. 24 4°). El lugar 1 está a 2 m del cruce y el 2, a 3 m antes del paso: solo queda el 3.'),
+    {
+      type: 'road',
+      layout: street({ crossStreet: { y: 50, side: 'right' }, zebras: [{ y: 170 }] }, 'none'),
+      marks: [
+        { t: 'spot', x: 189, y: 120, label: '1' },
+        { t: 'spot', x: 189, y: 212, label: '2' },
+        { t: 'spot', x: 189, y: 285, label: '3' },
+        { t: 'dim', x: 230, y: 82, to: 100, label: '2 m' },
+        { t: 'dim', x: 230, y: 179, to: 192, label: '3 m' },
+        { t: 'dim', x: 262, y: 179, to: 265, label: '10 m' },
+      ],
+      vehicles: [],
+    }),
+  QS(Q('z5-sta-02', 'stationnement', 'z5-sta-lieux',
+    ['Je m\'immobilise devant l\'entrée de garage d\'un voisin, juste le temps de faire descendre un passager. Est-ce permis ?', 'Non, même un arrêt y est interdit.', 'Oui, c\'est un arrêt, pas un stationnement.', 'Oui, si je laisse le moteur tourner.'],
+    ['Me detengo delante de la entrada de garaje de un vecino, solo el tiempo de que baje un pasajero. ¿Está permitido?', 'No, ahí está prohibida incluso la parada.', 'Sí, es una parada, no un estacionamiento.', 'Sí, si dejo el motor en marcha.'],
+    1, 'Delante de los «accès carrossables» está prohibido el estacionamiento (art. 25.1 3°), no la parada: inmovilizarse el tiempo justo para que suba o baje alguien es un «arrêt» (art. 2.22), y aquí no está prohibido.'),
+    { type: 'road', layout: street(), marks: [{ t: 'garage', x: 228, y: 150 }, { t: 'person', x: 211, y: 160, label: 'passager' }], vehicles: [parked('moi', { you: true, lane: 2, y: 150, dx: 6 })] }),
+  QS(Q('z5-sta-03', 'stationnement', 'z5-sta-lieux',
+    ['Rue étroite à double sens. La voiture B est stationnée de l\'autre côté. Puis-je stationner juste en face d\'elle, en P ?', 'Non, le croisement deviendrait malaisé.', 'Oui, je stationne bien à ma droite.', 'Oui, si je laisse 1 m entre nous.'],
+    ['Calle estrecha de doble sentido. El coche B está estacionado en el otro lado. ¿Puedo estacionar justo enfrente de él, en P?', 'No, el cruce de vehículos sería difícil.', 'Sí, estaciono a mi derecha como debe ser.', 'Sí, si dejo 1 m entre nosotros.'],
+    0, 'En una calzada de doble sentido está prohibido estacionar en el lado opuesto a otro vehículo parado o estacionado si eso hace difícil que se crucen otros dos vehículos (art. 25.1 11°).'),
+    { type: 'road', layout: { lanes: [SW, { dir: 'down', w: 32 }, { dir: 'up', w: 32 }, SW], lines: ['none', 'none', 'none'] }, marks: [{ t: 'spot', x: 181, y: 150, label: 'P' }], vehicles: [parked('B', { lane: 1, y: 150, dx: -5, heading: 'down' }), me({ lane: 2, y: 270, turn: 'none' })] }),
+  QS(Q('z5-sta-04', 'stationnement', 'z5-sta-lieux',
+    ['La piste cyclable se termine ici et les cyclistes rejoignent la chaussée. Puis-je stationner en P, à 3 m de cet endroit ?', 'Non, il faut rester à 5 m au moins.', 'Oui, la piste cyclable est terminée.', 'Oui, mais seulement pour 15 minutes.'],
+    ['El carril bici termina aquí y los ciclistas pasan a la calzada. ¿Puedo estacionar en P, a 3 m de ese punto?', 'No, hay que quedarse al menos a 5 m.', 'Sí, el carril bici ya ha terminado.', 'Sí, pero solo 15 minutos.'],
+    0, 'Están prohibidos la parada y el estacionamiento en los carriles bici y a menos de 5 m del lugar donde los ciclistas deben dejar el carril bici para circular por la calzada, o al revés (art. 24 2°).'),
+    {
+      type: 'road',
+      layout: { lanes: [SW, DOWN, { dir: 'up', w: 64 }, SW], lines: ['none', 'none', 'none'] },
+      marks: [{ t: 'strip', x: 188, w: 24, y1: 170, y2: 320 }, { t: 'spot', x: 200, y: 118, label: 'P' }, { t: 'dim', x: 242, y: 138, to: 170, label: '3 m' }],
+      vehicles: [me({ lane: 2, y: 262, dx: -10, turn: 'none' })],
+    }),
+  QS(Q('z5-sta-05', 'stationnement', 'z5-sta-lieux',
+    ['Hors agglomération, la route est bordée d\'un accotement de plain-pied praticable. Où dois-je stationner ?', 'À l\'emplacement 1, sur la chaussée.', 'Où je veux, s\'il n\'y a pas de signal.', 'À l\'emplacement 2, sur l\'accotement.'],
+    ['Fuera de población, la carretera tiene un arcén al mismo nivel y practicable. ¿Dónde debo estacionar?', 'En el lugar 1, en la calzada.', 'Donde quiera, si no hay señal.', 'En el lugar 2, en el arcén.'],
+    2, 'El vehículo parado o estacionado se coloca fuera de la calzada, en el «accotement de plain-pied» y, fuera de población, en cualquier arcén (art. 23.1 2°). Solo si no hay arcén practicable se estaciona en la calzada.'),
+    { type: 'road', layout: { lanes: [{ kind: 'shoulder' }, DOWN, UP, { kind: 'shoulder' }] }, marks: [{ t: 'spot', x: 189, y: 150, label: '1' }, { t: 'spot', x: 216, y: 150, label: '2' }], vehicles: [me({ lane: 2, y: 272, turn: 'none' })], caption: 'hors agglomération' }),
+
+  /* ============ AUTOROUTE ============ */
+  QS(Q('z5-aut-01', 'autoroute', 'x4-aut-acces',
+    ['J\'arrive au bout de la bande d\'accélération et je ne trouve aucun créneau pour m\'insérer. Que dois-je faire ?', 'Continuer sur la bande d\'arrêt d\'urgence.', 'M\'insérer : A devra bien freiner.', 'Ralentir, voire m\'arrêter, et attendre.'],
+    ['Llego al final del carril de aceleración y no encuentro ningún hueco para incorporarme. ¿Qué debo hacer?', 'Seguir por el arcén de emergencia.', 'Incorporarme: A tendrá que frenar.', 'Reducir, incluso detenerme, y esperar.'],
+    2, 'Quien se incorpora hace una maniobra y cede el paso a los que ya circulan (art. 12.4); solo puede seguir si puede hacerlo sin riesgo (art. 12.5). Circular por el arcén de emergencia está prohibido (art. 9.7). Si no hay hueco, se espera al final del carril de aceleración.'),
+    { type: 'road', layout: { lanes: [UP, UP, { dir: 'up', end: 96 }] }, vehicles: [me({ lane: 2, y: 172, turn: 'none' }), v('A', { lane: 1, y: 196, turn: 'none' }), v('B', { lane: 1, y: 136, turn: 'none' }), v('C', { lane: 1, y: 256, turn: 'none' }), v('D', { lane: 0, y: 166, turn: 'none' })], caption: 'autoroute chargée' }),
+  QS(Q('z5-aut-02', 'autoroute', 'x4-sig-feux-agents',
+    ['Au-dessus de la bande réservée aux heures de pointe, une croix rouge est allumée. Je sors à la prochaine sortie, dans 2 km. Puis-je déjà rouler sur cette bande ?', 'Oui, puisque je vais bientôt sortir.', 'Non, la croix rouge me l\'interdit.', 'Oui, si je roule à 70 km/h au moins.'],
+    ['Sobre el carril reservado a las horas punta hay una cruz roja encendida. Salgo en la próxima salida, a 2 km. ¿Puedo circular ya por ese carril?', 'Sí, ya que voy a salir pronto.', 'No, la cruz roja me lo prohíbe.', 'Sí, si voy al menos a 70 km/h.'],
+    1, 'La cruz roja sobre un carril significa que está prohibido circular por él, salvo los vehículos del art. 9.7 (art. 62bis 1°). La excepción para entrar en la autopista o salir de ella (art. 22decies) solo vale cuando ni las señales ni los semáforos del carril de horas punta funcionan.'),
+    {
+      type: 'road',
+      layout: { lanes: [UP, UP, { dir: 'up', kind: 'peak' }], lines: ['dashed', 'wide-dashed'] },
+      marks: [{ t: 'lanesig', x: 120, y: 34, s: 'down' }, { t: 'lanesig', x: 160, y: 34, s: 'down' }, { t: 'lanesig', x: 200, y: 34, s: 'cross' }, { t: 'text', x: 262, y: 120, text: 'bande heures' }, { t: 'text', x: 262, y: 133, text: 'de pointe' }],
+      vehicles: [me({ lane: 1, y: 262, turn: 'lane-right' }), v('A', { lane: 0, y: 150 })],
+    }),
+  QS(Q('z5-aut-03', 'autoroute', 'x4-aut-acces',
+    ['Bouchon sur une autoroute à deux bandes. Je suis sur la bande de gauche. Pour former le couloir de secours, je dois :', 'Serrer à gauche.', 'Serrer à droite.', 'Rester au milieu de ma bande.'],
+    ['Atasco en una autopista de dos carriles. Estoy en el carril izquierdo. Para formar el pasillo de emergencia, debo:', 'Arrimarme a la izquierda.', 'Arrimarme a la derecha.', 'Quedarme en el centro de mi carril.'],
+    0, 'Con dos carriles, los del carril izquierdo se arriman a la izquierda y los del derecho a la derecha, para dejar entre ellos el «couloir de secours» (art. 9.8 1°).'),
+    { type: 'road', layout: { lanes: [UP, UP, { dir: 'up', kind: 'emergency' }], lines: ['dashed', 'solid'] }, vehicles: [me({ lane: 0, y: 250, turn: 'none' }), parked('A', { lane: 0, y: 186 }), parked('B', { lane: 0, y: 122 }), parked('C', { lane: 1, y: 270 }), parked('D', { lane: 1, y: 206 }), parked('E', { lane: 1, y: 142 })], caption: 'bouchon' }),
+]

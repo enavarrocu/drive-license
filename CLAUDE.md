@@ -28,33 +28,42 @@ pnpm dev          # http://localhost:3000 (BD en ./data/permis.db)
 pnpm build        # .output/
 pnpm preview      # node .output/server/index.mjs
 pnpm typecheck    # nuxt typecheck (vue-tsc) — debe pasar antes de cada commit
-pnpm validate     # coherencia del banco de preguntas (ids, temas, teoría, baremo)
+pnpm validate     # coherencia y calidad del banco + verificador de escenas (ver «Flujo de trabajo»)
+pnpm validate --strict   # además, los avisos de calidad hacen fallar
+pnpm test         # vitest: unitarios + prueba de humo de la API (usa .output: haz pnpm build antes)
+npx tsx scripts/check-scenes.ts -v   # detalle del verificador de escenas de prioridad
 ```
 
 Variables: `NUXT_SESSION_PASSWORD` (≥ 32 chars, obligatoria), `NUXT_DB_PATH`,
-`NUXT_ALLOW_REGISTRATION` (además, `REGISTRATION_OPEN` en `server/utils/registration.ts` las cierra en código mientras la app no sea pública: hoy `false`), `NUXT_ADMIN_USERS` (usuarios admin, separados por comas: ven `/reports`). Ver `.env.example` y `DEPLOYMENT.md`.
+`NUXT_ALLOW_REGISTRATION` (además, `REGISTRATION_OPEN` en `server/utils/registration.ts` las cierra en código mientras la app no sea pública: hoy `false`), `NUXT_ADMIN_USERS` (usuarios admin, separados por comas: ven `/reports`), `NUXT_BACKUP_DISABLED` /
+`NUXT_BACKUP_KEEP` (copias diarias de la BD, 14 por defecto). Ver `.env.example` y `DEPLOYMENT.md`.
 
 ## Mapa del repo
 
 ```
 app/
   pages/          bienvenue (portada pública), index, course, study, exam, exams/index, exams/[id], glossary, signs, reports (admin), login, register
-  components/     QuestionCard, TheoryPanel, LangToggle, ExamResultCard (auto-importados)
+  components/     QuestionCard, TheoryPanel, LangToggle, ExamResultCard, GlossTerm, ReportForm, SignQuiz, ChapterQuiz (auto-importados)
   composables/    useStore.ts  ← ÚNICA fuente de estado de usuario (prefs, progreso, curso, exámenes) ↔ API
-                  useHotkeys.ts (atajos de teclado de /study y /exam), useSignPopup.ts
+                  useHotkeys.ts (atajos de teclado), useSwipe.ts (deslizar en móvil), useSignPopup.ts
                   usePwa.ts (instalación, online/offline; lo alimenta plugins/pwa.client.ts)
   plugins/        pwa.client.ts (registra public/sw.js?v=<buildId> en prod; en dev desregistra)
   middleware/     auth.global.ts (todo requiere sesión salvo /bienvenue, /login y /register; sin sesión `/` → /bienvenue)
   layouts/        default.vue (cabecera, nav, logout)
   data/           CONTENIDO: themes (16), theory, questions*.ts, q.ts (helpers), course/ (part1–4, 20 cap.), glossary, signs, signImages, signPictos
-  lib/            exam.ts (baremo, muestreo), scene.ts (SVG de cruces), md.ts (markdown ligero), speech.ts (voz)
+  lib/            exam.ts (baremo, muestreo), scene.ts (SVG de cruces y carreteras), priority.ts (reglas de prioridad para
+                  verificar escenas), srs.ts (repaso espaciado), signQuiz.ts, glossRefs.ts, signRefs.ts, md.ts, speech.ts, outbox.ts
   types.ts        tipos compartidos
 server/
-  utils/db.ts     conexión SQLite + esquema (CREATE TABLE IF NOT EXISTS) + helpers; utils/exams.ts
+  utils/db.ts     conexión SQLite + esquema (CREATE TABLE IF NOT EXISTS) + `migrate()` (ALTER idempotentes) + helpers
+                  (progress con streak/seen_at, study_days en Europe/Brussels, reports); utils/exams.ts, admin.ts,
+                  registration.ts, backup.ts
+  plugins/        backup.ts (copia diaria en <dir BD>/backups, integrity_check, rotación), errors.ts (logs JSON de 5xx)
   api/            auth/{register,login,logout,config}, me.get, prefs.put, progress/{record,flag,reset}, course/read, exams/{index,[id],stats},
-                  reports/{index.post (usuario), index.get, [id].put (admin)} — `utils/admin.ts`: `isAdmin`, `requireAdmin`
+                  reports/{index.post (usuario), index.get, [id].put (admin)}, admin/{backups.get, backup.post}
 public/           manifest.webmanifest, sw.js (service worker a mano), offline.html, icons/ (generados)
-scripts/          validate-data.ts, gen-icons.ts (PNG sin dependencias → `pnpm icons`)
+scripts/          validate-data.ts (+ checks.ts calidad, check-scenes.ts escenas), gen-icons.ts (`pnpm icons`)
+tests/            vitest (unitarios de app/lib y datos; api.smoke.test.ts arranca .output en el puerto 3132)
 Dockerfile · DEPLOYMENT.md · README.md
 ```
 
@@ -71,6 +80,17 @@ Dockerfile · DEPLOYMENT.md · README.md
 - **Escenas** (`lib/scene.ts`): brazos N/E/S/W; la derecha de un vehículo que llega desde S es E,
   desde E es N, desde N es W, desde W es S. `you: true` = el candidato («moi»). Comprueba la
   lógica de prioridad antes de escribir la respuesta: es donde más fácil es equivocarse.
+  `pnpm validate` la comprueba con `lib/priority.ts` (sirena, tranvía, semáforos > señales, B1/B5/B9/B15,
+  derecha, giro a la izquierda cede al de frente, rotonda con `inRing`, sentido único, incorporación,
+  bloqueos): una MISMATCH es error. No modela peatones, carreteras sin cruce ni adelantamientos (salen
+  como «no comprobadas»). Interpretaciones del motor: una rotonda cuenta como señalizada si algún
+  acceso tiene B1/B5; la SUL se detecta por la leyenda «excepté cyclistes»; `turn: 'none'` fuera de
+  rotonda no participa; una señal en el brazo prevalece sobre `mainAxis`.
+  Para carreteras rectas, carriles y marcas: `layout`, `marks` (spot, dim, sign, stop, garage, crest,
+  lanesig, person, path…), `ringLanes: 2` y, en vehículos, `lane`/`pos`/`path`/`blink`.
+- **Notas por opción** (`app/data/optionNotes.ts`): por qué es falsa cada opción incorrecta (una
+  entrada por opción, `null` en la correcta; validate lo comprueba). Cubren todas las preguntas graves;
+  si cambias las opciones de una pregunta, actualiza sus notas.
 - Las cifras del código belga (límites por región, 0,5 g/l, 5/15/20 m, M36/M18…) se
   contrastaron con fuentes belgas en sept–oct 2026 y se revisó TODO el contenido (preguntas,
   teoría, curso, glosario, señales) contra el texto consolidado del Code de la route
@@ -143,7 +163,13 @@ Dockerfile · DEPLOYMENT.md · README.md
 
 ## Flujo de trabajo
 
-1. `pnpm validate && pnpm typecheck` antes de proponer un commit.
+1. `pnpm validate --strict && pnpm typecheck && pnpm build && pnpm test` antes de proponer un commit
+   (la prueba de humo de la API usa el `.output` existente). Los tests unitarios solo importan módulos
+   puros (sin auto-imports de Nuxt): extrae la lógica a `app/lib` para testearla.
+   - Pruebas en Chrome con varios servidores a la vez: las cookies de sesión se comparten entre puertos
+     del mismo host; usa un host propio por servidor (`<nombre>.localhost:<puerto>`).
+   - Para un usuario de prueba con el registro cerrado: insértalo en la BD de prueba con el hash de
+     `hashPassword` (ver `tests/api.smoke.test.ts`); nunca dejes `REGISTRATION_OPEN = true`.
 2. Para probar la API en local: `pnpm build && NUXT_SESSION_PASSWORD=$(openssl rand -base64 48) NUXT_DB_PATH=./data/test.db pnpm preview` y `curl` con cookie (`-c jar -b jar`).
 3. Commits pequeños y descriptivos; `pnpm-lock.yaml` siempre versionado (Docker usa `--frozen-lockfile`).
 4. Historia del proyecto: v0.1/v0.2 fueron una SPA Vite (`../permis-trainer`, estática, localStorage);
@@ -154,7 +180,15 @@ Dockerfile · DEPLOYMENT.md · README.md
 - 637 preguntas en 16 temas. Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
   `z-prio/vit/dep/alc-NN`), -extra4 (resto de temas, `z-sig/sta/aut/usa/man/ecl/veh/per-NN`) y uno por
   tema nuevo: -panneaux (`z-pan-NN`), -mecanique (`z-mec-NN`), -accidents (`z-acc-NN`),
-  -comportement (`z-com-NN`). Siguiente bloque: `questions-extra5.ts`, ids `z5-<tema>-NN`.
+  -comportement (`z-com-NN`) y -extra5 (31 escenas de adelantamiento, carriles, rotondas de 2 carriles,
+  tranvía, peatones, estacionamiento y autopista, `z5-<tema>-NN`). Siguiente bloque: `questions-extra6.ts`,
+  ids `z6-<tema>-NN`.
+- Modos de estudio: repaso inteligente (por defecto), faltas graves, errores de un examen (`?ids=`),
+  quiz de señales (`/signs?mode=quiz`, progreso con ids `sign:<código>` en la misma tabla `progress`),
+  mini-test por capítulo del curso (`ChapterQuiz`, con un mapa capítulo → theoryId dentro del componente),
+  mort subite en `/exam`.
+- Objetivo diario y racha: tabla `study_days` (día en Europe/Brussels), cada respuesta de estudio suma;
+  la racha llega hasta hoy, o hasta ayer si hoy aún no se cumplió. Solo cuenta el estudio (no el simulacro).
 - Temas nuevos (25 oct 2026): `panneaux`, `mecanique`, `accidents`, `comportement` (no graves), con
   teoría en `theory.ts` y capítulos 17–20 del curso (`course/part4.ts`).
 - `grave: true` aparece también en algunas preguntas de autopista, maniobras, usuarios vulnerables y
@@ -206,4 +240,11 @@ Dockerfile · DEPLOYMENT.md · README.md
        exportar datos (RGPD). Al abrir: `REGISTRATION_OPEN = true` y enlazar el registro desde la portada.
   7. ~~Móvil: deslizar para pasar a la siguiente pregunta~~ (hecho: `composables/useSwipe.ts` en `/study`;
      solo gestos claramente horizontales ≥ 70 px, ignora campos de texto y la burbuja del glosario).
+- Mejoras propuestas el 25 oct 2026 (tarde), hechas: comprobaciones de calidad en validate, verificador de
+  escenas, quiz de señales, tests, escenas nuevas, notas por opción (graves), mini-test por capítulo,
+  copias de seguridad y logs de errores, objetivo diario.
+- Pendiente: recordatorio diario en el móvil (web push con VAPID, tabla `push_subscriptions`, plugin
+  con intervalo hacia las 19:00 de Bruselas, `push`/`notificationclick` en `sw.js`; necesita la dependencia
+  `web-push` y variables nuevas; en iOS solo con la PWA instalada). Notas por opción para las preguntas no
+  graves.
 - Descartado: panel de administración de preguntas (se editan en `app/data`).

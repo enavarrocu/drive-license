@@ -777,4 +777,55 @@ export const optionNotes: Record<string, (string | null)[]> = {
     null,
     'Cruzar la mediana para cambiar de sentido está prohibido y es extremadamente peligroso.',
   ],
+  // ── Escenas (questions-extra5) ───────────────────────────────────────────
+  'z5-dep-01': [
+    null,
+    'La discontinua está del lado del otro sentido: con dos líneas juntas solo cuenta la que tienes más cerca (art. 72.4).',
+    'Que no venga nadie no cambia nada: una línea continua no se cruza para adelantar (art. 72.2).',
+  ],
+  'z5-dep-02': [
+    'Quedarse a la izquierda alarga el adelantamiento y obliga a circular a la izquierda de una continua; el código permite justo lo contrario: volver.',
+    null,
+    'No hace falta el permiso de A: el derecho a volver a cruzar las líneas viene del art. 72.4, no de una ráfaga de luces.',
+  ],
+  'z5-dep-03': [
+    '1 m es el mínimo en población; fuera de población son al menos 1,5 m (art. 40ter).',
+    'La prisa no crea espacio: con B de frente la vía no está libre y no podrías dejar 1,5 m al ciclista.',
+    null,
+  ],
+  'z5-dep-04': [
+    null,
+    'La prohibición no es absoluta: no se aplica si puedes adelantar sin cruzar la continua que separa los sentidos (art. 17.2 3°).',
+    'El intermitente de A no cambia nada: lo que cuenta es que tengo un carril libre en mi sentido.',
+  ],
+  'z5-dep-05': [
+    'Acelerar para ganarle a la línea es justo lo que hay que evitar: ya no queda sitio para terminar el adelantamiento sin peligro.',
+    null,
+    'Seguir a la izquierda pasada la continua es cruzarla y circular a su izquierda, dos cosas prohibidas (art. 72.2).',
+  ],
+  'z5-dep-06': [
+    'La prohibición no depende de que haya alguien cruzando: basta con que A se acerque al paso o se detenga ante él (art. 17.2 5°).',
+    'Reducir no lo hace legal: A puede taparte a un ciclista que empieza a cruzar, y por eso ahí está prohibido adelantar.',
+    null,
+  ],
+  'z5-dep-07': [
+    '«Siempre» es falso: el art. 16.9 permite adelantar por la izquierda cuando a la derecha no hay sitio.',
+    null,
+    'Los coches circulan por la calzada (art. 9.1.1): la acera es de los peatones y no se usa para adelantar.',
+  ],
+  'z5-dep-08': [
+    null,
+    'En población, en una calle de sentido único con carriles, ir más rápido por un carril que por otro no es adelantar (art. 16.2).',
+    'En población el claxon solo sirve para evitar un accidente (art. 33.2), no para avisar de que pasas.',
+  ],
+  'z5-dep-09': [
+    'La prohibición en el cruce con prioridad de la derecha es para adelantar a conductores en movimiento, y la furgoneta está parada (art. 16.1).',
+    null,
+    'Nada obliga a esperar detrás de un vehículo parado: se le rodea cediendo el paso a los que vienen de frente (art. 15.2).',
+  ],
+  'z5-usa-01': [
+    'En población el autobús es la excepción: el art. 39 le dispensa de ceder el paso a los que siguen la misma dirección.',
+    'Estar ya en la calzada no basta: en población, si el autobús ha puesto el intermitente, debo reducir y, si hace falta, parar (art. 39).',
+    null,
+  ],
 }

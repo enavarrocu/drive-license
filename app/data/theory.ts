@@ -1157,6 +1157,77 @@ export const theory: TheoryEntry[] = [
       { fr: 'distance de freinage', es: 'distancia de frenado' },
     ],
   },
+  /* ---------- escenas (questions-extra5) ---------- */
+  {
+    id: 'z5-placement',
+    theme: 'manoeuvres',
+    title: { fr: 'Se placer sur la chaussée : tourner, bandes de sélection, rétrécissement', es: 'Colocarse en la calzada: girar, carriles de preselección, estrechamiento' },
+    body:
+      'Para girar a la derecha hay que pegarse lo más posible al borde derecho (art. 19.2 2°). Para girar a la izquierda, en una calzada de doble sentido hay que acercarse al eje sin molestar a los que vienen de frente y, en una de sentido único, pegarse al borde izquierdo (art. 19.3 2°). En el cruce, el giro a la izquierda se hace lo más amplio posible, para entrar por la derecha en la calzada a la que vas, salvo si en esa calzada se circula por carriles o en filas según los arts. 9.4 y 9.5 (art. 19.3 5°): no se «coupe le virage» (cortar la curva) por el lado de los que vienen de frente. En población, en una calzada de sentido único dividida en carriles o en una de doble sentido con al menos dos carriles por sentido, cada uno usa el carril que mejor convenga a su destino (art. 9.4); entonces solo se gira a la derecha desde el carril o la fila de la derecha, y a la izquierda desde el de la izquierda (art. 19.6). En esas calzadas, que un carril avance más rápido que otro no se considera adelantamiento (art. 16.2). Las «flèches de sélection» pintadas antes de un cruce indican el carril que hay que tomar para cada dirección, y en el cruce hay que seguir una de las direcciones marcadas en tu carril (art. 77.1): si te has equivocado de carril y la línea es continua, sigues la flecha y buscas otro camino. Cambiar de carril es una «manœuvre»: cedes el paso a quien ya circula por el otro carril (art. 12.4). La «tirette» (cremallera, art. 12bis) solo se aplica cuando el tráfico está fuertemente ralentizado y un carril termina o está cortado: entonces los del carril que se acaba se incorporan justo antes del estrechamiento y los del carril libre ceden por turnos. Con tráfico fluido no hay cremallera: quien cambia de carril cede el paso.',
+    keyTerms: [
+      { fr: 'flèche de sélection', es: 'flecha de preselección' },
+      { fr: 'se porter vers la gauche', es: 'colocarse a la izquierda' },
+      { fr: 'aborder par la droite', es: 'entrar por la derecha' },
+      { fr: 'bande de circulation', es: 'carril de circulación' },
+      { fr: 'tirette', es: 'cremallera' },
+    ],
+  },
+  {
+    id: 'z5-rondpoint-bandes',
+    theme: 'manoeuvres',
+    title: { fr: 'Rond-point à plusieurs bandes', es: 'Rotonda de varios carriles' },
+    body:
+      'En el anillo de una «rond-point» no hay obligación de circular pegado al borde derecho, pero sí de respetar las marcas que delimitan los carriles: se usa el carril que mejor convenga a tu destino (art. 9.3.1). Para la primera salida, el carril exterior («bande extérieure») desde la entrada. Para salidas más lejanas se puede usar el carril interior («bande intérieure»), pero antes de salir hay que volver al exterior, y pasar de un carril a otro es un cambio de carril, es decir, una «manœuvre»: cedes el paso a quien circula por el carril exterior (art. 12.4). Si no hay hueco, das otra vuelta en lugar de pararte en el anillo a esperar; nunca se da marcha atrás. Al entrar no es obligatorio poner el intermitente; para salir sí, el derecho (art. 19.2). Recuerda que al entrar cedes el paso a los que ya circulan por el anillo (señal B1 o B5 en la entrada, art. 12.3.1), estén en el carril que estén.',
+    keyTerms: [
+      { fr: 'anneau', es: 'anillo' },
+      { fr: 'bande extérieure', es: 'carril exterior' },
+      { fr: 'bande intérieure', es: 'carril interior' },
+      { fr: 'changer de bande', es: 'cambiar de carril' },
+      { fr: 'clignotant droit', es: 'intermitente derecho' },
+    ],
+  },
+  {
+    id: 'z5-dep-situations',
+    theme: 'depassement',
+    title: { fr: 'Dépasser ou non : situations courantes', es: 'Adelantar o no: situaciones frecuentes' },
+    body:
+      'Solo se «dépasse» (adelanta) a un conductor en movimiento (art. 16.1): rodear un vehículo parado o una furgoneta que hace una entrega no es un adelantamiento, así que no le afectan las prohibiciones de adelantar (cruce con prioridad de la derecha, etc.). Como el obstáculo está en tu lado, cedes el paso a los que vienen de frente y, si hace falta, te detienes (art. 15.2); la línea continua tampoco se cruza para rodearlo (art. 72.2). En población, en una calle de sentido único con varios carriles o en una vía con dos carriles o más por sentido, ir más rápido por un carril que por otro no es adelantar (art. 16.2), pero cambiarse de carril para pasar es una maniobra. Antes de adelantar hay que comprobar que la vía está libre a suficiente distancia y que podrás volver a la derecha enseguida (art. 16.4); al adelantar a un ciclista, la distancia lateral mínima es de 1 m en población y 1,5 m fuera (art. 40ter): si un coche viene de frente y no puedes dejarla, te quedas detrás. Está prohibido adelantar por la izquierda a un vehículo que se acerca a un paso de peatones o de ciclistas, o que se ha detenido delante, donde no hay agente ni semáforos (art. 17.2 5°), aunque no veas a nadie cruzando.',
+    keyTerms: [
+      { fr: 'conducteur en mouvement', es: 'conductor en movimiento' },
+      { fr: 'contourner un obstacle', es: 'rodear un obstáculo' },
+      { fr: 'passage pour cyclistes', es: 'paso para ciclistas' },
+      { fr: 'distance latérale', es: 'distancia lateral' },
+      { fr: 'reprendre sa place à droite', es: 'volver a la derecha' },
+    ],
+  },
+  {
+    id: 'z5-arrets-passages',
+    theme: 'usagers-faibles',
+    title: { fr: 'Bus et trams à l\'arrêt, passages pour piétons et cyclistes', es: 'Autobuses y tranvías parados, pasos de peatones y de ciclistas' },
+    body:
+      'Al pasar junto a un autobús, autocar o tranvía parado para que suban o bajen viajeros hay que moderar la velocidad (art. 40.3.1). Si en la parada no hay «refuge» (isleta), quien circula por el lado por donde suben o bajan los viajeros debe detenerse para dejarles subir o llegar a la acera, y arrancar después despacio (art. 40.3.2); quien pasa por el otro lado del vehículo no está obligado a pararse, pero sí a ir a velocidad moderada. En población, cuando un autobús o trolebús pone el intermitente para salir de su parada, quien sigue la misma dirección debe dejarle salir, reduciendo y, si hace falta, parando; por excepción al art. 12.4, el autobús no tiene que ceder el paso a esos conductores (art. 39). Fuera de población no existe esa obligación. «Passage pour piétons» sin agente ni semáforos: te acercas a velocidad moderada y cedes el paso a los peatones que están cruzando, en cualquier parte del paso, o que van a hacerlo (art. 40.4.2). «Passage pour cyclistes» (dos líneas de cuadrados blancos): te acercas a velocidad moderada, no pones en peligro a los ciclistas que lo cruzan ni les molestas mientras terminan, y te detienes si hace falta (art. 40ter). En ningún paso de peatones o de ciclistas se entra si el atasco hace probable quedarse parado encima (arts. 40.5 y 40ter): se espera antes del paso.',
+    keyTerms: [
+      { fr: 'refuge', es: 'isleta (refugio)' },
+      { fr: 'allure modérée', es: 'velocidad moderada' },
+      { fr: 'quitter son point d\'arrêt', es: 'salir de su parada' },
+      { fr: 'passage pour cyclistes', es: 'paso para ciclistas' },
+      { fr: 'encombrement', es: 'atasco' },
+    ],
+  },
+  {
+    id: 'z5-sta-lieux',
+    theme: 'stationnement',
+    title: { fr: 'Où se ranger : accotement, carrefours, passages, garages', es: 'Dónde colocarse: arcén, cruces, pasos, garajes' },
+    body:
+      'El vehículo parado o estacionado se coloca a la derecha (en una calzada de sentido único, a cualquiera de los dos lados) y, si existe, fuera de la calzada, en el «accotement de plain-pied» (arcén al mismo nivel); fuera de población, en cualquier arcén (art. 23.1). Solo si no hay arcén practicable se queda en la calzada. Prohibidos la parada y el estacionamiento (art. 24): a menos de 5 m del borde de la calzada transversal de un cruce; en la calzada a menos de 5 m antes de un paso de peatones o de ciclistas; en los carriles bici y a menos de 5 m del lugar donde los ciclistas deben dejar el carril bici para circular por la calzada (o al revés). Prohibido solo el estacionamiento (art. 25.1): delante de los «accès carrossables» (entradas de garaje), salvo para el vehículo cuya matrícula figure en ese acceso; en una calzada de doble sentido, en el lado opuesto a un vehículo ya parado o estacionado si eso hace difícil el cruce de otros dos vehículos; en la calzada dividida en carriles por líneas blancas, salvo donde lo permitan las señales E9a o E9b (art. 25.1 9°). Recuerda la diferencia: el «arrêt» (parada) es inmovilizarse el tiempo necesario para que suban o bajen personas o cosas (art. 2.22); el estacionamiento es cualquier inmovilización más larga. Por eso parar un momento delante de una entrada de garaje para dejar a un pasajero está permitido.',
+    keyTerms: [
+      { fr: 'accotement de plain-pied', es: 'arcén al mismo nivel' },
+      { fr: 'accès carrossable', es: 'entrada de vehículos (vado)' },
+      { fr: 'chaussée transversale', es: 'calzada transversal' },
+      { fr: 'arrêt', es: 'parada' },
+      { fr: 'croisement malaisé', es: 'cruce difícil' },
+    ],
+  },
 ]
 
 export const theoryById = Object.fromEntries(theory.map((t) => [t.id, t])) as Record<string, TheoryEntry>
