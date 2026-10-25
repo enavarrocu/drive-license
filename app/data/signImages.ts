@@ -1,4 +1,4 @@
-/** Señales con imagen oficial (SPW Wallonie, Sécurothèque) en public/signs/ — SVG vectorial extraído de los PDF «Combiné» (WebP cuando no fue posible). Las variantes C43-70, C45-90… son la misma señal con otra cifra. */
+/** Señales con imagen oficial (SPW Wallonie, Sécurothèque) en public/signs/ — SVG vectorial extraído de los PDF «Combiné». Las variantes C43-70, C45-90… son la misma señal con otra cifra. */
 export const signImages = new Map<string, string>([
   ['A11', '/signs/A11.svg'],
   ['A13', '/signs/A13.svg'],
@@ -79,8 +79,8 @@ export const signImages = new Map<string, string>([
   ['C45-90', '/signs/C45-90.svg'],
   ['C45', '/signs/C45.svg'],
   ['C46', '/signs/C46.svg'],
-  ['C47', '/signs/C47.svg'],
   ['C5', '/signs/C5.svg'],
+  ['C47', '/signs/C47.svg'],
   ['C6', '/signs/C6.svg'],
   ['C7', '/signs/C7.svg'],
   ['C9', '/signs/C9.svg'],
@@ -162,7 +162,7 @@ export const signImages = new Map<string, string>([
   ['F7', '/signs/F7.svg'],
   ['F79', '/signs/F79.svg'],
   ['F8', '/signs/F8.svg'],
-  ['F81', '/signs/F81.webp'],
+  ['F81', '/signs/F81.svg'],
   ['F85', '/signs/F85.svg'],
   ['F87', '/signs/F87.svg'],
   ['F89', '/signs/F89.svg'],
