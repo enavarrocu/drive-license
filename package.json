@@ -12,7 +12,8 @@
     "preview": "node .output/server/index.mjs",
     "postinstall": "nuxt prepare",
     "validate": "tsx scripts/validate-data.ts",
-    "icons": "tsx scripts/gen-icons.ts"
+    "icons": "tsx scripts/gen-icons.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "better-sqlite3": "^12.0.0",
@@ -25,6 +26,7 @@
     "@types/better-sqlite3": "^7.6.13",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
+    "vitest": "5.0.3",
     "vue-tsc": "^3.3.13"
   },
   "pnpm": {
