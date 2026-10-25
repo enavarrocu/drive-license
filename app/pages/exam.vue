@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import type { ExamAnswer, Question } from '../types'
 import { questions } from '../data/questions'
-import { EXAM, grade, sampleExam, score } from '../lib/exam'
+import { EXAM, grade, sampleExam, score, shuffle } from '../lib/exam'
 import { speakText, stopSpeaking, speechAvailable } from '../lib/speech'
 import type { ExamSummary } from '../composables/useStore'
 
 type Phase = 'setup' | 'reading' | 'answering' | 'result'
+/** « Mort subite » : uniquement des questions de faute grave, la première erreur arrête tout. */
+type Mode = 'exam' | 'sudden'
+
+/** Nombre de questions d'une manche de mort subite. */
+const SUDDEN_QUESTIONS = 20
+const graveQuestions = questions.filter((q) => q.grave)
 
 const { lang, prefs, setPrefs, saveExam } = useStore()
+const route = useRoute()
 
 const phase = ref<Phase>('setup')
+const mode = ref<Mode>(route.query.mode === 'sudden' ? 'sudden' : 'exam')
+/** Fin de la manche de mort subite : réussie (20/20) ou question ratée. */
+const sudden = ref<{ passed: boolean; streak: number; failed?: { question: Question; chosen: number | null } } | null>(null)
 const helpEs = computed({ get: () => prefs.value.helpEs, set: (v: boolean) => void setPrefs({ helpEs: v }) })
 const speak = computed({ get: () => prefs.value.speak, set: (v: boolean) => void setPrefs({ speak: v }) })
 const answerSeconds = computed({ get: () => prefs.value.answerSeconds, set: (v: number) => void setPrefs({ answerSeconds: v }) })
@@ -42,10 +52,14 @@ async function start() {
   } catch {
     /* hors ligne : tirage aléatoire */
   }
-  exam.value = sampleExam(questions, EXAM.questions, Math.random, seen)
+  exam.value =
+    mode.value === 'sudden'
+      ? shuffle(graveQuestions).sort((a, b) => (seen[a.id] ?? 0) - (seen[b.id] ?? 0)).slice(0, SUDDEN_QUESTIONS)
+      : sampleExam(questions, EXAM.questions, Math.random, seen)
   index.value = 0
   answers.value = []
   result.value = null
+  sudden.value = null
   startedAt.value = Date.now()
   present()
 }
@@ -96,7 +110,9 @@ function commit() {
   clearTimers()
   const q = current.value
   if (!q) return
-  answers.value.push(grade(q, chosen.value))
+  const a = grade(q, chosen.value)
+  answers.value.push(a)
+  if (mode.value === 'sudden' && !a.correct) return endSudden({ question: q, chosen: chosen.value })
   if (index.value < exam.value.length - 1) {
     index.value++
     present()
@@ -104,7 +120,16 @@ function commit() {
     void finish()
   }
 }
+/** Mort subite : pas de barème ni d'enregistrement dans l'historique des examens. */
+function endSudden(failed?: { question: Question; chosen: number | null }) {
+  readToken++
+  clearTimers()
+  stopSpeaking()
+  sudden.value = { passed: !failed, streak: answers.value.filter((a) => a.correct).length, failed }
+  phase.value = 'result'
+}
 async function finish() {
+  if (mode.value === 'sudden') return endSudden()
   readToken++
   clearTimers()
   stopSpeaking()
@@ -167,7 +192,16 @@ onBeforeUnmount(() => {
   <div>
     <div v-if="phase === 'setup'" class="card">
       <h2>{{ lang === 'fr' ? 'Simulation d\'examen' : 'Simulacro de examen' }}</h2>
-      <p class="muted">
+      <div class="mode-switch" role="radiogroup">
+        <label :class="{ active: mode === 'exam' }"><input v-model="mode" type="radio" value="exam" /> {{ lang === 'fr' ? 'Examen complet' : 'Examen completo' }}</label>
+        <label :class="{ active: mode === 'sudden' }"><input v-model="mode" type="radio" value="sudden" /> {{ lang === 'fr' ? 'Mort subite (fautes graves)' : 'Muerte súbita (faltas graves)' }}</label>
+      </div>
+      <p v-if="mode === 'sudden'" class="muted">
+        {{ lang === 'fr'
+          ? `${SUDDEN_QUESTIONS} questions de faute grave, à la suite. À la première erreur, c'est fini : comme à l'examen, où deux fautes graves suffisent pour échouer. Non comptée dans l'historique.`
+          : `${SUDDEN_QUESTIONS} preguntas de falta grave seguidas. Al primer fallo se acaba: como en el examen, donde dos faltas graves bastan para suspender. No cuenta en el historial.` }}
+      </p>
+      <p v-else class="muted">
         {{ EXAM.questions }} {{ lang === 'fr' ? 'questions' : 'preguntas' }} · {{ lang === 'fr' ? 'réussite à' : 'aprobado con' }} {{ EXAM.passMark }}/{{ EXAM.questions }} ·
         {{ lang === 'fr' ? 'erreur simple −1, faute grave −5 (2 fautes graves = échec)' : 'error simple −1, falta grave −5 (2 faltas graves = suspenso)' }}
       </p>
@@ -189,12 +223,13 @@ onBeforeUnmount(() => {
           </select>
         </label>
       </div>
-      <button class="btn primary" type="button" @click="start">{{ lang === 'fr' ? 'Commencer' : 'Empezar' }}</button>
+      <button class="btn primary" type="button" @click="start">{{ mode === 'sudden' ? (lang === 'fr' ? 'Commencer la mort subite' : 'Empezar la muerte súbita') : (lang === 'fr' ? 'Commencer' : 'Empezar') }}</button>
     </div>
 
     <div v-else-if="phase === 'reading' || phase === 'answering'" class="card">
       <div class="row small">
         <span class="timer-label">{{ index + 1 }} / {{ exam.length }}</span>
+        <span v-if="mode === 'sudden'" class="pill grave">{{ lang === 'fr' ? 'mort subite' : 'muerte súbita' }}</span>
         <span class="grow"></span>
         <span v-if="phase === 'reading'" class="pill warn">{{ lang === 'fr' ? 'Lecture…' : 'Lectura…' }}</span>
         <span v-else-if="untimed" class="muted">{{ lang === 'fr' ? 'sans limite' : 'sin límite' }}</span>
@@ -212,6 +247,32 @@ onBeforeUnmount(() => {
       <p class="kbd-hint small muted">
         <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> {{ lang === 'fr' ? 'choisir' : 'elegir' }} · <kbd>{{ lang === 'fr' ? 'Entrée' : 'Intro' }}</kbd> {{ lang === 'fr' ? 'valider (ou passer la lecture)' : 'validar (o saltar la lectura)' }}
       </p>
+    </div>
+
+    <div v-else-if="phase === 'result' && sudden">
+      <div class="card" :class="sudden.passed ? 'sudden-ok' : 'sudden-ko'">
+        <h2>
+          {{ sudden.passed
+            ? (lang === 'fr' ? `Sans faute : ${sudden.streak}/${SUDDEN_QUESTIONS} !` : `¡Sin fallos: ${sudden.streak}/${SUDDEN_QUESTIONS}!`)
+            : (lang === 'fr' ? `Mort subite à la question ${sudden.streak + 1}` : `Muerte súbita en la pregunta ${sudden.streak + 1}`) }}
+        </h2>
+        <p class="muted">
+          {{ sudden.passed
+            ? (lang === 'fr' ? 'Toutes les questions de faute grave réussies d\'affilée.' : 'Todas las preguntas de falta grave acertadas seguidas.')
+            : (lang === 'fr' ? `${sudden.streak} bonne(s) réponse(s) d'affilée avant l'erreur.` : `${sudden.streak} respuesta(s) correcta(s) seguidas antes del fallo.`) }}
+        </p>
+      </div>
+      <div v-if="sudden.failed" class="card">
+        <QuestionCard :question="sudden.failed.question" :lang="lang" show-alt :chosen="sudden.failed.chosen" revealed />
+        <TheoryPanel :theory-id="sudden.failed.question.theoryId" />
+      </div>
+      <div class="card">
+        <div class="row">
+          <button class="btn primary" type="button" @click="start">{{ lang === 'fr' ? 'Rejouer' : 'Volver a jugar' }}</button>
+          <NuxtLink :to="{ path: '/study', query: { theme: 'grave' } }" class="btn">{{ lang === 'fr' ? 'Réviser les fautes graves' : 'Repasar las faltas graves' }}</NuxtLink>
+          <button class="btn ghost" type="button" @click="phase = 'setup'">{{ lang === 'fr' ? 'Retour' : 'Volver' }}</button>
+        </div>
+      </div>
     </div>
 
     <div v-else-if="phase === 'result'">

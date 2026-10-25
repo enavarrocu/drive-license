@@ -106,7 +106,10 @@ async function confirmReset() {
           · {{ lang === 'fr' ? `${grave.recentGrave} faute(s) grave(s) sur tes ${grave.recentExams} derniers examens` : `${grave.recentGrave} falta(s) grave(s) en tus ${grave.recentExams} últimos exámenes` }}
         </template>
       </p>
-      <NuxtLink :to="{ path: '/study', query: { theme: 'grave' } }" class="btn primary">{{ lang === 'fr' ? 'S\'entraîner sur les fautes graves' : 'Practicar las faltas graves' }}</NuxtLink>
+      <div class="row">
+        <NuxtLink :to="{ path: '/study', query: { theme: 'grave' } }" class="btn primary">{{ lang === 'fr' ? 'S\'entraîner sur les fautes graves' : 'Practicar las faltas graves' }}</NuxtLink>
+        <NuxtLink :to="{ path: '/exam', query: { mode: 'sudden' } }" class="btn">{{ lang === 'fr' ? 'Mort subite' : 'Muerte súbita' }}</NuxtLink>
+      </div>
     </div>
 
     <div v-if="showInstall" class="card install-card">
