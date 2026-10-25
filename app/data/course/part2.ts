@@ -12,11 +12,12 @@ export const part2: CourseChapter[] = [
       {
         id: 'ch06-lignes',
         title: { fr: 'Lignes longitudinales', es: 'Líneas longitudinales' },
-        body: `- **«Ligne blanche continue»**: prohibido cruzarla y circular sobre ella, también para adelantar a un vehículo lento: si no cabes sin pisarla, esperas. Dos líneas continuas = idem. Solo se puede cruzar para evitar un obstáculo imprevisto o entrar en una propiedad, con prudencia.
-- **«Ligne blanche discontinue»**: se puede cruzar (para adelantar, girar, cambiar de carril). Si los trazos se vuelven **cortos y próximos**, anuncian una línea continua o separan un carril especial (bus, aceleración, deceleración).
-- **Línea continua junto a discontinua**: vale la que está **más cerca** de tu lado.
-- **«Ligne de bord» (línea del borde)**: continua ancha delimita la calzada del arcén de emergencia (autopista) o de un accotement; cruzarla solo para parar en emergencia.
-- **Líneas amarillas discontinuas** en el borde: **estacionamiento prohibido** a lo largo de esa línea (la parada sí).
+        body: `- **«Ligne blanche continue»**: prohibido cruzarla (art. 72.2) y, si separa los sentidos, circular a su izquierda; también para adelantar a un vehículo lento: si no cabes sin pisarla, esperas. Dos líneas continuas = idem.
+- **«Ligne blanche discontinue»**: solo se cruza para adelantar, girar a la izquierda, dar media vuelta o cambiar de carril. Si los trazos se vuelven **cortos y próximos**, anuncian una línea continua.
+- **Línea continua junto a discontinua**: vale la que está **de tu lado**; quien la cruzó para adelantar puede volver a cruzarla para recuperar su sitio.
+- **Línea del borde**: una línea continua normal marca el borde real de la calzada. Una línea continua **ancha** marca un borde «fictif»: lo que queda más allá es una banda para parar y estacionar, salvo en autopista y route pour automobiles (allí es la «bande d'arrêt d'urgence», solo para emergencias).
+- **Línea amarilla discontinua** en el borde o el bordillo: **estacionamiento prohibido** a lo largo de esa línea (la parada sí).
+- Las marcas **naranjas** (líneas o clavos) son provisionales, por obras: anulan las blancas del mismo lugar.
 - **Bandas de un color** (rojo, ocre) o **chevrons** en el borde: «bande cyclable suggérée», no reservada pero aviso de ciclistas.
 - Dos líneas **discontinuas paralelas** cerca del borde = «piste cyclable»: reservada a ciclos; se cruza para girar o estacionar cediendo el paso, nunca se circula por ella.`,
       },
@@ -27,18 +28,17 @@ export const part2: CourseChapter[] = [
 - **Fila de triángulos blancos** apuntando hacia ti: equivale al **B1**, «céder le passage».
 - **«Passage pour piétons»**: bandas blancas paralelas al eje de la calzada. **«Passage pour cyclistes»**: dos filas de cuadrados blancos.
 - **«Flèches de sélection»** (flechas en el carril antes de un cruce): obligan a seguir la dirección indicada al llegar al cruce; se puede cambiar de carril antes mientras la línea sea discontinua.
-- **«Flèches de rabattement»** (flechas oblicuas en el centro): anuncian el fin de la zona de adelantamiento: vuelve a la derecha antes de la línea continua.
+- **«Flèches de rabattement»** (flechas oblicuas sobre la línea discontinua): anuncian que se reduce el número de carriles utilizables en tu sentido (por ejemplo, el fin de la zona de adelantamiento): vuelve a la derecha antes de la línea continua.
 - Pictogramas: bicicleta (carril o paso ciclista), «BUS» (carril bus), «30» (zona 30), bebé/silla de ruedas (plaza reservada), rayos (recarga eléctrica).`,
       },
       {
         id: 'ch06-zones',
         title: { fr: 'Zones et marquages particuliers', es: 'Zonas y marcas particulares' },
-        body: `- **«Zone d'évitement»** (rayas oblicuas paralelas entre dos líneas): prohibido circular, parar y estacionar; canaliza el tráfico antes de una isleta o un estrechamiento.
-- **«Damier»** (ajedrezado blanco): zona reservada a bus/tram o de prohibición de estacionar; no se estaciona ni se para.
-- **Cuadros rojos y blancos / «marquage en damier» de intersección** (Bruselas): «ne pas bloquer le carrefour»: no entres si no puedes salir.
-- **Plazas de estacionamiento** delimitadas en blanco: estacionar dentro de las marcas, en el sentido indicado. **Azul** = zona azul (disco). **Pictograma de silla de ruedas** = reservado a titulares de la tarjeta de aparcamiento para PMR (está prohibido para el resto, con grúa).
-- **«Dispositifs surélevés»** (lomos, «coussins berlinois», plateaux): anuncio con A14 y marcas en triángulos blancos; pasar a 30 km/h como máximo; prohibido parar o estacionar encima.
-- Marcas **amarillas** temporales (obras) prevalecen sobre las blancas.`,
+        body: `- **«Zone d'évitement»** e **«îlot directionnel»** marcados (rayas oblicuas paralelas blancas): prohibido circular, parar y estacionar encima; canalizan el tráfico antes de una isleta o un estrechamiento.
+- **«Damier»** (ajedrezado de cuadrados blancos): delimita un site spécial franchissable o un carril bus, o un paso a nivel; prohibido parar y estacionar encima.
+- **Cruces**: aunque el semáforo esté en verde, no entres si te vas a quedar inmovilizado dentro (art. 14.2).
+- **Plazas de estacionamiento** delimitadas en blanco: estacionar dentro de las marcas, en el sentido indicado. **Pictograma de silla de ruedas** = reservado a titulares de la tarjeta de aparcamiento para personas con discapacidad (prohibido para el resto). Pictograma de bici o patinete = reservado a esos vehículos.
+- **«Dispositifs surélevés»** (lomos, «coussins berlinois», plateaux): anunciados con A14 (y F87 en el propio resalto); pasar a 30 km/h como máximo; prohibido adelantar encima y, salvo señalización local, parar o estacionar encima.`,
       },
     ],
   },
@@ -56,7 +56,7 @@ export const part2: CourseChapter[] = [
         title: { fr: 'Tenir sa droite', es: 'Circular por la derecha' },
         body: `Regla básica: circula lo más **a la derecha** posible, sin pisar aceras, arcenes ni pistas ciclables, dejando espacio a quien te adelanta. Puedes apartarte de la derecha para adelantar, girar a la izquierda, evitar un obstáculo, o si la vía de dos carriles por sentido está **en población** y eliges carril según destino.
 
-En una calzada con **dos sentidos y sin marcas**, imagina el eje y no lo invadas salvo para adelantar con visibilidad. En **cuestas estrechas**, cede el que baja. Con un obstáculo en tu lado, cedes tú al que viene de frente (B19/B21 lo señalan en pasos estrechos).
+En una calzada con **dos sentidos y sin marcas**, imagina el eje y no lo invadas salvo para adelantar con visibilidad. Con un obstáculo en tu lado, cedes tú al que viene de frente (art. 15.2; B19/B21 lo regulan en pasos estrechos). En **cuestas estrechas**, por costumbre cede el que baja.
 
 En una calzada de **tres carriles** y dos sentidos (sin marcas de sentido), el carril central se usa solo para adelantar; el de la izquierda nunca. Con **cuatro o más** carriles, no se usan los de la mitad izquierda (salvo señalización).`,
       },
@@ -65,25 +65,25 @@ En una calzada de **tres carriles** y dos sentidos (sin marcas de sentido), el c
         title: { fr: 'Bandes de circulation, files, tirette', es: 'Carriles, filas, cremallera' },
         body: `- **Cambio de carril**: espejos, ángulo muerto, intermitente, con antelación y sin obligar a frenar a nadie. El que cambia de carril cede el paso.
 - **«Circulation en files»** (tráfico denso en varias filas): cada fila avanza a su ritmo; está permitido que tu fila vaya más rápido que la de la izquierda (adelantar por la derecha), pero no cambiar de fila para ganar posiciones.
-- **«Tirette»** (cremallera): cuando un carril se cierra, los conductores del carril que termina **se incorporan justo antes del estrechamiento**, alternando uno a uno con los del carril que continúa. Es obligatorio desde 2014; incorporarse demasiado pronto o no dejar hueco es infracción.
+- **«Tirette»** (cremallera, art. 12bis): cuando el tráfico va muy lento y un carril se cierra, los conductores del carril que termina **se incorporan justo antes del estrechamiento**, y los del carril que continúa les ceden el paso alternando uno a uno. Incorporarse así no es una maniobra (no cedes a todos); no dejar hueco es infracción.
 - **«Bande d'accélération» / «de décélération»**: para entrar/salir de autopistas y vías rápidas; se usa toda su longitud.
-- **«Bande bus»** (F17, línea ancha discontinua, «BUS» pintado): reservada a bus y a los usuarios de la placa (taxi, bici, moto…). Los demás solo la cruzan para girar o entrar a una propiedad. **«Site spécial franchissable»** (F18): lo mismo, para bus y tram.
+- **«Bande bus»** (F17, una o dos líneas anchas discontinuas o un damier, «BUS» pintado): reservada al transporte público y a los usuarios indicados en la señal (taxi, bici, moto…). Los demás solo pueden usarla para rodear un obstáculo o para girar justo antes de un cruce, y cruzarla en el cruce o para entrar o salir de una propiedad o de un aparcamiento. **«Site spécial franchissable»** (F18, líneas anchas continuas o damier): parecido, para el transporte público (bus y tram); los demás lo cruzan en los cruces o para entrar o salir de una propiedad, o lo usan para rodear un obstáculo.
 - **Carriles con semáforos de carril**: cruz roja = carril cerrado.`,
       },
       {
         id: 'ch07-sens-unique',
         title: { fr: 'Sens unique, SUL, rues particulières', es: 'Sentido único, SUL, calles particulares' },
         body: `- **«Sens unique»** (F19 a la entrada, C1 al otro extremo): se puede circular por cualquier carril y **estacionar a ambos lados** (si no hay señal en contra). Para girar a la izquierda, colócate en el carril izquierdo.
-- **«SUL» (sens unique limité)**: F19 y C1 con placas **M4/M2** (bici «excepté»): los ciclistas (y a veces ciclomotores A o patinetes) circulan en **ambos sentidos**. Cuenta con un ciclista de frente al girar, al abrir la puerta y al adelantar.
-- **«Rue cyclable»** (F111): vehículos a **30 km/h** máximo, los ciclistas pueden ocupar todo el carril (o toda la calzada en sentido único) y está **prohibido adelantarlos**.
-- **«Rue réservée au jeu»** (barrera con señal C3 + «rue réservée au jeu»): temporal, solo residentes a paso de persona.
-- **«Chemin réservé»** (F99a/b/c): reservado a los usuarios dibujados (peatones, bicis, caballos, tractores).`,
+- **«SUL» (sens unique limité)**: **F19 con la placa M4** a la entrada y **C1 con la placa M2** («excepté» bicicletas) al otro extremo: los ciclistas (con M5 / M3, también los ciclomotores clase A) circulan en **ambos sentidos**. Cuenta con un ciclista de frente al girar, al abrir la puerta y al adelantar.
+- **«Zone cyclable» / «rue cyclable»** (F111 → F113): **30 km/h** como máximo; el ciclista puede usar toda la calzada si es de sentido único o la mitad derecha si es de doble sentido, y los vehículos a motor tienen **prohibido adelantarlo** (art. 22novies).
+- **«Rue réservée au jeu»** (barrera con señal C3 + «rue réservée au jeu»): temporal, solo residentes, vehículos prioritarios y autorizados, y ciclistas, a paso de persona. La **«rue scolaire»** (C3 + «rue scolaire») funciona igual junto a una escuela.
+- **«Chemin réservé»** (F99a/b/c): reservado a los usuarios dibujados (peatones, bicis, jinetes, speed pedelecs; con F99c, también vehículos agrícolas); 30 km/h como máximo.`,
       },
       {
         id: 'ch07-zones',
         title: { fr: 'Zones 30, résidentielles, de rencontre, piétonnes', es: 'Zonas 30, residenciales, de encuentro, peatonales' },
-        body: `- **Zone 30** (F4a → F4b) y **«abords d'école»** (A23 + 30): 30 km/h en toda la zona; suele haber lomos y prioridad de la derecha. En Bruselas, 30 es ya la regla general.
-- **«Zone résidentielle»** (F12a → F12b) y **«zone de rencontre»**: **20 km/h**; los peatones pueden usar toda la calzada y jugar, pero no estorbar inútilmente; los conductores no deben ponerlos en peligro y ceden siempre; estacionamiento solo en plazas marcadas (con «P» o marcas); los juegos están permitidos.
+        body: `- **Zone 30** (F4a → F4b) y **«abords d'école»** (F4a con A23 → F4b): 30 km/h en toda la zona; suele haber lomos y prioridad de la derecha. En Bruselas, 30 es ya la regla general en población.
+- **«Zone résidentielle»** (F12a → F12b) y **«zone de rencontre»**: **20 km/h**; los peatones pueden usar toda la anchura de la vía y jugar, pero no estorbar sin necesidad; los conductores no deben ponerlos en peligro ni estorbarlos y, si hace falta, se detienen; estacionamiento solo en plazas marcadas con «P» o donde una señal lo permita (a derecha o izquierda).
 - **«Zone piétonne»** (F103 → F105): solo peatones. Vehículos autorizados por la placa (residentes, reparto en horario, bicis si se indica) **a paso de persona**, cediendo a los peatones, sin estacionar. Los ciclistas solo si la señal lo permite y a paso, bajando de la bici si hay aglomeración.
 - **«Zone de stationnement»** (E9 + «zone»): regla de estacionamiento válida en toda la zona.
 - Para el examen, retén: 30 = zona 30 / entorno escolar / rue cyclable; 20 = residencial / de encuentro; paso de persona = peatonal.`,
@@ -104,23 +104,23 @@ En una calzada de **tres carriles** y dos sentidos (sin marcas de sentido), el c
         title: { fr: 'Les limitations générales', es: 'Los límites generales' },
         body: `| Lugar | Valonia | Flandes | Bruselas |
 |---|---|---|---|
-| «En agglomération» (F1–F3) | 50 | 50 | **30** (50 o 70 solo con señal) |
-| «Hors agglomération», carretera ordinaria | **90** | **70** | 70 |
-| Carretera 2×2 carriles con mediana («berme centrale») | 120 | 120 | 120 |
+| «En agglomération» (F1a–F3a) | 50 | 50 | **30** (50 o 70 solo con señal C43) |
+| «Hors agglomération», carretera ordinaria | **90** | **70** (90 solo con señal) | 70 |
+| Carretera 2×2 carriles con los sentidos separados por algo más que marcas (mediana, «terre-plein») | 120 | 120 | 120 |
 | «Autoroute» | 120 (mín. **70**) | 120 (mín. 70) | 120 (mín. 70) |
 | Zone 30 / abords d'école | 30 | 30 | 30 |
 | Zone résidentielle / de rencontre | 20 | 20 | 20 |
 | Zone piétonne | paso de persona | paso | paso |
 | Rue cyclable | 30 | 30 | 30 |
 
-Otros límites: **C43** indica un máximo hasta el próximo cruce o C45; placas con «zone» hasta el fin de zona. Vehículos con remolque de conjunto > 3,5 t y camiones > 7,5 t: **90** en autopista. Ciclomotores clase B: 45. Neumáticos con clavos: 90 en autopista, 60 en el resto. Un **conductor novel** no tiene límites distintos en Bélgica.
+Otros límites: **C43** indica un máximo hasta el próximo cruce inclusive (o hasta otra C43, C45 o una señal de inicio/fin de población o de zona); con validez de «zone», hasta el fin de zona. Vehículos y conjuntos de MMA > 3,5 t: **90** en autopista y en las 2×2 separadas; fuera de esas vías, los de más de 7,5 t: 60. Ciclomotores clase B: 45; clase A: 25. Los neumáticos con clavos están prohibidos salvo autorización ministerial excepcional. Un **conductor novel** no tiene límites distintos en Bélgica.
 
-Trampas típicas: la señal F1 (entrada en población) **no** lleva número: implica el límite de la región. Un panel «50» en Bruselas levanta el 30 **solo hasta el siguiente cruce** si no es de zona. Al salir de una zona 30 sin señal de fin, el fin se deduce del F4b.`,
+Trampas típicas: la señal F1a (entrada en población) **no** lleva número: implica el límite de la región. Un panel «50» en Bruselas levanta el 30 **solo hasta el siguiente cruce** si no es de zona. La zona 30 termina en la señal **F4b**.`,
       },
       {
         id: 'ch08-adaptee',
         title: { fr: 'La vitesse adaptée', es: 'La velocidad adecuada' },
-        body: `El límite es un **máximo**, nunca un objetivo. El código obliga a regular la velocidad según el estado de la vía, el tráfico, la visibilidad, el tiempo y la carga, y a poder **detenerse dentro de la distancia visible libre** («distance de visibilité»). De noche con luces de cruce ves unos 50 m: a más de 70 km/h ya no puedes parar en lo que ves.
+        body: `El límite es un **máximo**, nunca un objetivo. El código obliga a regular la velocidad según el estado de la vía, el tráfico, la visibilidad, el tiempo y la carga, y a poder **detenerse dentro de la distancia visible libre** («distance de visibilité»). De noche con luces de cruce ves unos 50 m: a 50 km/h necesitas unos 40 m para parar, pero a 70 km/h ya unos 70 m: más de lo que ves.
 
 Reduce especialmente: ante peatones y ciclistas, cerca de escuelas y paradas, en curvas y cambios de rasante, con lluvia, niebla, hielo o viento, en estrechamientos y obras, y al cruzarte con un vehículo en vías estrechas.
 
@@ -129,9 +129,9 @@ Circular **anormalmente despacio** sin motivo (y estorbar) también es infracci�
       {
         id: 'ch08-securite',
         title: { fr: 'La distance de sécurité', es: 'La distancia de seguridad' },
-        body: `Hay que dejar con el vehículo precedente una distancia que permita evitar el choque si frena bruscamente. Regla práctica: **2 segundos** (elige un punto fijo; cuando el de delante lo pasa, cuenta «mil uno, mil dos»; si lo pasas antes, estás demasiado cerca). Con lluvia o de noche, 3–4 segundos. En metros: a 50 km/h ≈ **28 m**, a 90 ≈ 50 m, a 120 ≈ **66 m**.
+        body: `Hay que dejar con el vehículo precedente una distancia que permita evitar el choque si frena bruscamente. Regla práctica: **2 segundos** (elige un punto fijo; cuando el de delante lo pasa, cuenta «mil uno, mil dos»; si lo pasas antes, estás demasiado cerca). Con lluvia o de noche, 3–4 segundos. En algunas autopistas, unos **chevrons** blancos pintados en el carril ayudan a medir la distancia. En metros: a 50 km/h ≈ **28 m**, a 90 ≈ 50 m, a 120 ≈ **66 m**.
 
-Obligaciones específicas: fuera de población, los vehículos y conjuntos de más de **7,5 t** deben dejar al menos **50 m**. No frenar bruscamente sin necesidad («freinage brusque»), ni pegarse al de delante para forzarle («talonner»): infracción y, en autopista, causa de los accidentes en cadena.`,
+Obligaciones específicas (art. 18): fuera de población, los vehículos y conjuntos de más de **7,5 t** o de más de **7 m** de largo deben dejar entre ellos al menos **50 m**; en los puentes, los de más de 7,5 t, al menos **15 m**. No frenar bruscamente sin necesidad («freinage brusque»), ni pegarse al de delante para forzarle («talonner»): infracción y, en autopista, causa de los accidentes en cadena.`,
       },
       {
         id: 'ch08-arret',
@@ -159,13 +159,13 @@ Con **ABS**: pisa a fondo y mantén; el pedal vibra, es normal; sigue pudiendo g
       {
         id: 'ch09-droite',
         title: { fr: 'La priorité de droite', es: 'La prioridad de la derecha' },
-        body: `En todo **carrefour** sin semáforo ni señal de prioridad, cedes el paso al conductor que llega por tu **derecha**, venga de donde venga (calle grande o pequeña, vía privada abierta al público, aparcamiento). Se aplica incluso si la vía de la derecha es de tierra o parece secundaria.
+        body: `En todo **carrefour** sin semáforo ni señal de prioridad, cedes el paso al conductor que llega por tu **derecha**, venga de donde venga (calle grande o pequeña, aunque parezca secundaria).
 
 Detalles que caen en el examen:
 - El de la derecha **conserva** la prioridad aunque **se haya parado** o vaya muy despacio.
-- La **pierde** si circula en **«sens interdit»** (a contramano).
-- No se aplica frente a un **tranvía** (siempre prioritario) ni frente a un **vehículo prioritario** con sirena.
-- Quien sale de un **lugar no público** (garaje, propiedad privada, estación de servicio, camino de tierra, aparcamiento privado) **cede a todos**: no es un cruce.
+- La **pierde** si viene de un **«sens interdit»** (a contramano) o si sale de un **«chemin de terre»** o un **«sentier»** a una vía con calzada: entonces cede a todos (art. 12.3.1).
+- No se aplica dentro de un **«rond-point»**, frente a un **tranvía** (todos le ceden, art. 12.1) ni frente a un **vehículo prioritario** con sirena.
+- Quien sale de una **propiedad** (garaje, propiedad privada, estación de servicio, aparcamiento) **cede a todos**: es una maniobra, no un cruce.
 - Quien realiza una **maniobra** (marcha atrás, demi-tour, cambio de carril, salir de un aparcamiento en batería) cede a todos.
 - El que **gira a la izquierda** cede a los que vienen de frente (recto o girando a la derecha).
 - Ceder el paso = no obligar al otro a frenar ni a desviarse; no basta con «pasar rápido».`,
@@ -179,39 +179,39 @@ Detalles que caen en el examen:
 - **B15** (flecha gruesa): prioridad en el próximo cruce solamente. **B17** (cruz negra en X): prioridad de la derecha en el próximo cruce (se pone para avisar tras una serie de cruces prioritarios).
 - **B19** (borde rojo, flecha negra abajo y roja arriba): cedes en el paso estrecho. **B21** (azul, flecha roja abajo y blanca arriba): tienes prioridad. La flecha de tu sentido (hacia arriba) te dice si cedes (roja) o pasas (blanca).
 - **B22 / B23**: solo para ciclistas (girar a la derecha / recto en rojo).
-- Combinaciones: un B1 con **placa de esquema** (líneas gruesas/finas) muestra qué vías son prioritarias en un cruce complejo. Una señal de peligro «carrefour» (A) no da prioridad: anuncia un cruce donde se aplica la derecha.
+- Combinaciones: un B1, B5, B15 o B9 con **placa de esquema** (líneas gruesas/finas) muestra el trazado de la vía prioritaria en un cruce complejo. **B3** y **B7** anuncian un B1 o un B5 a la distancia indicada.
 
 Con semáforo verde o una señal B9/B15, sigues teniendo que ceder a peatones y ciclistas que cruzan la calle en la que giras y a los vehículos prioritarios.`,
       },
       {
         id: 'ch09-rondpoint',
         title: { fr: 'Les ronds-points', es: 'Las rotondas' },
-        body: `Casi todas llevan **D5** (giratorio obligatorio) + **B1** en cada entrada → **prioridad a los que están dentro**. Sin B1 (raro), prioridad de la derecha (prioridad al que entra). Un «carrefour giratoire» con tráfico en el anillo y B1 también en el anillo (plazas antiguas) invierte la lógica: lee las señales.
+        body: `Un **«rond-point»** (art. 2.39) es un anillo de sentido único alrededor de una isleta central, con **D5** y con **B1** (o B5) en cada entrada → **prioridad a los que están dentro**: la prioridad de la derecha no se aplica en el anillo. Un giratorio sin B1 ni B5 en las entradas no es un rond-point en sentido legal: vale la prioridad de la derecha (prioridad al que entra). Lee siempre las señales.
 
-- **Entrar**: ceder a los del anillo, sin intermitente obligatorio (en Bélgica no se señala la entrada).
-- **Dentro**: no se para ni se da marcha atrás. Con dos carriles, el **exterior** para salir pronto; el **interior** para dar más vuelta, volviendo al exterior antes de la salida con intermitente, cediendo al que ya va por el exterior.
+- **Entrar**: ceder a los del anillo, sin intermitente obligatorio (art. 19.2: entrar no se señala).
+- **Dentro**: no se para ni se da marcha atrás. No estás obligado a ir pegado a la derecha: con dos carriles marcados, usa el que convenga a tu salida (el **exterior** para salir pronto; el **interior** para dar más vuelta, volviendo al exterior antes de la salida con intermitente y cediendo al que ya va por él).
 - **Salir**: **intermitente derecho** obligatorio antes de la salida, cediendo a los **ciclistas** de la pista ciclable que rodea la rotonda y a los **peatones** del paso.
-- Ciclistas: pueden circular por el centro del carril en rotondas pequeñas; nunca se les adelanta dentro.`,
+- Ciclistas: pueden circular por el centro del carril en rotondas pequeñas; no intentes adelantarlos dentro del anillo: quédate detrás.`,
       },
       {
         id: 'ch09-trams-prioritaires',
         title: { fr: 'Trams, bus et véhicules prioritaires', es: 'Tranvías, autobuses y vehículos prioritarios' },
         body: `### Tranvía
-Tiene **prioridad sobre todos** los usuarios, salvo señal contraria. No se aplica la prioridad de la derecha frente a él; hay que dejarle los raíles libres cuando se acerca; nunca se le adelanta en un cruce ni cuando está parado en una parada **sin refugio** con viajeros subiendo o bajando (se espera detrás). Su distancia de frenado es muy larga y no puede esquivar.
+Todo usuario debe **cederle el paso** y apartarse de la vía en cuanto pueda (art. 12.1); donde hay semáforos, el tram respeta los suyos. No se aplica la prioridad de la derecha frente a él; hay que dejarle los raíles libres cuando se acerca. Cuando está parado en una parada **sin refugio** con viajeros subiendo o bajando, el conductor que circula por ese lado se detiene para dejarlos pasar y arranca después a velocidad moderada (art. 40.3.2). Su distancia de frenado es muy larga y no puede esquivar.
 
 ### Autobús
-En población, un bus que sale de su parada con el intermitente tiene **prioridad para reincorporarse**: redúcete o para. En parada sin refugio, los viajeros cruzan la calzada: espera. Un bus escolar con las luces de emergencia: niños subiendo o bajando, prudencia máxima.
+En población, un bus o trolebús que señala con el intermitente que sale de su parada tiene **prioridad para reincorporarse**: reduce y, si hace falta, para (art. 39). En parada sin refugio, los viajeros cruzan la calzada: espera. Un vehículo de transporte escolar con todos los intermitentes encendidos: niños subiendo o bajando, reduce mucho y para si hace falta (art. 39bis).
 
 ### Vehículos prioritarios
-Policía, bomberos, ambulancia, protección civil, con **luz azul + sirena** («avertisseur sonore spécial»): tienen prioridad absoluta: te apartas, reduces o paras, incluso cruzando un semáforo en rojo con prudencia si hace falta para dejar paso; en autopista formas el «couloir de secours» (pasillo de emergencia: carril izquierdo a la izquierda, los demás a la derecha). Con **solo luz azul** (sin sirena): no tienen prioridad, pero avisan de un peligro. Luz **naranja** giratoria (grúa, obras, vehículos lentos): no da prioridad, solo señala.
+Policía, bomberos, ambulancia, protección civil, con **luz azul + sirena** («avertisseur sonore spécial»): en cuanto oyes la sirena, despejas y cedes el paso, parando si hace falta (art. 38); en autopista y en los atascos formas el «couloir de secours» (pasillo de emergencia: carril izquierdo a la izquierda, los demás a la derecha). Con **solo luz azul** (sin sirena): no tienen prioridad, pero avisan de un peligro. Luz **naranja** giratoria (grúa, obras, vehículos lentos): no da prioridad, solo señala.
 
 ### Convoyes y columnas
-No se corta una columna militar, un cortejo fúnebre, un grupo de ciclistas en competición (señalado por motos) ni una fila de niños guiada; se esperan.`,
+No se corta una columna militar, un cortejo (también fúnebre), una procesión, una carrera ciclista ni un grupo de niños en fila o cruzando con un guía o un «surveillant habilité» (art. 40bis y 41); se esperan. Ante el coche que abre una carrera ciclista con bandera roja, te apartas y paras hasta que pase el de cierre con bandera verde.`,
       },
       {
         id: 'ch09-usagers',
         title: { fr: 'Piétons et cyclistes aux carrefours', es: 'Peatones y ciclistas en los cruces' },
-        body: `- En un **paso de peatones** (sin semáforo): ceder al peatón que cruza o que **se dispone a cruzar**; acercarse a velocidad moderada; prohibido adelantar al vehículo que se detiene ante el paso.
+        body: `- En un **paso de peatones** (sin semáforo ni agente): ceder al peatón que cruza o que **se dispone a cruzar**; acercarse a velocidad moderada; prohibido adelantar al vehículo que se acerca al paso o se detiene ante él. Con semáforo, deja terminar de cruzar al peatón que ya había empezado.
 - Al **girar** (izquierda o derecha): ceder a peatones y ciclistas que cruzan la calle en la que entras, con o sin semáforo, y a los ciclistas que siguen recto por la piste cyclable paralela.
 - Ciclistas que llegan por la derecha en un cruce sin señales: prioridad de la derecha para ellos igual que para un coche.
 - **Ciclistas en SUL**: vienen a contramano: mira a ambos lados antes de girar desde o hacia un sentido único.
@@ -235,40 +235,40 @@ No se corta una columna militar, un cortejo fúnebre, un grupo de ciclistas en c
 
 Por la **derecha** solo en tres casos: para adelantar a un **tranvía** (salvo sentido único o espacio insuficiente), a un conductor que ha **señalado y se ha colocado a la izquierda** para girar, y en **circulación en filas**. Obligaciones del adelantado: no acelerar, apartarse a la derecha si es necesario.
 
-A un vehículo **lento** (tractor, bici) con una línea continua: no se cruza la línea; se espera. A una columna de vehículos: solo si puedes adelantarla entera. A un vehículo que **ya está adelantando**: prohibido (doble adelantamiento).`,
+A un vehículo **lento** (tractor, bici) con una línea continua: no se cruza la línea; se espera. A una columna de vehículos: solo si puedes adelantarla entera. A un vehículo que **ya está adelantando** a otro (que no sea una bici, un ciclomotor o una moto de dos ruedas): prohibido, salvo que haya tres carriles o más en tu sentido (art. 17.2.4°).`,
       },
       {
         id: 'ch10-interdit',
         title: { fr: 'Où le dépassement est interdit', es: 'Dónde está prohibido adelantar' },
-        body: `Prohibido adelantar (vehículos de más de dos ruedas, por la izquierda):
+        body: `Prohibido adelantar por la izquierda a un vehículo de tracción animal, a un vehículo a motor de dos ruedas (moto, ciclomotor) o a un vehículo de más de dos ruedas (art. 17.2):
 
-- Al acercarse a un **paso de peatones o de ciclistas**, si hay que invadir el sentido contrario o si un vehículo se ha detenido ante el paso.
-- En un **cruce** donde se aplica la **prioridad de la derecha** (salvo si estás en vía prioritaria B9/B15, o vas por un carril claramente separado).
-- En un **paso a nivel** sin barreras ni semáforos.
-- Al llegar a la **cima de una cuesta** y en las **curvas**, fuera de población, si la visibilidad es insuficiente.
-- Donde una **línea continua** separe los sentidos, o con señal **C35** (hasta C37) / **C39** (camiones, hasta C41).
-- En una **«rue cyclable»**, a ciclistas y ciclomotores.
-- Con **lluvia** (precipitaciones), en autopista y vías 2×2, para vehículos de más de **7,5 t**.
-- En túneles de un solo carril por sentido (habitualmente C35) y en estrechamientos.
-- Cuando la maniobra obligaría a los que vienen de frente a frenar o desviarse.
+- Cuando el vehículo que vas a adelantar **se acerca a un paso de peatones o de ciclistas** o se detiene ante él, si el paso no está regulado por semáforos ni por un agente.
+- En un **cruce** donde se aplica la **prioridad de la derecha**, y en los demás cruces si eres tú quien debe ceder (B1, B5…). En una vía prioritaria (B9/B15) sí se puede.
+- En un **paso a nivel** con cruz de San Andrés sin barreras ni semáforos.
+- Al llegar a la **cima de una cuesta** y en las **curvas** si la visibilidad es insuficiente, salvo que puedas hacerlo sin cruzar la línea continua del sentido contrario.
+- Sobre un **«dispositif surélevé»** (lomo, plateau).
+- Con señal **C35** (o **C39** para camiones de más de 3,5 t): hasta el próximo cruce inclusive, o hasta C37 / C41 si aparecen antes. Una **línea continua** tampoco se puede cruzar para adelantar.
+- Con **precipitaciones**, en autopista, route pour automobiles y vías de 4 carriles o más, para los vehículos de mercancías de más de **7,5 t**.
+- En una **«zone cyclable»**, a los ciclistas (prohibido para los vehículos a motor, art. 22novies).
+- Siempre que no veas a los que vienen de frente a una distancia suficiente (art. 17.1), o la maniobra les obligaría a frenar o desviarse.
 
-Ciclistas y ciclomotores se pueden adelantar en muchos de estos lugares si es posible sin invadir el sentido contrario y con la distancia lateral.`,
+A una **bicicleta** (o un patinete) sí se la puede adelantar en esos lugares si cabes sin invadir el sentido contrario y con la distancia lateral (1 m / 1,5 m).`,
       },
       {
         id: 'ch10-tram',
         title: { fr: 'Dépasser un tram', es: 'Adelantar a un tranvía' },
-        body: `Se adelanta **por la derecha**. Por la izquierda únicamente en calle de **sentido único** o cuando a la derecha no hay espacio o hay un obstáculo, siempre sin peligro. Prohibido adelantar a un tranvía (o autobús en site propre) **parado en una parada sin refugio** mientras suben o bajan viajeros: parar detrás y esperar; con refugio, pasar despacio por la derecha del refugio. Prohibido adelantarlo en un cruce si hay que cruzar los raíles con riesgo, o cuando se dispone a girar.`,
+        body: `Se adelanta **por la derecha**, esté en marcha o parado (art. 16.9). Por la izquierda únicamente en calle de **sentido único** cuando la circulación lo justifique, o cuando a la derecha no hay espacio o hay un obstáculo, siempre sin molestar ni poner en peligro a los que vienen de frente. Cuando un tranvía (o un bus) está **parado en una parada sin refugio** y suben o bajan viajeros, el conductor que pasa por ese lado debe **detenerse** para dejarles subir o llegar a la acera, y arrancar después a velocidad moderada (art. 40.3.2); con refugio, se pasa moderando la velocidad.`,
       },
       {
         id: 'ch10-croisement',
         title: { fr: 'Le croisement', es: 'El cruce con vehículos de frente' },
         body: `Al cruzarte con un vehículo que viene en sentido contrario, mantente **a la derecha** y reduce si hace falta. En vías estrechas:
 
-- Obstáculo en **tu** lado (coche aparcado, obras): **tú cedes**.
-- Cuesta estrecha: cede **el que baja**; salvo si el que sube está más cerca de un apartadero.
-- Vehículo ancho (camión, bus) frente a coche: en general se arregla el más maniobrable, pero legalmente cede el del obstáculo.
+- Obstáculo en **tu** lado (coche aparcado, obras) o usuarios que te estorban: **tú** reduces y, si hace falta, paras para dejar pasar (art. 15.2).
+- Si la calzada es demasiado estrecha, puedes usar el accotement de plain-pied sin poner en peligro a quien esté en él.
+- Cuesta estrecha: por costumbre cede **el que baja** (salvo si el que sube está más cerca de un apartadero); el código belga no lo regula.
 - Señales **B19** (cedes) / **B21** (prioridad) en pasos estrechos.
-- Frente a un **tranvía**, déjale los raíles.
+- Frente a un **tranvía**, déjale los raíles; si no cabes a la derecha, se le puede cruzar por la izquierda sin molestar a los que vienen de frente.
 
 De noche, al cruzarte: luces de cruce, mirar al borde derecho de la calzada para no deslumbrarte.`,
       },
@@ -290,7 +290,7 @@ De noche, al cruzarte: luces de cruce, mirar al borde derecho de la calzada para
 Intermitente con antelación, colocarse **lo más a la derecha** (sin invadir la pista ciclable), reducir, mirar el ángulo muerto derecho (ciclistas), ceder a peatones y ciclistas que van recto, tomar la curva **cerrada**.
 
 ### A la izquierda
-Intermitente, colocarse **a la izquierda de tu sentido** (junto al eje; en sentido único, el carril izquierdo), ceder a los que vienen de frente (recto o girando a su derecha), a los ciclistas de la pista ciclable de la izquierda si la hay, y a los peatones; girar **amplio** para entrar por la derecha de la nueva calle. Dos vehículos que giran a la izquierda uno frente a otro se cruzan **por la derecha** (cada uno mantiene su derecha; el otro vehículo pasa a su izquierda, sin rodearse) salvo que las flechas en el suelo indiquen otra cosa.
+Intermitente, colocarse **a la izquierda de tu sentido** (junto al eje; en sentido único, el carril izquierdo), ceder a los que vienen de frente (recto o girando a su derecha), a los ciclistas de la pista ciclable de la izquierda si la hay, y a los peatones; girar **amplio** para entrar por la derecha de la nueva calle.
 
 ### Reglas comunes
 Toda maniobra (girar, cambiar de carril, salir de un aparcamiento, demi-tour, marcha atrás, abrir una puerta) obliga a **ceder el paso** a los demás y a **señalar**. Intermitente: antes de la maniobra, el tiempo suficiente, y apagarlo después. Las señales con el brazo solo si el intermitente no funciona.`,
@@ -300,25 +300,25 @@ Toda maniobra (girar, cambiar de carril, salir de un aparcamiento, demi-tour, ma
         title: { fr: 'Demi-tour et marche arrière', es: 'Cambio de sentido y marcha atrás' },
         body: `**Demi-tour** (giro en U): solo si no estorba ni pone en peligro a nadie, con visibilidad. **Prohibido** en autopista y route pour automobiles, en rotondas, donde haya C33 (señal), sobre una línea continua, en túneles, en pasos a nivel y en lugares sin visibilidad (curvas, cuestas). Alternativa segura: dar la vuelta a la manzana.
 
-**Marche arrière**: solo la distancia estrictamente necesaria, a paso lento, cediendo a todos, con visibilidad (girarse, no fiarse solo de la cámara). **Prohibida** en autopista, route pour automobiles, rotondas y donde esté prohibido el demi-tour. Al salir marcha atrás de una plaza en batería, eres tú quien cede a todos.
+**Marche arrière**: solo la distancia estrictamente necesaria, a paso lento, cediendo a todos, con visibilidad (girarse, no fiarse solo de la cámara). **Prohibida** en autopista y route pour automobiles (art. 21.4) y en las rotondas. Al salir marcha atrás de una plaza en batería, eres tú quien cede a todos.
 
-**Abrir una puerta**: solo si no hay peligro; el responsable de un accidente con un ciclista es quien abre («emportiérage»).`,
+**Abrir una puerta**: prohibido abrirla, dejarla abierta, subir o bajar sin asegurarse de que no hay peligro ni molestia para nadie, sobre todo peatones y ciclistas (art. 28).`,
       },
       {
         id: 'ch11-passage-niveau',
         title: { fr: 'Les passages à niveau', es: 'Los pasos a nivel' },
-        body: `Anuncio: **A41** (con barreras, pictograma de valla) / **A43** (sin barreras, pictograma de locomotora) a ~150 m fuera de población, con placas de 3, 2 y 1 barras rojas (distancia). En el paso: **cruz de San Andrés** A45 (una vía) / A47 (varias vías).
+        body: `Anuncio: **A41** (con barreras, pictograma de valla) / **A43** (sin barreras, pictograma de locomotora) a unos 150 m, a menudo seguido de balizas con 3, 2 y 1 barras rojas oblicuas que marcan la distancia que queda. En el paso: **cruz de San Andrés** A45 (una vía) / A47 (varias vías).
 
-Obligatorio detenerse cuando: las luces **rojas parpadean** (una o dos alternantes), suena la **campana**, las barreras bajan o están bajadas, o se acerca un tren aunque nada esté activado. Luz **blanca intermitente** = paso libre con prudencia. Nunca entres si no puedes **despejar** el paso inmediatamente; nunca zigzaguees entre medias barreras. Prohibido adelantar en pasos sin barreras ni semáforos; prohibido parar o estacionar sobre el paso a nivel.
+Prohibido entrar en el paso cuando (art. 20.3): las barreras **se mueven o están cerradas**, las luces **rojas parpadean** o funciona la **señal sonora**. Sin barreras ni semáforos (o si no funcionan), solo se entra tras comprobar que no llega ningún tren. Luz **blanca intermitente** = paso autorizado, con prudencia. Nunca entres si no puedes **despejar** el paso inmediatamente; nunca zigzaguees entre medias barreras. Prohibido adelantar en pasos sin barreras ni semáforos; prohibido parar o estacionar sobre el paso a nivel.
 
 Si te quedas **parado sobre las vías**: haz salir a los pasajeros, intenta mover el vehículo (arrancar en 1.ª a golpes de motor de arranque si es manual), y si no puedes, aléjate **en diagonal hacia el tren** (para evitar los restos proyectados) y llama al **112** y al número de la placa del paso.`,
       },
       {
         id: 'ch11-tunnels',
         title: { fr: 'Les tunnels', es: 'Los túneles' },
-        body: `Señal **F25** (túnel). Dentro: **luces de cruce** obligatorias (aunque esté iluminado), gafas de sol fuera, radio en la frecuencia indicada, distancia de seguridad aumentada (en los túneles largos hay marcas o señales de distancia), velocidad adaptada, no adelantar si es prohibido (C35, un carril por sentido). **Prohibido** parar, dar marcha atrás, cambiar de sentido y, en general, circular con un vehículo que transporte mercancías peligrosas si está señalado.
+        body: `Señal **F8** (túnel de más de 500 m; una placa indica la longitud). Dentro: **luces de cruce** aunque esté iluminado (el código no lo dice expresamente, pero la vista tarda en adaptarse y hay que ser visto; las largas deslumbrarían), gafas de sol fuera, radio en la frecuencia indicada, distancia de seguridad aumentada (en los túneles largos hay marcas o señales de distancia), velocidad adaptada, no adelantar si es prohibido (C35, un carril por sentido). **Prohibido** parar o estacionar (art. 24), dar marcha atrás y cambiar de sentido; los vehículos con ciertas mercancías peligrosas no pueden entrar si una señal C24 lo indica.
 
-**Avería**: luces de emergencia, apartarse en el «garage» (apartadero), apagar el motor, llamar desde el «poste d'appel» (poste SOS, da tu posición exacta). **Incendio**: intenta salir del túnel si es posible; si no, para, apaga el motor, **deja las llaves puestas**, abandona el vehículo por la **salida de emergencia** más cercana (pictograma verde, cada 100–200 m), nunca des media vuelta en coche. En atasco dentro del túnel: distancia con el de delante, luces encendidas, motor apagado si es largo.`,
+**Avería**: luces de emergencia, apartarse en el «garage» (apartadero, F98), apagar el motor, llamar desde el teléfono de emergencia (F62, da tu posición exacta). **Incendio**: intenta salir del túnel si es posible; si no, para, apaga el motor, **deja las llaves puestas**, abandona el vehículo por la **salida de emergencia** más cercana (F52, pictograma verde; F52bis indica la distancia), nunca des media vuelta en coche. En atasco dentro del túnel: distancia con el de delante, luces encendidas, motor apagado si es largo.`,
       },
     ],
   },

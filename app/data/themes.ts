@@ -12,6 +12,10 @@ export const themes: Theme[] = [
   { id: 'manoeuvres', fr: 'Manœuvres, virages, ronds-points', es: 'Maniobras, giros, rotondas', grave: false },
   { id: 'eclairage', fr: 'Éclairage et conditions difficiles', es: 'Alumbrado y condiciones difíciles', grave: false },
   { id: 'vehicule', fr: 'Véhicule, documents, sécurité', es: 'Vehículo, documentos, seguridad', grave: false },
+  { id: 'panneaux', fr: 'Panneaux de signalisation', es: 'Señales de tráfico', grave: false },
+  { id: 'mecanique', fr: 'Technique du véhicule', es: 'Mecánica del vehículo', grave: false },
+  { id: 'accidents', fr: 'Panne, accident, premiers secours', es: 'Avería, accidente, primeros auxilios', grave: false },
+  { id: 'comportement', fr: 'Conduite défensive et environnement', es: 'Conducción defensiva y medio ambiente', grave: false },
   { id: 'permis', fr: 'Permis provisoire et règles générales', es: 'Permiso provisional y reglas generales', grave: false },
 ]
 

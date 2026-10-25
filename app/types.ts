@@ -15,6 +15,10 @@ export type ThemeId =
   | 'eclairage'
   | 'permis'
   | 'manoeuvres'
+  | 'panneaux'
+  | 'mecanique'
+  | 'accidents'
+  | 'comportement'
 
 export interface Theme {
   id: ThemeId

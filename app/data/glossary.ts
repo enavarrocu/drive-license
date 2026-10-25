@@ -37,7 +37,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'déboucher', es: 'desembocar, salir a una vía', theme: 'priorite' },
   { fr: 'le rond-point', es: 'la rotonda', theme: 'priorite' },
   { fr: 'le véhicule prioritaire', es: 'el vehículo prioritario (policía, bomberos, ambulancia)', theme: 'priorite' },
-  { fr: 'le feu bleu / l\'avertisseur sonore spécial', es: 'la luz azul / la sirena', theme: 'priorite' },
+  { fr: 'les feux bleus clignotants / l\'avertisseur sonore spécial', es: 'las luces azules intermitentes / la sirena', theme: 'priorite' },
   { fr: 'l\'agent qualifié', es: 'el agente (policía) que regula el tráfico', theme: 'signaux' },
   { fr: 'l\'injonction', es: 'la orden (de un agente)', theme: 'signaux' },
   { fr: 'le sens interdit', es: 'la dirección prohibida', theme: 'signaux' },
@@ -78,7 +78,7 @@ export const glossary: GlossaryEntry[] = [
   /* --- Semáforos y señales --- */
   { fr: 'le feu rouge / vert / orange', es: 'el semáforo en rojo / verde / ámbar', theme: 'signaux' },
   { fr: 'le feu orange fixe', es: 'el ámbar fijo (hay que parar)', theme: 'signaux' },
-  { fr: 'le feu orange clignotant', es: 'el ámbar intermitente (semáforo apagado)', theme: 'signaux' },
+  { fr: 'le feu orange clignotant', es: 'el ámbar intermitente (el semáforo no regula: valen las señales)', theme: 'signaux' },
   { fr: 'la flèche verte', es: 'la flecha verde', theme: 'signaux' },
   { fr: 'la ligne d\'arrêt', es: 'la línea de detención', theme: 'signaux' },
   { fr: 'le signal / le panneau', es: 'la señal', theme: 'signaux' },
@@ -87,7 +87,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'les marques au sol / le marquage', es: 'las marcas viales', theme: 'signaux' },
   { fr: 'la zone d\'évitement', es: 'la zona excluida (cebreado)', theme: 'signaux' },
   { fr: 'les chevrons (de distance)', es: 'los chevrones: marcas blancas en V en el carril, en autopista', note: 'Mantén al menos dos chevrones con el vehículo de delante.', theme: 'signaux' },
-  { fr: 'le damier', es: 'el ajedrezado (zona reservada)', theme: 'signaux' },
+  { fr: 'les marques en damier', es: 'el damero (plataforma del transporte público o paso a nivel; prohibido parar)', theme: 'signaux' },
   { fr: 'les flèches de sélection', es: 'las flechas de selección de carril', theme: 'signaux' },
   { fr: 'le passage pour piétons', es: 'el paso de peatones', theme: 'usagers-faibles' },
   { fr: 'le passage à niveau', es: 'el paso a nivel', theme: 'manoeuvres' },
@@ -105,7 +105,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'le stationnement alterné semi-mensuel', es: 'el estacionamiento alterno quincenal', theme: 'stationnement' },
   { fr: 'les numéros pairs / impairs', es: 'los números pares / impares', theme: 'stationnement' },
   { fr: 'l\'arrêt de bus / de tram', es: 'la parada de bus / de tranvía', theme: 'stationnement' },
-  { fr: 'la piste cyclable', es: 'el carril bici (separado)', theme: 'usagers-faibles' },
+  { fr: 'la piste cyclable', es: 'el carril bici', theme: 'usagers-faibles' },
   { fr: 'le frein à main', es: 'el freno de mano', theme: 'stationnement' },
 
   /* --- Autopista y emergencias --- */
@@ -117,7 +117,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'la marche arrière', es: 'la marcha atrás', theme: 'manoeuvres' },
   { fr: 'la panne', es: 'la avería', theme: 'autoroute' },
   { fr: 'les feux de détresse', es: 'las luces de emergencia (warning)', theme: 'autoroute' },
-  { fr: 'le gilet fluorescent', es: 'el chaleco reflectante', theme: 'autoroute' },
+  { fr: 'le gilet fluorescent / la veste de sécurité rétroréfléchissante', es: 'el chaleco reflectante', theme: 'autoroute' },
   { fr: 'le triangle de danger', es: 'el triángulo de emergencia', theme: 'autoroute' },
   { fr: 'la glissière de sécurité', es: 'el guardarraíl', theme: 'autoroute' },
   { fr: 'le constat amiable', es: 'el parte amistoso', theme: 'autoroute' },
@@ -198,7 +198,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'l\'amende', es: 'la multa', theme: 'permis' },
   { fr: 'le retrait immédiat du permis', es: 'la retirada inmediata del permiso', theme: 'permis' },
   { fr: 'la déchéance du droit de conduire', es: 'la retirada del derecho a conducir', theme: 'permis' },
-  { fr: 'le tribunal de police', es: 'el tribunal de tráfico', theme: 'permis' },
+  { fr: 'le tribunal de police', es: 'el tribunal de policía (juzgado de tráfico)', theme: 'permis' },
   { fr: 'mettre en danger', es: 'poner en peligro', theme: 'permis' },
   { fr: 'gêner', es: 'estorbar, molestar', theme: 'permis' },
 ]

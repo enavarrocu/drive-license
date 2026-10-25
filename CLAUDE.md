@@ -41,11 +41,12 @@ app/
   pages/          index, course, study, exam, exams/index, exams/[id], glossary, signs, login, register
   components/     QuestionCard, TheoryPanel, LangToggle, ExamResultCard (auto-importados)
   composables/    useStore.ts  ← ÚNICA fuente de estado de usuario (prefs, progreso, curso, exámenes) ↔ API
+                  useHotkeys.ts (atajos de teclado de /study y /exam), useSignPopup.ts
                   usePwa.ts (instalación, online/offline; lo alimenta plugins/pwa.client.ts)
   plugins/        pwa.client.ts (registra public/sw.js?v=<buildId> en prod; en dev desregistra)
   middleware/     auth.global.ts (todo requiere sesión salvo /login y /register)
   layouts/        default.vue (cabecera, nav, logout)
-  data/           CONTENIDO: themes, theory, questions(+scenes,+extra), q.ts (helpers), course/, glossary, signs, signPictos
+  data/           CONTENIDO: themes (16), theory, questions*.ts, q.ts (helpers), course/ (part1–4, 20 cap.), glossary, signs, signImages, signPictos
   lib/            exam.ts (baremo, muestreo), scene.ts (SVG de cruces), md.ts (markdown ligero), speech.ts (voz)
   types.ts        tipos compartidos
 server/
@@ -70,17 +71,29 @@ Dockerfile · DEPLOYMENT.md · README.md
   desde E es N, desde N es W, desde W es S. `you: true` = el candidato («moi»). Comprueba la
   lógica de prioridad antes de escribir la respuesta: es donde más fácil es equivocarse.
 - Las cifras del código belga (límites por región, 0,5 g/l, 5/15/20 m, M36/M18…) se
-  contrastaron con fuentes belgas en sept–oct 2026. Si cambias una cifra, cita la fuente en
-  el commit. Nunca inventes códigos de señales: usa solo los que existen (familias A, B, C,
+  contrastaron con fuentes belgas en sept–oct 2026 y se revisó TODO el contenido (preguntas,
+  teoría, curso, glosario, señales) contra el texto consolidado del Code de la route
+  (codedelaroute.be, AR 1/12/1975) el 25 oct 2026. Fuentes de referencia: el propio código para
+  las reglas; police.be / be.brussels / mobilit.belgium.be para alcohol, sanciones e importes
+  (retirada inmediata de 15 días desde 0,8 g/l y por teléfono en mano desde el 14/02/2026;
+  importes indexados el 1/7/2026); la hoja GOCA «Doc B.FR.PR» (Región de Bruselas) para el
+  permiso provisional (prácticas 9/6/3 meses, 22–6 h, guía 8 años). Si cambias una cifra, cita la
+  fuente en el commit y en el `why` (artículo). Si una regla no está en el código ni en una fuente
+  oficial, no se pregunta (se retiraron «cede el que baja en cuesta», «dos giros a la izquierda se
+  cruzan por la derecha»…). Evita importes en euros en las preguntas: caducan con la indexación. Nunca inventes códigos de señales: usa solo los que existen (familias A, B, C,
   D, E, F, placas M).
 - El banco es **original** (no copiar preguntas de Feu Vert, GOCA u otras apps).
 - El curso (`app/data/course/`) usa markdown ligero renderizado por `lib/md.ts`
   (párrafos, `###`, listas `- `, tablas `|`, `**negrita**`, términos FR entre « »).
 - **Señales: imágenes oficiales del SPW (Sécurothèque Wallonie)** en `public/signs/<código>.svg`
-  (168 señales + variantes `C43-70`, `C45-90`… + placas `M-distance`, `M-longueur`, `M-horaire`,
-  `panel-30min`), listadas en `app/data/signImages.ts` (generado). Se extrajeron de los PDF
-  «Combiné» (página en color, `pdftocairo -svg`, recorte por bbox ignorando el marco, `svgo`); los
-  PDF están en `~/Downloads/drive-license`. Los SVG **no pintan el blanco** de la señal, por eso
+  (167 señales + variantes `C43-70`, `C45-90`… + placas M2/M4 y las placas adicionales SPW
+  `M-distance` (tipo Ia), `M-longueur` (II), `M-horaire` (V) y `panel-30min` (VIIc) — las claves
+  «M-…» son históricas, no son placas M del código), listadas en `app/data/signImages.ts`. Se
+  extrajeron de los PDF «Combiné» (página en color → SVG con `pdftocairo -svg` o PyMuPDF, recorte
+  por bbox ignorando el marco, `svgo`); los PDF están en `~/Downloads/drive-license` y el nombre de
+  cada PDF es el código. Todas son vectoriales (sin PNG/WebP). El 25 oct 2026 se compararon una a
+  una con su PDF (176/176 correctas tras corregir C5, F63, F79, F81 y los recortes de C37/C41/C45/
+  C46/F103/M2/M4). Si añades una, compárala con el PDF: hubo imágenes de otra página del PDF. Los SVG **no pintan el blanco** de la señal, por eso
   `img.sign-img` lleva fondo blanco. Los dibujos de `signPictos.ts` solo son respaldo
   (`SignImage.vue` elige imagen oficial si existe) y sirven para `signWithValue(code, valor)`
   cuando no hay variante oficial con esa cifra.
@@ -90,7 +103,7 @@ Dockerfile · DEPLOYMENT.md · README.md
   miniaturas (`SignText inline`). Las escenas pintan las señales oficiales en los brazos
   (`signs: { E: 'B1' }`), con `oneWay`, `inRing` (vehículo ya en la rotonda), `type: 'merge'`.
 - **Opciones**: tres, de longitud parecida, sin justificación ni «:» solo en la correcta (la
-  explicación va en `why`); la respuesta correcta repartida ~1/3 entre A/B/C (hoy 113/113/113 → al
+  explicación va en `why`); la respuesta correcta repartida ~1/3 entre A/B/C (hoy 212/211/214 → al
   añadir, no pongas siempre la buena en el medio). Nada de preguntas «¿quién tiene la culpa?»: se
   pregunta la regla.
 - No dupliques preguntas: antes de añadir, busca si ya existe en versión texto o escena (hubo 7
@@ -135,10 +148,19 @@ Dockerfile · DEPLOYMENT.md · README.md
 4. Historia del proyecto: v0.1/v0.2 fueron una SPA Vite (`../permis-trainer`, estática, localStorage);
    v0.3 es esta migración a Nuxt + SQLite. No mezcles las dos.
 
-## Estado (24 oct 2026) y herramientas de diagnóstico
+## Estado (25 oct 2026) y herramientas de diagnóstico
 
-- 332 preguntas (questions, -scenes, -extra, -extra2). Siguiente bloque: `questions-extra3.ts`,
-  ids `z-<tema>-NN`.
+- 637 preguntas en 16 temas. Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
+  `z-prio/vit/dep/alc-NN`), -extra4 (resto de temas, `z-sig/sta/aut/usa/man/ecl/veh/per-NN`) y uno por
+  tema nuevo: -panneaux (`z-pan-NN`), -mecanique (`z-mec-NN`), -accidents (`z-acc-NN`),
+  -comportement (`z-com-NN`). Siguiente bloque: `questions-extra5.ts`, ids `z5-<tema>-NN`.
+- Temas nuevos (25 oct 2026): `panneaux`, `mecanique`, `accidents`, `comportement` (no graves), con
+  teoría en `theory.ts` y capítulos 17–20 del curso (`course/part4.ts`).
+- `grave: true` aparece también en algunas preguntas de autopista, maniobras, usuarios vulnerables y
+  alumbrado (marcha atrás en autopista, pasos a nivel, ceder a peatones…): es deliberado cuando la
+  infracción es de las graves; no lo generalices.
+- `scripts/validate-data.ts` no comprueba la longitud de las opciones; para eso hay un chequeo
+  ad hoc (la correcta no debe ser >30 % más larga que la mayor de las otras).
 - Examen: modo «Sans limite» (`answerSeconds = 0`, sin lectura ni cuenta atrás); el sorteo
   (`sampleExam(..., seen)`) prioriza las preguntas menos vistas según `GET /api/exams/stats`.
 - Diagnóstico: cada pregunta muestra su id (`code.qid`) y cada examen su `#id`; en «Historial»
@@ -151,4 +173,16 @@ Dockerfile · DEPLOYMENT.md · README.md
 
 - Seguir ampliando el banco y añadir escenas a más temas (ver «Estado»).
 - Exportar/importar progreso (JSON) y estadísticas por tema en el historial.
+- Mejoras de experiencia de usuario (propuestas el 25 oct 2026, en este orden):
+  1. ~~Atajos de teclado~~ (hecho: `composables/useHotkeys.ts`; A/B/C o 1/2/3 responden, Entrée
+     revela/siguiente en estudio y valida en el examen, M marca, T traducción, L relee).
+  2. Repaso inteligente en `/study`: priorizar falladas y no vistas hace tiempo (repetición espaciada
+     con `progress.ok/ko`; sin cambio de esquema).
+  3. «Repasar los fallos de este examen» desde el resultado del simulacro.
+  4. Progreso por tema (acierto %, vistas) y un indicador «¿estoy listo?» a partir de los últimos simulacros.
+  5. Glosario dentro de la pregunta: tocar un término FR del glosario y ver su traducción.
+  6. Antes de abrir al público: botón «signaler une erreur» (id + comentario en BD, lista para el
+     admin), aviso «outil non officiel — la référence est le Code de la route», recuperar
+     contraseña, borrar cuenta y exportar datos (RGPD), página de portada sin sesión.
+  7. Móvil: deslizar para pasar a la siguiente pregunta.
 - Descartado: panel de administración de preguntas (se editan en `app/data`).
