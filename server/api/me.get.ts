@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
     .all(user.id) as Omit<ExamRow, 'answers' | 'user_id'>[]
   return {
     user: { id: user.id, username: user.username },
+    isAdmin: isAdmin(user.username),
     prefs: { lang: prefs.lang, speak: !!prefs.speak, helpEs: !!prefs.help_es, answerSeconds: prefs.answer_seconds },
     progress: Object.fromEntries(progress.map((p) => [p.question_id, { ok: p.ok, ko: p.ko, flagged: !!p.flagged, streak: p.streak, seenAt: p.seen_at }])),
     courseRead,

@@ -64,6 +64,8 @@ function num(a: { questionId: string }) {
             :chosen="a.chosen"
             :revealed="true"
             :label="`${num(a)} / ${exam.total}`"
+            gloss
+            reportable
           />
           <TheoryPanel v-if="!a.correct" :theory-id="questionById[a.questionId]!.theoryId" />
         </div>

@@ -49,6 +49,7 @@ En la pestaña **Environment Variables** del recurso:
 | `NUXT_SESSION_PASSWORD` | el secreto generado (≥ 32 caracteres) | cifra la cookie de sesión; si cambia, todos los usuarios tienen que volver a iniciar sesión |
 | `NUXT_DB_PATH` | `/data/permis.db` | ya viene en el Dockerfile; ponla también aquí para que quede explícita |
 | `NUXT_ALLOW_REGISTRATION` | `true` | pásala a `false` cuando hayas creado las cuentas |
+| `NUXT_ADMIN_USERS` | tu nombre de usuario | administradores, separados por comas: ven la pestaña «⚑ Avisos» (`/reports`) con los errores que avisan los usuarios |
 | `NODE_ENV` | `production` | ya viene en el Dockerfile |
 
 Márcalas como variables **de runtime** (no solo de build). `NUXT_SESSION_PASSWORD` no se

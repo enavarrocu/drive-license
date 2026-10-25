@@ -40,6 +40,7 @@ export interface ExamSummary {
 }
 interface Me {
   user: { id: number; username: string }
+  isAdmin: boolean
   prefs: Prefs
   progress: Record<string, ProgressEntry>
   courseRead: string[]
@@ -58,6 +59,7 @@ export function useStore() {
   const courseRead = useState<Record<string, true>>('courseRead', () => ({}))
   const exams = useState<ExamSummary[]>('exams', () => [])
   const loaded = useState<boolean>('storeLoaded', () => false)
+  const isAdmin = useState<boolean>('isAdmin', () => false)
   // Côté serveur, $fetch n'envoie pas les cookies de la requête : useRequestFetch les transmet.
   const requestFetch = useRequestFetch()
 
@@ -69,6 +71,7 @@ export function useStore() {
     progress.value = me.progress
     courseRead.value = Object.fromEntries(me.courseRead.map((c) => [c, true]))
     exams.value = me.exams
+    isAdmin.value = me.isAdmin
     loaded.value = true
     if (import.meta.client) void refreshPending(me.user.id)
   }
@@ -78,6 +81,7 @@ export function useStore() {
     progress.value = {}
     courseRead.value = {}
     exams.value = []
+    isAdmin.value = false
     pendingCount.value = 0
   }
 
@@ -154,6 +158,20 @@ export function useStore() {
     }
   }
 
+  /**
+   * Signale une erreur sur une question. Sans réseau, le signalement part dans la file hors ligne ;
+   * les autres erreurs (limite quotidienne, texte trop court) remontent pour être affichées.
+   */
+  async function reportQuestion(questionId: string, message: string) {
+    const body = { questionId, message, lang: prefs.value.lang }
+    try {
+      await $fetch('/api/reports', { method: 'POST', body })
+    } catch (e) {
+      if (isNetworkError(e) && user.value) await enqueue({ userId: user.value.id, url: '/api/reports', method: 'POST', body })
+      else throw e
+    }
+  }
+
   async function resetAll() {
     await $fetch('/api/progress/reset', { method: 'POST' })
     progress.value = {}
@@ -161,5 +179,5 @@ export function useStore() {
     exams.value = []
   }
 
-  return { prefs, lang, progress, courseRead, exams, loaded, pendingCount, load, reset, setPrefs, recordStudy, toggleFlag, markChapter, saveExam, resetAll, syncOutbox }
+  return { prefs, lang, progress, courseRead, exams, loaded, isAdmin, pendingCount, load, reset, setPrefs, recordStudy, toggleFlag, markChapter, saveExam, reportQuestion, resetAll, syncOutbox }
 }

@@ -32,13 +32,13 @@ pnpm validate     # coherencia del banco de preguntas (ids, temas, teoría, bare
 ```
 
 Variables: `NUXT_SESSION_PASSWORD` (≥ 32 chars, obligatoria), `NUXT_DB_PATH`,
-`NUXT_ALLOW_REGISTRATION`. Ver `.env.example` y `DEPLOYMENT.md`.
+`NUXT_ALLOW_REGISTRATION`, `NUXT_ADMIN_USERS` (usuarios admin, separados por comas: ven `/reports`). Ver `.env.example` y `DEPLOYMENT.md`.
 
 ## Mapa del repo
 
 ```
 app/
-  pages/          index, course, study, exam, exams/index, exams/[id], glossary, signs, login, register
+  pages/          index, course, study, exam, exams/index, exams/[id], glossary, signs, reports (admin), login, register
   components/     QuestionCard, TheoryPanel, LangToggle, ExamResultCard (auto-importados)
   composables/    useStore.ts  ← ÚNICA fuente de estado de usuario (prefs, progreso, curso, exámenes) ↔ API
                   useHotkeys.ts (atajos de teclado de /study y /exam), useSignPopup.ts
@@ -51,7 +51,8 @@ app/
   types.ts        tipos compartidos
 server/
   utils/db.ts     conexión SQLite + esquema (CREATE TABLE IF NOT EXISTS) + helpers; utils/exams.ts
-  api/            auth/{register,login,logout,config}, me.get, prefs.put, progress/{record,flag,reset}, course/read, exams/{index,[id]}
+  api/            auth/{register,login,logout,config}, me.get, prefs.put, progress/{record,flag,reset}, course/read, exams/{index,[id],stats},
+                  reports/{index.post (usuario), index.get, [id].put (admin)} — `utils/admin.ts`: `isAdmin`, `requireAdmin`
 public/           manifest.webmanifest, sw.js (service worker a mano), offline.html, icons/ (generados)
 scripts/          validate-data.ts, gen-icons.ts (PNG sin dependencias → `pnpm icons`)
 Dockerfile · DEPLOYMENT.md · README.md
@@ -194,8 +195,12 @@ Dockerfile · DEPLOYMENT.md · README.md
      `glossary.ts` — sin artículo, variantes «/», sin fragmentos —; `GlossTerm.vue` muestra la burbuja;
      activo en `/study` y en el simulacro solo con la ayuda ES. Para que un término nuevo se resalte,
      basta con añadirlo al glosario).
-  6. Antes de abrir al público: botón «signaler une erreur» (id + comentario en BD, lista para el
-     admin), aviso «outil non officiel — la référence est le Code de la route», recuperar
-     contraseña, borrar cuenta y exportar datos (RGPD), página de portada sin sesión.
+  6. Antes de abrir al público:
+     - ~~«Signaler une erreur»~~ (hecho: botón ⚑ en `QuestionCard` con `reportable` —estudio,
+       corrección de exámenes, mort subite; nunca durante el examen—, tabla `reports`, máx. 30 por
+       usuario y día, página `/reports` para los admins de `NUXT_ADMIN_USERS`).
+     - ~~Aviso «outil non officiel»~~ (hecho: pie de página con enlace al Code de la route).
+     - Pendiente: recuperar contraseña (requiere email + servicio de envío), borrar cuenta y
+       exportar datos (RGPD), página de portada sin sesión.
   7. Móvil: deslizar para pasar a la siguiente pregunta.
 - Descartado: panel de administración de preguntas (se editan en `app/data`).

@@ -263,7 +263,7 @@ onBeforeUnmount(() => {
         </p>
       </div>
       <div v-if="sudden.failed" class="card">
-        <QuestionCard :question="sudden.failed.question" :lang="lang" show-alt :chosen="sudden.failed.chosen" revealed />
+        <QuestionCard :question="sudden.failed.question" :lang="lang" show-alt gloss reportable :chosen="sudden.failed.chosen" revealed />
         <TheoryPanel :theory-id="sudden.failed.question.theoryId" />
       </div>
       <div class="card">

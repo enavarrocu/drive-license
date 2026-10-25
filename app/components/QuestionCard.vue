@@ -20,6 +20,8 @@ const props = defineProps<{
   disabled?: boolean
   /** Termes du glossaire cliquables dans le texte français. */
   gloss?: boolean
+  /** Affiche « signaler une erreur » (pas pendant l'examen). */
+  reportable?: boolean
 }>()
 
 const emit = defineEmits<{ choose: [index: number] }>()
@@ -50,7 +52,14 @@ const { open } = useSignPopup()
 // Une bulle de glossaire ouverte se ferme en touchant ailleurs ou en changeant de question.
 const glossOpen = useState<string | null>('glossOpen', () => null)
 const closeGloss = () => (glossOpen.value = null)
-watch(() => props.question.id, closeGloss)
+const reporting = ref(false)
+watch(
+  () => props.question.id,
+  () => {
+    closeGloss()
+    reporting.value = false
+  },
+)
 onMounted(() => document.addEventListener('click', closeGloss))
 onBeforeUnmount(() => document.removeEventListener('click', closeGloss))
 const hasVisual = computed(() => !!sceneSvg.value || !!props.question.image || questionSigns.value.length > 0)
@@ -71,7 +80,11 @@ function classFor(i: number) {
       <span v-if="question.grave" class="pill grave">{{ lang === 'fr' ? 'faute grave' : 'falta grave' }}</span>
       <span class="grow"></span>
       <code class="qid" :title="lang === 'fr' ? 'Identifiant de la question' : 'Identificador de la pregunta'">{{ question.id }}</code>
+      <button v-if="reportable" type="button" class="btn sm ghost report-btn" :aria-expanded="reporting" :title="lang === 'fr' ? 'Signaler une erreur' : 'Avisar de un error'" @click="reporting = !reporting">
+        ⚑ <span class="report-label">{{ lang === 'fr' ? 'Signaler' : 'Avisar' }}</span>
+      </button>
     </div>
+    <ReportForm v-if="reporting" :question-id="question.id" @close="reporting = false" />
     <div class="q-layout" :class="{ 'has-visual': hasVisual }">
       <div v-if="hasVisual" class="q-visual">
         <div v-if="sceneSvg" class="scene-wrap" v-html="sceneSvg"></div>

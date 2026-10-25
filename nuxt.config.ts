@@ -52,9 +52,11 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
-    // Surchargés par les variables d'env NUXT_DB_PATH, NUXT_ALLOW_REGISTRATION, NUXT_SESSION_PASSWORD
+    // Surchargés par les variables d'env NUXT_DB_PATH, NUXT_ALLOW_REGISTRATION, NUXT_ADMIN_USERS, NUXT_SESSION_PASSWORD
     dbPath: './data/permis.db',
     allowRegistration: 'true',
+    /** Noms d'utilisateur administrateurs (séparés par des virgules) : voient les erreurs signalées. */
+    adminUsers: '',
     session: {
       password: process.env.NUXT_SESSION_PASSWORD || '',
       maxAge: 60 * 60 * 24 * 90, // 90 jours

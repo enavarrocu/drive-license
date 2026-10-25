@@ -55,6 +55,17 @@ CREATE TABLE IF NOT EXISTS exams (
   answers TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS exams_user_date ON exams(user_id, date DESC);
+-- Erreurs signalées par les utilisateurs sur une question (traitées par un administrateur).
+CREATE TABLE IF NOT EXISTS reports (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  question_id TEXT NOT NULL,
+  message TEXT NOT NULL,
+  lang TEXT NOT NULL DEFAULT 'fr',
+  status TEXT NOT NULL DEFAULT 'open',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS reports_status ON reports(status, created_at DESC);
 `
 
 export function useDb(): Database.Database {
@@ -99,6 +110,15 @@ export interface ProgressRow {
   streak: number
   /** ISO (UTC) de la dernière réponse en mode étude ; null pour les lignes antérieures. */
   seen_at: string | null
+}
+export interface ReportRow {
+  id: number
+  user_id: number
+  question_id: string
+  message: string
+  lang: 'fr' | 'es'
+  status: 'open' | 'done'
+  created_at: string
 }
 export interface ExamRow {
   id: number

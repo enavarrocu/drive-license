@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { loggedIn, user, clear } = useUserSession()
 const store = useStore()
-const { lang, pendingCount } = store
+const { lang, pendingCount, isAdmin } = store
 const route = useRoute()
 const { online } = usePwa()
 
@@ -34,15 +34,23 @@ async function logout() {
     </header>
     <nav v-if="loggedIn" class="nav">
       <NuxtLink v-for="t in tabs" :key="t.to" :to="t.to" :class="{ active: route.path === t.to || (t.to !== '/' && route.path.startsWith(t.to)) }">{{ t[lang] }}</NuxtLink>
+      <NuxtLink v-if="isAdmin" to="/reports" :class="{ active: route.path === '/reports' }">⚑ {{ lang === 'fr' ? 'Signalements' : 'Avisos' }}</NuxtLink>
     </nav>
     <main>
       <slot />
     </main>
     <SignPopup />
     <footer>
-      {{ lang === 'fr'
-        ? 'Cours et banque de questions originaux, rédigés pour l\'entraînement à l\'examen théorique B (Bruxelles). Ce n\'est pas la banque officielle GOCA.'
-        : 'Curso y banco de preguntas originales, redactados para preparar el examen teórico B (Bruselas). No es el banco oficial de GOCA.' }}
+      <p>
+        <b>{{ lang === 'fr' ? 'Outil d\'entraînement non officiel.' : 'Herramienta de práctica no oficial.' }}</b>
+        {{ lang === 'fr'
+          ? 'Cours et banque de questions originaux, rédigés pour préparer l\'examen théorique B (Bruxelles) ; ce n\'est pas la banque officielle GOCA. Le contenu a été vérifié avec soin, mais la seule référence est la réglementation :'
+          : 'Curso y banco de preguntas originales, redactados para preparar el examen teórico B (Bruselas); no es el banco oficial de GOCA. El contenido se ha revisado con cuidado, pero la única referencia es la normativa:' }}
+        <a href="https://www.codedelaroute.be/fr/reglementation/1975120109~hra8v386pu" target="_blank" rel="noopener">Code de la route</a>.
+      </p>
+      <p v-if="loggedIn">
+        {{ lang === 'fr' ? 'Une erreur ? Utilisez « ⚑ Signaler » sur la question concernée.' : '¿Un error? Usa «⚑ Avisar» en la pregunta afectada.' }}
+      </p>
     </footer>
   </div>
 </template>
