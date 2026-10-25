@@ -306,3 +306,8 @@ footer p { margin: 0 0 6px; }
 .landing-features h3 { margin: 6px 0 4px; }
 .landing-icon { font-size: 1.6rem; }
 .landing-access { text-align: center; margin-top: 14px; }
+
+/* Glisser pour passer à la question suivante (écrans tactiles) */
+.swipe-card { touch-action: pan-y; transition: transform 0.15s ease-out, opacity 0.15s ease-out; }
+.swipe-hint { display: none; margin: 10px 0 0; text-align: center; }
+@media (hover: none) and (pointer: coarse) { .swipe-hint { display: block; } }

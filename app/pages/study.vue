@@ -94,6 +94,10 @@ function readCurrent() {
 }
 onBeforeUnmount(stopSpeaking)
 
+// Mobile : glisser vers la gauche = question suivante (comme le bouton « Suivante »).
+const cardEl = ref<HTMLElement | null>(null)
+const { offset: swipeOffset } = useSwipe(cardEl, { onLeft: () => current.value && next() })
+
 useHotkeys((key) => {
   if (!current.value) return
   const i = answerIndex(key)
@@ -151,7 +155,12 @@ useHotkeys((key) => {
       <p v-else class="muted">{{ lang === 'fr' ? 'Aucune question dans cette sélection.' : 'No hay preguntas en esta selección.' }}</p>
     </div>
 
-    <div v-else class="card">
+    <div
+      v-else
+      ref="cardEl"
+      class="card swipe-card"
+      :style="swipeOffset ? { transform: `translateX(${swipeOffset}px)`, opacity: 1 - Math.min(Math.abs(swipeOffset) / 200, 0.4), transition: 'none' } : undefined"
+    >
       <QuestionCard :question="current" :lang="lang" :show-alt="showAlt" gloss reportable :chosen="chosen" :revealed="revealed" :label="`${index + 1} / ${pool.length}`" @choose="choose" />
       <TheoryPanel v-if="revealed && showTheory" :theory-id="current.theoryId" />
       <div class="row" style="margin-top: 14px">
@@ -161,6 +170,7 @@ useHotkeys((key) => {
         <button v-if="!revealed" class="btn" type="button" @click="revealed = true">{{ lang === 'fr' ? 'Voir la réponse' : 'Ver la respuesta' }}</button>
         <button class="btn primary" type="button" @click="next">{{ lang === 'fr' ? 'Suivante →' : 'Siguiente →' }}</button>
       </div>
+      <p class="swipe-hint small muted">{{ lang === 'fr' ? 'Glissez vers la gauche pour la question suivante.' : 'Desliza hacia la izquierda para pasar a la siguiente.' }}</p>
       <p class="kbd-hint small muted">
         <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> {{ lang === 'fr' ? 'répondre' : 'responder' }} ·
         <kbd>{{ lang === 'fr' ? 'Entrée' : 'Intro' }}</kbd> {{ lang === 'fr' ? 'réponse / suivante' : 'respuesta / siguiente' }} ·

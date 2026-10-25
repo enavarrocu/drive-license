@@ -204,5 +204,6 @@ Dockerfile · DEPLOYMENT.md · README.md
        aún no está abierta; «Se connecter» para los usuarios existentes).
      - Pendiente: recuperar contraseña (requiere email + servicio de envío), borrar cuenta y
        exportar datos (RGPD). Al abrir: `REGISTRATION_OPEN = true` y enlazar el registro desde la portada.
-  7. Móvil: deslizar para pasar a la siguiente pregunta.
+  7. ~~Móvil: deslizar para pasar a la siguiente pregunta~~ (hecho: `composables/useSwipe.ts` en `/study`;
+     solo gestos claramente horizontales ≥ 70 px, ignora campos de texto y la burbuja del glosario).
 - Descartado: panel de administración de preguntas (se editan en `app/data`).
