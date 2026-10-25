@@ -9,7 +9,8 @@ const { open } = useSignPopup()
 onMounted(() => {
   if (typeof route.query.code === 'string') open(route.query.code)
 })
-const mode = ref<'grid' | 'flash'>('grid')
+// Mode d'affichage : catalogue, flashcards ou quiz (?mode=quiz pour y arriver directement).
+const mode = ref<'grid' | 'flash' | 'quiz'>(route.query.mode === 'quiz' ? 'quiz' : 'grid')
 const category = ref<SignCategory | 'all'>('all')
 const list = computed(() => signs.filter((s) => category.value === 'all' || s.category === category.value))
 
@@ -39,8 +40,11 @@ function nextCard() {
           <option value="all">{{ lang === 'fr' ? 'Toutes les familles' : 'Todas las familias' }}</option>
           <option v-for="c in signCategories" :key="c.id" :value="c.id">{{ c[lang] }}</option>
         </select>
-        <button v-if="mode === 'grid'" class="btn primary" type="button" @click="startFlash">Flashcards</button>
-        <button v-else class="btn" type="button" @click="mode = 'grid'">{{ lang === 'fr' ? 'Liste' : 'Lista' }}</button>
+        <div class="tabs-inline">
+          <button class="btn" :class="{ primary: mode === 'grid' }" type="button" @click="mode = 'grid'">{{ lang === 'fr' ? 'Liste' : 'Lista' }}</button>
+          <button class="btn" :class="{ primary: mode === 'flash' }" type="button" @click="startFlash">Flashcards</button>
+          <button class="btn" :class="{ primary: mode === 'quiz' }" type="button" @click="mode = 'quiz'">Quiz</button>
+        </div>
       </div>
       <p class="muted small" style="margin-bottom: 0">{{ lang === 'fr' ? 'Dessins schématiques : forme, couleur et symbole conformes, tracé simplifié.' : 'Dibujos esquemáticos: forma, color y símbolo fieles, trazado simplificado.' }}</p>
     </div>
@@ -54,6 +58,8 @@ function nextCard() {
         <p class="small" style="margin: 6px 0 0; text-align: left">{{ s.meaning }}</p>
       </div>
     </div>
+
+    <SignQuiz v-else-if="mode === 'quiz'" :category="category" />
 
     <div v-else-if="card" class="card flash">
       <p class="muted small">{{ pos + 1 }} / {{ deck.length }}</p>
