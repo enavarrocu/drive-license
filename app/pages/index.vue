@@ -3,6 +3,7 @@ import { questions } from '../data/questions'
 import { themes } from '../data/themes'
 import { course } from '../data/course'
 import { EXAM } from '../lib/exam'
+import { reviewPlan } from '../lib/srs'
 
 const { lang, progress, exams, courseRead, resetAll } = useStore()
 const { user } = useUserSession()
@@ -37,6 +38,22 @@ const perTheme = computed(() =>
   }),
 )
 const lastExams = computed(() => exams.value.slice(0, 8))
+
+/** Fautes graves : −5 chacune à l'examen, deux suffisent pour échouer. */
+const graveQuestions = questions.filter((q) => q.grave)
+const grave = computed(() => {
+  const plan = reviewPlan(graveQuestions, progress.value)
+  // « Maîtrisée » = dernière réponse en étude correcte.
+  const mastered = graveQuestions.filter((q) => (progress.value[q.id]?.streak ?? 0) > 0).length
+  const recent = exams.value.slice(0, 5)
+  return {
+    total: graveQuestions.length,
+    mastered,
+    due: plan.due,
+    recentExams: recent.length,
+    recentGrave: recent.reduce((n, e) => n + e.graveErrors, 0),
+  }
+})
 const readiness = computed(() => {
   const last3 = exams.value.slice(0, 3)
   if (last3.length < 3) return null
@@ -73,6 +90,23 @@ async function confirmReset() {
             : (lang === 'fr' ? 'Objectif : 3 examens de suite ≥ 45/50 avant de réserver' : 'Objetivo: 3 exámenes seguidos ≥ 45/50 antes de reservar') }}
         </span>
       </p>
+    </div>
+
+    <div class="card grave-card">
+      <h2>{{ lang === 'fr' ? 'Fautes graves' : 'Faltas graves' }} <span class="pill grave">−5</span></h2>
+      <p class="small muted">
+        {{ lang === 'fr'
+          ? 'Une faute grave coûte 5 points au lieu de 1 : deux suffisent pour échouer. C\'est là qu\'il faut être sans faille.'
+          : 'Una falta grave quita 5 puntos en lugar de 1: con dos ya suspendes. Es donde no puedes fallar.' }}
+      </p>
+      <div class="bar"><div :style="{ width: (grave.mastered / grave.total) * 100 + '%' }"></div></div>
+      <p class="small">
+        {{ grave.mastered }} / {{ grave.total }} {{ lang === 'fr' ? 'maîtrisées' : 'dominadas' }}<span v-if="grave.due" style="color: var(--ko)"> · {{ grave.due }} {{ lang === 'fr' ? 'à revoir' : 'para repasar' }}</span>
+        <template v-if="grave.recentExams">
+          · {{ lang === 'fr' ? `${grave.recentGrave} faute(s) grave(s) sur tes ${grave.recentExams} derniers examens` : `${grave.recentGrave} falta(s) grave(s) en tus ${grave.recentExams} últimos exámenes` }}
+        </template>
+      </p>
+      <NuxtLink :to="{ path: '/study', query: { theme: 'grave' } }" class="btn primary">{{ lang === 'fr' ? 'S\'entraîner sur les fautes graves' : 'Practicar las faltas graves' }}</NuxtLink>
     </div>
 
     <div v-if="showInstall" class="card install-card">
