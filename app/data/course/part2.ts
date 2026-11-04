@@ -86,7 +86,7 @@ En una calzada de **tres carriles** y dos sentidos (sin marcas de sentido), el c
 - **«Zone résidentielle»** (F12a → F12b) y **«zone de rencontre»**: **20 km/h**; los peatones pueden usar toda la anchura de la vía y jugar, pero no estorbar sin necesidad; los conductores no deben ponerlos en peligro ni estorbarlos y, si hace falta, se detienen; estacionamiento solo en plazas marcadas con «P» o donde una señal lo permita (a derecha o izquierda).
 - **«Zone piétonne»** (F103 → F105): solo peatones. Vehículos autorizados por la placa (residentes, reparto en horario, bicis si se indica) **a paso de persona**, cediendo a los peatones, sin estacionar. Los ciclistas solo si la señal lo permite y a paso, bajando de la bici si hay aglomeración.
 - **«Zone de stationnement»** (E9 + «zone»): regla de estacionamiento válida en toda la zona.
-- Para el examen, retén: 30 = zona 30 / entorno escolar / rue cyclable; 20 = residencial / de encuentro; paso de persona = peatonal.`,
+- Para el examen, retén: 30 = zona 30 / entorno escolar / zone cyclable; 20 = residencial / de encuentro; paso de persona = peatonal.`,
       },
     ],
   },
@@ -111,7 +111,7 @@ En una calzada de **tres carriles** y dos sentidos (sin marcas de sentido), el c
 | Zone 30 / abords d'école | 30 | 30 | 30 |
 | Zone résidentielle / de rencontre | 20 | 20 | 20 |
 | Zone piétonne | paso de persona | paso | paso |
-| Rue cyclable | 30 | 30 | 30 |
+| Zone cyclable | 30 | 30 | 30 |
 
 Otros límites: **C43** indica un máximo hasta el próximo cruce inclusive (o hasta otra C43, C45 o una señal de inicio/fin de población o de zona); con validez de «zone», hasta el fin de zona. Vehículos y conjuntos de MMA > 3,5 t: **90** en autopista y en las 2×2 separadas; fuera de esas vías, los de más de 7,5 t: 60. Ciclomotores clase B: 45; clase A: 25. Los neumáticos con clavos están prohibidos salvo autorización ministerial excepcional. Un **conductor novel** no tiene límites distintos en Bélgica.
 

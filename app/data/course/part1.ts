@@ -190,8 +190,8 @@ Tres tipos de distracción: **visual** (apartar la vista: a 90 km/h, 2 s de mira
 Desde 0,3 g/l: campo visual más estrecho, peor percepción de distancias y velocidad, reflejos más lentos, exceso de confianza. A 0,5 g/l el riesgo de accidente mortal se multiplica por 2; a 0,8 por 10; a 1,5 por 25.
 
 ### Sanciones
-- 0,5–0,8 g/l: multa (197 € si se paga en el acto, desde julio de 2026) e **«interdiction de conduire» de 3 h** en el sitio.
-- ≥ 0,8 g/l: «interdiction de conduire» de **6 h** como mínimo y **«retrait immédiat du permis» de 15 días** (aplicado en todo el país desde febrero de 2026), multa más alta, posible citación ante el «tribunal de police» y «déchéance».
+- 0,5–0,8 g/l: multa (197 € si se paga en el acto, desde julio de 2026) e **«interdiction de conduire» de 12 h** en el sitio (ley de 16/3/1968, art. 60 §3; antes eran 3 h).
+- ≥ 0,8 g/l: la misma «interdiction de conduire» de **12 h** y además **«retrait immédiat du permis» de 15 días** (aplicado en todo el país desde febrero de 2026), multa más alta, posible citación ante el «tribunal de police» y «déchéance».
 - Con tasas muy altas (≥ 1,8 g/l) o en caso de **reincidencia**, el juez debe en principio imponer el «éthylotest antidémarrage» (alcolock) y puede exigir exámenes médicos y psicológicos.
 - **Negarse** al test de aliento o al análisis de sangre se castiga como una tasa alta.
 - «Ivresse» (embriaguez manifiesta, independiente de la tasa): también delito.`,

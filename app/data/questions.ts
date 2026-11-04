@@ -7,6 +7,8 @@ import { extraQuestions2 } from './questions-extra2'
 import { extraQuestions3 } from './questions-extra3'
 import { extraQuestions4 } from './questions-extra4'
 import { extraQuestions5 } from './questions-extra5'
+import { extraQuestions6 } from './questions-extra6'
+import { extraQuestions7 } from './questions-extra7'
 import { panneauxQuestions } from './questions-panneaux'
 import { mecaniqueQuestions } from './questions-mecanique'
 import { accidentsQuestions } from './questions-accidents'
@@ -92,9 +94,9 @@ const baseQuestions: Question[] = [
     ['En una zona residencial (esta señal), la velocidad máxima es:', '30 km/h', '20 km/h', '10 km/h'],
     1, 'Zona residencial y zona de encuentro: 20 km/h; los peatones pueden usar toda la calzada.', true), signs: ["F12a"] },
   { ...Q('vit-06', 'vitesse', 'vit-limites',
-    ['Dans une rue cyclable (ce signal), je dois :', 'Rouler à 30 km/h maximum sans dépasser les cyclistes.', 'Rouler à 50 km/h maximum en dépassant si possible.', 'Dépasser les cyclistes en laissant 1 m, sans limite.'],
-    ['En una calle ciclista (esta señal), debo:', 'Circular a 30 km/h máximo sin adelantar a los ciclistas.', 'Circular a 50 km/h máximo adelantando si es posible.', 'Adelantar a los ciclistas dejando 1 m, sin límite.'],
-    0, 'En la «rue cyclable» los ciclistas pueden ocupar el carril, no se les adelanta y el límite es 30.', true), signs: ["F111"] },
+    ['Dans une zone cyclable (ce signal), je dois :', 'Rouler à 30 km/h maximum sans dépasser les cyclistes.', 'Rouler à 50 km/h maximum en dépassant si possible.', 'Dépasser les cyclistes en laissant 1 m, sans limite.'],
+    ['En una zona ciclista (esta señal), debo:', 'Circular a 30 km/h máximo sin adelantar a los ciclistas.', 'Circular a 50 km/h máximo adelantando si es posible.', 'Adelantar a los ciclistas dejando 1 m, sin límite.'],
+    0, 'En la «zone cyclable» los ciclistas pueden ocupar el carril, no se les adelanta y el límite es 30.', true), signs: ["F111"] },
   Q('vit-07', 'vitesse', 'vit-adaptee',
     ['Quelle distance de sécurité minimale recommande-t-on de laisser derrière le véhicule qui précède ?', 'Une distance parcourue en 2 secondes.', 'Une distance parcourue en 1 seconde.', '10 mètres, quelle que soit la vitesse.'],
     ['¿Qué distancia de seguridad mínima se recomienda dejar detrás del vehículo precedente?', 'Una distancia recorrida en 2 segundos.', 'Una distancia recorrida en 1 segundo.', '10 metros, sea cual sea la velocidad.'],
@@ -166,9 +168,9 @@ const baseQuestions: Question[] = [
     ['Antes de adelantar, debo entre otras cosas:', 'Tocar el claxon obligatoriamente antes de desplazarme.', 'Comprobar que nadie me adelanta y señalizar.', 'Acelerar por encima del límite para ir más rápido.'],
     1, 'Retrovisor + ángulo muerto + intermitente. Nunca superar el límite de velocidad para adelantar.', true),
   { ...Q('dep-13', 'depassement', 'dep-interdit',
-    ['Je circule dans une rue cyclable (ce signal) derrière un cycliste lent. Puis-je le dépasser ?', 'Oui, en laissant 1 m.', 'Non, c\'est interdit.', 'Oui, si je klaxonne d\'abord.'],
-    ['Circulo por una calle ciclista (esta señal) detrás de un ciclista lento. ¿Puedo adelantarlo?', 'Sí, dejando 1 m.', 'No, está prohibido.', 'Sí, si toco el claxon antes.'],
-    1, 'En la «rue cyclable» los coches no pueden adelantar a ciclistas ni ciclomotores.', true), signs: ["F111"] },
+    ['Je circule dans une zone cyclable (ce signal) derrière un cycliste lent. Puis-je le dépasser ?', 'Oui, en laissant 1 m.', 'Non, c\'est interdit.', 'Oui, si je klaxonne d\'abord.'],
+    ['Circulo por una zona ciclista (esta señal) detrás de un ciclista lento. ¿Puedo adelantarlo?', 'Sí, dejando 1 m.', 'No, está prohibido.', 'Sí, si toco el claxon antes.'],
+    1, 'En la «zone cyclable» los coches no pueden adelantar a ciclistas ni ciclomotores.', true), signs: ["F111"] },
 
   /* ============================ ALCOOL ============================ */
   Q('alc-01', 'alcool', 'alc-taux',
@@ -182,7 +184,7 @@ const baseQuestions: Question[] = [
   Q('alc-03', 'alcool', 'alc-taux',
     ['À partir de quel taux d\'alcool le permis est-il retiré immédiatement ?', '0,5 g/l', '0,8 g/l', '1,5 g/l'],
     ['¿A partir de qué tasa de alcohol se retira el permiso en el acto?', '0,5 g/l', '0,8 g/l', '1,5 g/l'],
-    1, 'Desde el 14/02/2026, por encima de 0,8 g/l (0,35 mg/l de aire) se retira el permiso en el acto durante 15 días en toda Bélgica, además de la prohibición de conducir de 6 h y el tribunal. Entre 0,5 y 0,8 g/l: prohibición de conducir de 3 h y multa (police.be).', true),
+    1, 'Desde el 14/02/2026, por encima de 0,8 g/l (0,35 mg/l de aire) se retira el permiso en el acto durante 15 días en toda Bélgica, además de la prohibición de conducir de 12 h y el tribunal. Entre 0,5 y 0,8 g/l: prohibición de conducir de 12 h y multa (police.be; ley de 16/3/1968, art. 60 §3).', true),
   Q('alc-04', 'alcool', 'alc-taux',
     ['Comment faire baisser plus vite son taux d\'alcool ?', 'Boire du café fort.', 'Prendre une douche froide.', 'Rien, seul le temps agit.'],
     ['¿Cómo se hace bajar más rápido la tasa de alcohol?', 'Beber café fuerte.', 'Darse una ducha fría.', 'Nada, solo el tiempo actúa.'],
@@ -513,6 +515,6 @@ const baseQuestions: Question[] = [
     1, 'Obligación de identificarse; abandonar el lugar = «délit de fuite». Sin desacuerdo basta el constat amiable.'),
 ]
 
-export const questions: Question[] = [...baseQuestions, ...sceneQuestions, ...extraQuestions, ...extraQuestions2, ...extraQuestions3, ...extraQuestions4, ...extraQuestions5, ...panneauxQuestions, ...mecaniqueQuestions, ...accidentsQuestions, ...comportementQuestions]
+export const questions: Question[] = [...baseQuestions, ...sceneQuestions, ...extraQuestions, ...extraQuestions2, ...extraQuestions3, ...extraQuestions4, ...extraQuestions5, ...extraQuestions6, ...extraQuestions7, ...panneauxQuestions, ...mecaniqueQuestions, ...accidentsQuestions, ...comportementQuestions]
 
 export const questionById = Object.fromEntries(questions.map((q) => [q.id, q])) as Record<string, Question>

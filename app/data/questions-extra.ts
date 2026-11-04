@@ -366,9 +366,9 @@ export const extraQuestions: Question[] = [
     ['Un autobús escolar está parado con las luces de emergencia encendidas. Significa:', 'Suben o bajan niños.', 'Está averiado.', 'Debo adelantarlo rápidamente.'],
     0, 'Los buses escolares deben usar los warning al cargar/descargar niños. Pasar muy despacio o esperar.'),
   Q('x-usa-08', 'usagers-faibles', 'usa-cyclistes',
-    ['Une « speed pedelec » (vélo électrique jusqu\'à 45 km/h) suit les règles :', 'Des cyclistes ordinaires.', 'Des motos de catégorie A1.', 'Des cyclomoteurs de classe B.'],
-    ['Una «speed pedelec» (bici eléctrica hasta 45 km/h) sigue las reglas:', 'De los ciclistas ordinarios.', 'De las motos de categoría A1.', 'De los ciclomotores de clase B.'],
-    2, 'Las bicis con asistencia hasta 25 km/h son bicis; la speed pedelec (hasta 45 km/h) es un ciclomotor de clase B: matrícula, permiso AM y casco.'),
+    ['Une « speed pedelec » (vélo électrique jusqu\'à 45 km/h) suit les règles :', 'Des cyclistes ordinaires.', 'Des motos de catégorie A1.', 'Des cyclomoteurs.'],
+    ['Una «speed pedelec» (bici eléctrica hasta 45 km/h) sigue las reglas:', 'De los ciclistas ordinarios.', 'De las motos de categoría A1.', 'De los ciclomotores.'],
+    2, 'Las bicis con asistencia hasta 25 km/h son bicis; la speed pedelec (asistencia hasta 45 km/h) es un «cyclomoteur» de tipo propio, ni de clase A ni de clase B (art. 2.17, 3°): matrícula, permiso AM y casco.'),
 
   /* ============ VITESSE, DISTANCES (compléments) ============ */
   Q('x-vit-01', 'vitesse', 'vit-arret',

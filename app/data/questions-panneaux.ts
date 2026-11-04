@@ -336,7 +336,7 @@ export const panneauxQuestions: Question[] = [
   { ...Q('z-pan-64', 'panneaux', 'pan-indication',
     ['Après ce signal, puis-je de nouveau dépasser un cycliste ?', 'Non, jamais dans une agglomération.', 'Oui, avec les règles habituelles.', 'Oui, mais seulement à 30 km/h.'],
     ['Después de esta señal, ¿puedo volver a adelantar a un ciclista?', 'No, nunca dentro de una población.', 'Sí, con las reglas habituales.', 'Sí, pero solo a 30 km/h.'],
-    1, 'F113: fin de la zona o calle ciclista. Termina la prohibición de adelantar a los ciclistas y el límite de 30 km/h propio de la zona; vuelven las reglas normales.'), signs: ['F113'] },
+    1, 'F113: fin de la zona ciclista. Termina la prohibición de adelantar a los ciclistas y el límite de 30 km/h propio de la zona; vuelven las reglas normales.'), signs: ['F113'] },
 
   { ...Q('z-pan-65', 'panneaux', 'pan-indication',
     ['Ce signal indique :', 'Un site bus et tram que je peux franchir.', 'Une bande que je peux emprunter la nuit.', 'Une gare de bus et de trams à proximité.'],
@@ -364,8 +364,8 @@ export const panneauxQuestions: Question[] = [
     2, 'F41: itinerario de desvío («déviation»), en naranja: síguelo hasta volver a tu ruta. F39 lo anuncia antes.'), signs: ['F41'] },
 
   { ...Q('z-pan-70', 'panneaux', 'pan-indication',
-    ['Ce signal indique :', 'Une piste cyclable obligatoire.', 'Une rue cyclable à 30 km/h.', 'Un passage pour cyclistes.'],
-    ['Esta señal indica:', 'Un carril bici obligatorio.', 'Una calle ciclista a 30 km/h.', 'Un paso para ciclistas.'],
+    ['Ce signal indique :', 'Une piste cyclable obligatoire.', 'Une zone cyclable à 30 km/h.', 'Un passage pour cyclistes.'],
+    ['Esta señal indica:', 'Un carril bici obligatorio.', 'Una zona ciclista a 30 km/h.', 'Un paso para ciclistas.'],
     2, 'F50: paso para ciclistas y ciclomotores de dos ruedas (se coloca en el mismo paso; A25 lo anuncia). Debo cederles el paso cuando cruzan.'), signs: ['F50'] },
 
   { ...Q('z-pan-71', 'panneaux', 'pan-indication',

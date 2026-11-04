@@ -57,7 +57,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'freiner', es: 'frenar', theme: 'vitesse' },
   { fr: 'la zone 30 / la zone résidentielle / la zone de rencontre', es: 'zona 30 / zona residencial / zona de encuentro', theme: 'vitesse' },
   { fr: 'les abords d\'école', es: 'el entorno escolar', theme: 'vitesse' },
-  { fr: 'la rue cyclable', es: 'la calle ciclista (F111)', theme: 'vitesse' },
+  { fr: 'la zone cyclable', es: 'la zona ciclista (F111; antes «rue cyclable»)', theme: 'vitesse' },
 
   /* --- Adelantamiento --- */
   { fr: 'dépasser / le dépassement', es: 'adelantar / el adelantamiento', theme: 'depassement' },

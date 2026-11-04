@@ -97,7 +97,8 @@ Dockerfile · DEPLOYMENT.md · README.md
   (codedelaroute.be, AR 1/12/1975) el 25 oct 2026. Fuentes de referencia: el propio código para
   las reglas; police.be / be.brussels / mobilit.belgium.be para alcohol, sanciones e importes
   (retirada inmediata de 15 días desde 0,8 g/l y por teléfono en mano desde el 14/02/2026;
-  importes indexados el 1/7/2026); la hoja GOCA «Doc B.FR.PR» (Región de Bruselas) para el
+  importes indexados el 1/7/2026; prohibición de conducir de 12 h desde 0,22 mg/l, también en bici, a caballo
+  y para el guía, ley de 16/3/1968 art. 60 §3 —las antiguas 3 h/6 h ya no existen—); la hoja GOCA «Doc B.FR.PR» (Región de Bruselas) para el
   permiso provisional (prácticas 9/6/3 meses, 22–6 h, guía 8 años). Si cambias una cifra, cita la
   fuente en el commit y en el `why` (artículo). Si una regla no está en el código ni en una fuente
   oficial, no se pregunta (se retiraron «cede el que baja en cuesta», «dos giros a la izquierda se
@@ -124,8 +125,10 @@ Dockerfile · DEPLOYMENT.md · README.md
   miniaturas (`SignText inline`). Las escenas pintan las señales oficiales en los brazos
   (`signs: { E: 'B1' }`), con `oneWay`, `inRing` (vehículo ya en la rotonda), `type: 'merge'`.
 - **Opciones**: tres, de longitud parecida, sin justificación ni «:» solo en la correcta (la
-  explicación va en `why`); la respuesta correcta repartida ~1/3 entre A/B/C (hoy 212/211/214 → al
-  añadir, no pongas siempre la buena en el medio). Nada de preguntas «¿quién tiene la culpa?»: se
+  explicación va en `why`); la respuesta correcta repartida ~1/3 entre A/B/C (al añadir, no pongas
+  siempre la buena en el medio). Dos opciones solo para preguntas «oui / non» (como en el examen real):
+  siempre `['Oui.', 'Non.']` / `['Sí.', 'No.']` en ese orden, con ~mitad de respuestas Oui; validate
+  vigila el reparto por separado para 2 y 3 opciones. Nada de preguntas «¿quién tiene la culpa?»: se
   pregunta la regla.
 - No dupliques preguntas: antes de añadir, busca si ya existe en versión texto o escena (hubo 7
   pares; se eliminaron las versiones texto).
@@ -177,12 +180,15 @@ Dockerfile · DEPLOYMENT.md · README.md
 
 ## Estado (25 oct 2026) y herramientas de diagnóstico
 
-- 637 preguntas en 16 temas. Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
+- 697 preguntas en 16 temas (13 de dos opciones «oui / non»). Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
   `z-prio/vit/dep/alc-NN`), -extra4 (resto de temas, `z-sig/sta/aut/usa/man/ecl/veh/per-NN`) y uno por
   tema nuevo: -panneaux (`z-pan-NN`), -mecanique (`z-mec-NN`), -accidents (`z-acc-NN`),
   -comportement (`z-com-NN`) y -extra5 (31 escenas de adelantamiento, carriles, rotondas de 2 carriles,
-  tranvía, peatones, estacionamiento y autopista, `z5-<tema>-NN`). Siguiente bloque: `questions-extra6.ts`,
-  ids `z6-<tema>-NN`.
+  tranvía, peatones, estacionamiento y autopista, `z5-<tema>-NN`), -extra6 (escenas y temas graves, `z6-…`) y
+  -extra7 (texto y oui/non, `z7-…`); estos dos cubren huecos detectados al comparar con simulacros reales
+  (nov 2026). Siguiente bloque: `questions-extra8.ts`, ids `z8-<tema>-NN`.
+- Vocabulario: la F111 es «zone cyclable» (código vigente; los paneles «rue cyclable» valen hasta el 1/1/2035).
+  Textos oficiales para verificar: codedelaroute.be (AR 1/12/1975, ley de 16/3/1968, AR 23/3/1998 del permiso).
 - Modos de estudio: repaso inteligente (por defecto), faltas graves, errores de un examen (`?ids=`),
   quiz de señales (`/signs?mode=quiz`, progreso con ids `sign:<código>` en la misma tabla `progress`),
   mini-test por capítulo del curso (`ChapterQuiz`, con un mapa capítulo → theoryId dentro del componente),

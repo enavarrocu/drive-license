@@ -18,7 +18,8 @@ const CODE_RE = /\b([A-F]\d{1,3}(?:[a-z]|bis)?|M\d{1,2})\b/g
 /** Señales de escena que no son códigos del catálogo (semáforos). */
 const isSceneLight = (s: string) => s.startsWith('light-')
 
-const EXPECTED_OPTIONS = 3
+/** Tres opciones; dos solo para las preguntas «oui / non» (como en el examen real). */
+const ALLOWED_OPTIONS = [2, 3]
 
 /** Minúsculas, sin acentos, sin puntuación, espacios simples. */
 export function normalize(s: string): string {
@@ -56,7 +57,7 @@ export function checkQuestions(questions: Question[]): CheckResult {
   for (const q of questions) {
     // 1. Errores estructurales
     if (q.fr.options.length !== q.es.options.length) errors.push(`${q.id}: ${q.fr.options.length} options FR ≠ ${q.es.options.length} ES`)
-    if (q.fr.options.length !== EXPECTED_OPTIONS) errors.push(`${q.id}: ${q.fr.options.length} options (attendu ${EXPECTED_OPTIONS})`)
+    if (!ALLOWED_OPTIONS.includes(q.fr.options.length)) errors.push(`${q.id}: ${q.fr.options.length} options (attendu ${ALLOWED_OPTIONS.join(' ou ')})`)
     for (const code of q.signs ?? []) if (!signByCode[code]) errors.push(`${q.id}: signs → code inconnu ${code}`)
     for (const code of Object.values(q.scene?.signs ?? {})) {
       if (code && !isSceneLight(code) && !signByCode[code]) errors.push(`${q.id}: scene.signs → code inconnu ${code}`)
@@ -80,16 +81,20 @@ export function checkQuestions(questions: Question[]): CheckResult {
     if (q.why.trim().length < 20) warnings.push(`${q.id}: why vide ou trop court (${q.why.trim().length} car.)`)
   }
 
-  // Reparto de respuestas por posición (solo preguntas de 3 opciones)
-  const three = questions.filter((q) => q.fr.options.length === EXPECTED_OPTIONS)
-  if (three.length) {
-    const counts = [0, 0, 0]
-    for (const q of three) counts[q.answer]!++
-    const pct = counts.map((c) => (100 * c) / three.length)
-    info.push(`réponses par position (A/B/C) : ${counts.map((c, i) => `${'ABC'[i]}=${c} (${pct[i]!.toFixed(1)} %)`).join(', ')}`)
-    pct.forEach((p, i) => {
-      if (Math.abs(p - 100 / 3) > 10) warnings.push(`position ${'ABC'[i]} : ${p.toFixed(1)} % des bonnes réponses (écart > 10 points du tiers)`)
-    })
+  // Reparto de respuestas por posición, por número de opciones (la buena ~1/n en cada posición)
+  for (const n of ALLOWED_OPTIONS) {
+    const group = questions.filter((q) => q.fr.options.length === n)
+    if (!group.length) continue
+    const counts = Array<number>(n).fill(0)
+    for (const q of group) counts[q.answer]!++
+    const pct = counts.map((c) => (100 * c) / group.length)
+    info.push(`réponses par position, ${n} options (${group.length} q.) : ${counts.map((c, i) => `${'ABC'[i]}=${c} (${pct[i]!.toFixed(1)} %)`).join(', ')}`)
+    // Con pocas preguntas el reparto no es significativo.
+    if (group.length >= 20) {
+      pct.forEach((p, i) => {
+        if (Math.abs(p - 100 / n) > 10) warnings.push(`${n} options, position ${'ABC'[i]} : ${p.toFixed(1)} % des bonnes réponses (écart > 10 points de 1/${n})`)
+      })
+    }
   }
 
   // Casi duplicados: enunciado FR parecido Y misma respuesta correcta normalizada.

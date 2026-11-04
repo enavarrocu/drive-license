@@ -259,9 +259,9 @@ export const extraQuestions2: Question[] = [
 
   /* ============ ALCOOL (+4) ============ */
   Q('y-alc-01', 'alcool', 'alc-taux',
-    ['Entre 0,5 et 0,8 g/l, la sanction immédiate est :', 'Rien, si je conduis encore prudemment.', 'Le retrait immédiat du permis pour 15 jours.', 'Une amende et une interdiction de conduire de 3 h.'],
-    ['Entre 0,5 y 0,8 g/l, la sanción inmediata es:', 'Nada, si sigo conduciendo con prudencia.', 'La retirada inmediata del permiso durante 15 días.', 'Una multa y una prohibición de conducir de 3 h.'],
-    2, 'Entre 0,5 y 0,8 g/l: multa y prohibición de conducir de 3 h. Por encima de 0,8: prohibición de 6 h como mínimo, retirada inmediata del permiso durante 15 días (desde el 14/02/2026) y tribunal.', true),
+    ['Entre 0,5 et 0,8 g/l, la sanction immédiate est :', 'Rien, si je conduis encore prudemment.', 'Le retrait immédiat du permis pour 15 jours.', 'Une amende et une interdiction de conduire de 12 h.'],
+    ['Entre 0,5 y 0,8 g/l, la sanción inmediata es:', 'Nada, si sigo conduciendo con prudencia.', 'La retirada inmediata del permiso durante 15 días.', 'Una multa y una prohibición de conducir de 12 h.'],
+    2, 'Desde 0,5 g/l (0,22 mg/l de aire) la prohibición de conducir es de 12 h (ley de 16/3/1968, art. 60 §3), más la multa. Por encima de 0,8: además, retirada inmediata del permiso durante 15 días (desde el 14/02/2026) y tribunal.', true),
   Q('y-alc-02', 'alcool', 'alc-taux',
     ['Deux personnes boivent la même quantité d\'alcool. Qui aura en général le taux le plus élevé ?', 'La personne la plus légère.', 'La personne la plus lourde.', 'C\'est identique.'],
     ['Dos personas beben la misma cantidad de alcohol. ¿Quién tendrá en general la tasa más alta?', 'La persona más ligera.', 'La persona más pesada.', 'Es idéntico.'],

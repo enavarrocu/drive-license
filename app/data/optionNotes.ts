@@ -346,8 +346,8 @@ export const optionNotes: Record<string, (string | null)[]> = {
   ],
   'vit-06': [
     null,
-    'En la calle ciclista el máximo es 30 km/h y no se adelanta a los ciclistas: las dos partes de esta respuesta son falsas.',
-    'En la calle ciclista no se adelanta a los ciclistas ni dejando 1 m, y sí hay límite: 30 km/h.',
+    'En la zona ciclista el máximo es 30 km/h y no se adelanta a los ciclistas: las dos partes de esta respuesta son falsas.',
+    'En la zona ciclista no se adelanta a los ciclistas ni dejando 1 m, y sí hay límite: 30 km/h.',
   ],
   'vit-07': [
     null,
@@ -502,9 +502,9 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'El límite sigue vigente durante el adelantamiento: si hace falta superarlo, es que no hay que adelantar.',
   ],
   'dep-13': [
-    'Dejar 1 m es la regla en una vía normal; en la calle ciclista adelantar a los ciclistas está prohibido sin más.',
+    'Dejar 1 m es la regla en una vía normal; en la zona ciclista adelantar a los ciclistas está prohibido sin más.',
     null,
-    'El claxon no da derecho a adelantar (art. 33.2): en la calle ciclista el ciclista puede ocupar el carril.',
+    'El claxon no da derecho a adelantar (art. 33.2): en la zona ciclista el ciclista puede ocupar el carril.',
   ],
   'x-dep-01': [
     null,
@@ -619,7 +619,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'El código belga no fija tolerancia cero para los profesionales, sino 0,2 g/l.',
   ],
   'alc-03': [
-    'Entre 0,5 y 0,8 g/l la sanción inmediata es multa y prohibición de conducir de 3 h, sin retirada del permiso.',
+    'Entre 0,5 y 0,8 g/l la sanción inmediata es multa y prohibición de conducir de 12 h, sin retirada del permiso.',
     null,
     '1,5 g/l es demasiado alto: la retirada inmediata empieza ya por encima de 0,8 g/l.',
   ],
@@ -828,4 +828,39 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'Estar ya en la calzada no basta: en población, si el autobús ha puesto el intermitente, debo reducir y, si hace falta, parar (art. 39).',
     null,
   ],
+
+  // ── Bloque 6 (questions-extra6.ts) ───────────────────────────────────────
+  'z6-prio-01': [
+    'Mi señal de prioridad no vale frente a A: está en la misma vía prioritaria y viene de frente, y quien gira a la izquierda le cede (art. 19.3 3°).',
+    null,
+    'B tiene «céder le passage»: cede a todos los que circulan por la vía que aborda, así que pasa el último (art. 12.3.1 a).',
+  ],
+  'z6-prio-02': [
+    null,
+    'El intermitente del autobús solo obliga a quien sigue su misma dirección (art. 39); yo llego por una calle transversal.',
+    'El orden de llegada no da prioridad: el autobús que sale de su parada maniobra y cede (art. 12.4), y yo vengo por su derecha.',
+  ],
+  'z6-prio-03': [
+    'Quien sale de un camino de tierra no puede invocar la prioridad de la derecha: cede a todos, vengan por donde vengan (art. 12.3.1 b).',
+    'La velocidad no da ningún derecho: la regla depende de la vía de la que se sale, no de quién llega más rápido.',
+    null,
+  ],
+  'z6-prio-04': [
+    null,
+    'Ceder a los que vienen de frente es lo que impone la señal contraria, la de la flecha roja hacia arriba; esta me da la prioridad.',
+  ],
+  'z6-dep-01': [
+    null,
+    'Que no venga nadie de frente no basta: A está adelantando a un camión y solo hay dos carriles en mi sentido (art. 17.2 4°).',
+    'El claxon no levanta ninguna prohibición: solo avisa de que se va a adelantar (art. 33.2).',
+  ],
+  'z6-dep-02': [
+    'Un cuistax es un ciclo, pero de cuatro ruedas: la señal solo deja adelantar a los vehículos de dos ruedas.',
+    'Respetar la distancia lateral no basta: con esta señal está prohibido adelantar a un vehículo de más de dos ruedas.',
+    null,
+  ],
+  'z7-alc-01': [null, 'El art. 59 incluye expresamente a quien acompaña a un aprendiz: el guía responde como el conductor.'],
+  'z7-alc-02': ['La bici es un vehículo y la prohibición de 12 h vale para «un véhicule ou une monture», no solo para el coche.', null],
+  'z7-alc-03': ['La prohibición nombra expresamente la «monture»: montar a caballo también está prohibido esas 12 h.', 'Acompañar a un aprendiz también está prohibido durante las 12 h, como conducir.', null],
+  'z7-alc-04': ['En 30 minutos el cuerpo solo elimina unos 0,07 g/l: seguirías por encima de 0,5.', null, 'El café no acelera la eliminación del alcohol; solo el tiempo la reduce.'],
 }
