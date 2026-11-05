@@ -9,6 +9,7 @@ import { extraQuestions4 } from './questions-extra4'
 import { extraQuestions5 } from './questions-extra5'
 import { extraQuestions6 } from './questions-extra6'
 import { extraQuestions7 } from './questions-extra7'
+import { extraQuestions8 } from './questions-extra8'
 import { panneauxQuestions } from './questions-panneaux'
 import { mecaniqueQuestions } from './questions-mecanique'
 import { accidentsQuestions } from './questions-accidents'
@@ -31,7 +32,7 @@ const baseQuestions: Question[] = [
   Q('prio-02', 'priorite', 'prio-droite',
     ['Le conducteur venant de droite s\'est arrêté au carrefour. Conserve-t-il sa priorité ?', 'Oui, il conserve sa priorité même s\'il s\'est arrêté.', 'Non, en s\'arrêtant il a renoncé à sa priorité.', 'Seulement s\'il fait un signe de la main.'],
     ['El conductor que viene por la derecha se ha detenido en el cruce. ¿Conserva su prioridad?', 'Sí, conserva su prioridad aunque se haya detenido.', 'No, al pararse ha renunciado a su prioridad.', 'Solo si hace una señal con la mano.'],
-    0, 'En Bélgica el que viene por la derecha conserva la prioridad aunque se haya parado (art. 12.3.1). Solo la pierde si circula en sentido prohibido, si tiene una señal B1/B5 o si sale de un camino de tierra.', true),
+    0, 'Detenerse no hace perder la prioridad: el código no prevé esa pérdida y así lo aplica la jurisprudencia belga. Las únicas excepciones a la prioridad de la derecha están en el art. 12.3.1: el que viene de la derecha llega de un sentido prohibido, tiene una señal B1/B5 o sale de un «chemin de terre» o «sentier»; y no se aplica dentro de una rotonda. Distinto es un coche estacionado que arranca: hace una maniobra y debe ceder (art. 12.4).', true),
   Q('prio-03', 'priorite', 'prio-droite',
     ['Je sors d\'un parking privé pour m\'engager sur la chaussée. Qui a la priorité ?', 'Moi, je viens de droite.', 'Les usagers de la chaussée.', 'Le premier arrivé.'],
     ['Salgo de un aparcamiento privado para incorporarme a la calzada. ¿Quién tiene prioridad?', 'Yo, vengo por la derecha.', 'Los usuarios de la calzada.', 'El primero que llega.'],
@@ -106,9 +107,9 @@ const baseQuestions: Question[] = [
     ['Si mi velocidad se duplica, mi distancia de frenado:', 'Se duplica.', 'Se multiplica por cuatro.', 'Sigue igual si freno fuerte.'],
     1, 'La distancia de frenado crece con el cuadrado de la velocidad: ×2 velocidad = ×4 frenado.'),
   Q('vit-09', 'vitesse', 'vit-arret',
-    ['À 50 km/h sur chaussée sèche, la distance d\'arrêt totale (réaction + freinage) est d\'environ :', '15 m', '40 m', '80 m'],
-    ['A 50 km/h en calzada seca, la distancia de detención total (reacción + frenado) es aproximadamente:', '15 m', '40 m', '80 m'],
-    1, '≈15 m de reacción (1 s) + ≈25 m de frenado = ≈40 m.'),
+    ['Selon la règle pratique, à 50 km/h sur chaussée sèche, la distance d\'arrêt totale (réaction + freinage) est d\'environ :', '15 m', '40 m', '80 m'],
+    ['Según la regla práctica, a 50 km/h en calzada seca, la distancia de detención total (reacción + frenado) es aproximadamente:', '15 m', '40 m', '80 m'],
+    1, 'Regla práctica de las autoescuelas: ≈15 m de reacción (1 s) + ≈25 m de frenado ((50/10)²) = ≈40 m. Es una estimación prudente; la distancia real depende de los neumáticos, los frenos y el conductor.'),
   { ...Q('vit-10', 'vitesse', 'vit-adaptee',
     ['Il pleut fort et la visibilité est réduite, mais ce signal est en place. Je dois :', 'Rouler à 90 km/h, c\'est la limite autorisée.', 'Adapter ma vitesse, même en dessous de 90.', 'Allumer les feux de route pour mieux voir.'],
     ['Llueve fuerte y la visibilidad es reducida, pero está esta señal. Debo:', 'Circular a 90 km/h, es el límite permitido.', 'Adaptar la velocidad, incluso por debajo de 90.', 'Encender las luces largas para ver mejor.'],
@@ -170,7 +171,7 @@ const baseQuestions: Question[] = [
   { ...Q('dep-13', 'depassement', 'dep-interdit',
     ['Je circule dans une zone cyclable (ce signal) derrière un cycliste lent. Puis-je le dépasser ?', 'Oui, en laissant 1 m.', 'Non, c\'est interdit.', 'Oui, si je klaxonne d\'abord.'],
     ['Circulo por una zona ciclista (esta señal) detrás de un ciclista lento. ¿Puedo adelantarlo?', 'Sí, dejando 1 m.', 'No, está prohibido.', 'Sí, si toco el claxon antes.'],
-    1, 'En la «zone cyclable» los coches no pueden adelantar a ciclistas ni ciclomotores.', true), signs: ["F111"] },
+    1, 'En la «zone cyclable» los vehículos a motor no pueden adelantar a los ciclistas ni a los speed pedelecs (art. 22novies); máx. 30 km/h.', true), signs: ["F111"] },
 
   /* ============================ ALCOOL ============================ */
   Q('alc-01', 'alcool', 'alc-taux',
@@ -182,9 +183,9 @@ const baseQuestions: Question[] = [
     ['¿Cuál es la tasa máxima de alcohol para un conductor profesional (bus, camión, taxi)?', '0,5 g/l', '0,2 g/l', '0,0 g/l'],
     1, 'Conductores profesionales: 0,2 g/l (0,09 mg/l en aire).', true),
   Q('alc-03', 'alcool', 'alc-taux',
-    ['À partir de quel taux d\'alcool le permis est-il retiré immédiatement ?', '0,5 g/l', '0,8 g/l', '1,5 g/l'],
-    ['¿A partir de qué tasa de alcohol se retira el permiso en el acto?', '0,5 g/l', '0,8 g/l', '1,5 g/l'],
-    1, 'Desde el 14/02/2026, por encima de 0,8 g/l (0,35 mg/l de aire) se retira el permiso en el acto durante 15 días en toda Bélgica, además de la prohibición de conducir de 12 h y el tribunal. Entre 0,5 y 0,8 g/l: prohibición de conducir de 12 h y multa (police.be; ley de 16/3/1968, art. 60 §3).', true),
+    ['Depuis février 2026, à partir de quel taux d\'alcool le permis est-il systématiquement retiré sur-le-champ ?', '0,5 g/l', '0,8 g/l', '1,5 g/l'],
+    ['Desde febrero de 2026, ¿a partir de qué tasa de alcohol se retira sistemáticamente el permiso en el acto?', '0,5 g/l', '0,8 g/l', '1,5 g/l'],
+    1, 'Desde el 14/02/2026, por encima de 0,8 g/l (0,35 mg/l de aire) se retira el permiso en el acto durante 15 días en toda Bélgica, además de la prohibición de conducir de 12 h y el tribunal. Entre 0,5 y 0,8 g/l: prohibición de conducir de 12 h (art. 60 §3) y multa; la ley permite la retirada inmediata ya desde 0,5 g/l (art. 55 §1), pero solo es sistemática desde 0,8 g/l (police.be; ley de 16/3/1968).', true),
   Q('alc-04', 'alcool', 'alc-taux',
     ['Comment faire baisser plus vite son taux d\'alcool ?', 'Boire du café fort.', 'Prendre une douche froide.', 'Rien, seul le temps agit.'],
     ['¿Cómo se hace bajar más rápido la tasa de alcohol?', 'Beber café fuerte.', 'Darse una ducha fría.', 'Nada, solo el tiempo actúa.'],
@@ -192,7 +193,7 @@ const baseQuestions: Question[] = [
   Q('alc-05', 'alcool', 'alc-drogues',
     ['Le test salivaire révèle une trace de cannabis. Quelle est la conséquence ?', 'Rien si le taux est faible.', 'Le retrait immédiat du permis.', 'Un simple avertissement.'],
     ['El test de saliva revela un rastro de cannabis. ¿Cuál es la consecuencia?', 'Nada si la tasa es baja.', 'La retirada inmediata del permiso.', 'Una simple advertencia.'],
-    1, 'Con las drogas no hay tasa «tolerada»: basta con superar los umbrales de detección fijados por la ley, muy bajos. Test salival positivo = prohibición de conducir y retirada inmediata del permiso.', true),
+    1, 'Con las drogas no hay tasa «tolerada»: basta con superar los umbrales de detección fijados por la ley, muy bajos. Test salival positivo = prohibición de conducir de 12 h con entrega del permiso (ley de 16/3/1968, art. 61ter y 61quater) y, en la práctica, retirada inmediata (art. 55).', true),
   Q('alc-06', 'alcool', 'alc-drogues',
     ['Je conduis de nuit et je bâille sans arrêt, mes paupières sont lourdes. Que faire ?', 'Ouvrir la fenêtre et monter la radio.', 'M\'arrêter et dormir 15 à 20 minutes.', 'Boire un café et continuer.'],
     ['Conduzco de noche y bostezo sin parar, tengo los párpados pesados. ¿Qué hacer?', 'Abrir la ventana y subir la radio.', 'Parar y dormir 15–20 minutos.', 'Tomar un café y seguir.'],
@@ -244,9 +245,9 @@ const baseQuestions: Question[] = [
     ['Hay flechas de selección pintadas en mi carril. En el cruce debo:', 'Seguir la dirección de la flecha de mi carril.', 'Elegir libremente mi dirección.', 'Detenerme antes del cruce y esperar.'],
     0, 'Las «flèches de sélection» obligan a seguir esa dirección al llegar al cruce.'),
   Q('sig-10', 'signaux', 'sig-categories',
-    ['Un signal triangulaire à bord rouge (famille A) placé hors agglomération se trouve généralement à quelle distance du danger ?', 'Environ 150 m.', 'Environ 50 m.', 'Juste à l\'endroit du danger.'],
-    ['Una señal triangular con borde rojo (familia A) situada fuera de población está generalmente a qué distancia del peligro?', 'Unos 150 m.', 'Unos 50 m.', 'Justo en el lugar del peligro.'],
-    0, 'Fuera de población las señales de peligro se colocan a unos 150 m; en población, cerca del peligro. Una placa puede precisar la distancia.'),
+    ['Un signal triangulaire à bord rouge (famille A) se trouve généralement à quelle distance du danger ?', 'Environ 150 m.', 'Environ 50 m.', 'Juste à l\'endroit du danger.'],
+    ['¿A qué distancia del peligro está generalmente una señal triangular con borde rojo (familia A)?', 'Unos 150 m.', 'Unos 50 m.', 'Justo en el lugar del peligro.'],
+    0, 'Las señales de peligro se colocan a unos 150 m del lugar peligroso, dentro o fuera de población (art. 66.2); si están más cerca o más lejos, una placa indica la distancia. Excepción: A45/A47, junto al paso a nivel.'),
   Q('sig-11', 'signaux', 'sig-categories',
     ['Un signal rond à fond bleu (famille D) indique :', 'Une interdiction.', 'Une obligation.', 'Une indication.'],
     ['Una señal redonda con fondo azul (familia D) indica:', 'Una prohibición.', 'Una obligación.', 'Una indicación.'],
@@ -324,9 +325,9 @@ const baseQuestions: Question[] = [
     ['Mi vehículo se avería en la autopista. ¿Qué debo hacer?', 'Empujar el vehículo al carril derecho.', 'Apartarme al arcén de emergencia.', 'Esperar dentro del coche con las luces.'],
     1, 'Warning → arcén de emergencia → chaleco antes de salir → triángulo a 100 m como mínimo → resguardarse detrás del guardarraíl → 112.'),
   Q('aut-06', 'autoroute', 'aut-panne',
-    ['À quelle distance derrière le véhicule en panne place-t-on le triangle de danger sur autoroute ?', 'Environ 30 m.', 'Environ 100 m.', 'Environ 10 m.'],
-    ['¿A qué distancia detrás del vehículo averiado se coloca el triángulo en autopista?', 'Unos 30 m.', 'Unos 100 m.', 'Unos 10 m.'],
-    1, '≈30 m en carretera ordinaria, ≈100 m en autopista.'),
+    ['À quelle distance derrière le véhicule en panne place-t-on le triangle de danger sur autoroute ?', 'Au moins 30 m.', 'Au moins 100 m.', 'Au moins 10 m.'],
+    ['¿A qué distancia detrás del vehículo averiado se coloca el triángulo en autopista?', 'Al menos 30 m.', 'Al menos 100 m.', 'Al menos 10 m.'],
+    1, 'Mínimo 30 m en vía ordinaria y 100 m en autopista, visible a unos 50 m (art. 51.2).'),
   Q('aut-07', 'autoroute', 'aut-regles',
     ['Puis-je m\'arrêter sur la bande d\'arrêt d\'urgence pour passer un appel téléphonique ?', 'Oui, brièvement, sans quitter le véhicule.', 'Non, jamais, ce n\'est pas un cas d\'urgence.', 'Oui, avec les feux de détresse allumés.'],
     ['¿Puedo parar en el arcén de emergencia para hacer una llamada?', 'Sí, brevemente, sin salir del vehículo.', 'No, nunca, no es un caso de urgencia.', 'Sí, con las luces de emergencia encendidas.'],
@@ -402,17 +403,17 @@ const baseQuestions: Question[] = [
 
   /* ============================ ÉCLAIRAGE ============================ */
   Q('ecl-01', 'eclairage', 'ecl-feux',
-    ['Quels feux dois-je allumer quand la visibilité est inférieure à 200 m à cause de la pluie ?', 'Les feux de position uniquement.', 'Les feux de croisement.', 'Les feux de route.'],
-    ['¿Qué luces debo encender cuando la visibilidad es inferior a 200 m a causa de la lluvia?', 'Solo las luces de posición.', 'Las luces de cruce.', 'Las luces de carretera.'],
-    1, 'Con visibilidad <200 m (y de noche): «feux de croisement» delante y rojos detrás.'),
+    ['Quels feux dois-je allumer quand la visibilité est inférieure à 200 m à cause de la pluie ?', 'Les feux de position uniquement.', 'Les feux de croisement.', 'Le feu de brouillard arrière uniquement.'],
+    ['¿Qué luces debo encender cuando la visibilidad es inferior a 200 m a causa de la lluvia?', 'Solo las luces de posición.', 'Las luces de cruce.', 'Solo la luz antiniebla trasera.'],
+    1, 'Cuando no se ve claramente a unos 200 m (y de noche): delante «feux de croisement» (o largas si no deslumbran a nadie) y detrás las luces rojas (art. 30.1). La antiniebla trasera se añade con lluvia fuerte, pero nunca sustituye a las demás.'),
   Q('ecl-02', 'eclairage', 'ecl-feux',
     ['Quand le feu de brouillard arrière est-il obligatoire ?', 'Dès qu\'il fait nuit hors agglomération.', 'Si la visibilité est inférieure à 100 m.', 'Dès qu\'il pleut, même légèrement.'],
     ['¿Cuándo es obligatoria la luz antiniebla trasera?', 'En cuanto es de noche fuera de población.', 'Si la visibilidad es inferior a 100 m.', 'En cuanto llueve, aunque sea poco.'],
-    1, 'Obligatoria con niebla o nieve que reducen la visibilidad a menos de 100 m (y con lluvia fuerte); prohibida en otros casos porque deslumbra (art. 30.3).'),
+    1, 'Obligatoria con niebla o nieve que reducen la visibilidad a menos de 100 m (y con lluvia fuerte); en otros casos no se usa porque deslumbra (art. 30.1, 2°).'),
   Q('ecl-03', 'eclairage', 'ecl-feux',
     ['Je roule de nuit avec les feux de route et je croise un véhicule. Je dois :', 'Garder les feux de route.', 'Passer en feux de croisement.', 'Éteindre tous les feux.'],
     ['Circulo de noche con las luces largas y me cruzo con un vehículo. Debo:', 'Mantener las luces largas.', 'Pasar a luces de cruce.', 'Apagar todas las luces.'],
-    1, 'Las largas se apagan al cruzarse, al seguir a otro vehículo y donde el alumbrado permite ver a 100 m.'),
+    1, 'Las largas se cambian por las de cruce al cruzarse con otro usuario, al seguir a otro vehículo a menos de 50 m (salvo adelantando) y donde el alumbrado permite ver a unos 100 m (art. 30.1, 1°).'),
   Q('ecl-04', 'eclairage', 'ecl-conditions',
     ['Par brouillard dense, la bonne conduite est de :', 'Allumer les feux de route et ralentir.', 'Allumer les feux de croisement et ralentir.', 'Suivre de près le véhicule précédent.'],
     ['Con niebla densa, lo correcto es:', 'Encender las luces largas y reducir.', 'Encender las de cruce y reducir.', 'Seguir de cerca al vehículo de delante.'],
@@ -492,7 +493,7 @@ const baseQuestions: Question[] = [
   Q('per-07', 'permis', 'per-sanctions',
     ['Faire marche arrière sur autoroute est une infraction :', 'Du 1er degré.', 'Du 4e degré, la plus grave.', 'Sans sanction si personne n\'est gêné.'],
     ['Dar marcha atrás en autopista es una infracción:', 'De 1er grado.', 'De 4.º grado, la más grave.', 'Sin sanción si nadie resulta molestado.'],
-    1, 'Infracción de 4.º grado: tribunal y retirada del derecho a conducir de al menos 8 días.'),
+    1, 'Infracción de 4.º grado (la más grave): tribunal y, salvo decisión motivada del juez, pérdida del derecho a conducir («déchéance») de 8 días a 5 años (ley de 16/3/1968, art. 29 y 38).'),
   Q('per-08', 'permis', 'per-general',
     ['Un conducteur venant de ma droite me cède le passage par courtoisie. Je dois :', 'Passer, puisqu\'il me l\'a proposé.', 'Vérifier moi-même avant de passer.', 'Refuser et attendre qu\'il passe.'],
     ['Un conductor que viene por mi derecha me cede el paso por cortesía. Debo:', 'Pasar, puesto que me lo ha propuesto.', 'Comprobar yo mismo antes de pasar.', 'Rechazar y esperar a que pase.'],
@@ -500,7 +501,7 @@ const baseQuestions: Question[] = [
   Q('per-09', 'permis', 'per-general',
     ['Quand puis-je utiliser l\'avertisseur sonore (klaxon) en agglomération ?', 'Pour saluer un ami ou un voisin.', 'Uniquement pour éviter un accident.', 'Pour faire avancer la file au feu vert.'],
     ['¿Cuándo puedo usar la bocina en población?', 'Para saludar a un amigo o vecino.', 'Solo para evitar un accidente.', 'Para hacer avanzar la fila en verde.'],
-    1, 'La bocina solo para evitar un accidente; de noche se prefiere la ráfaga de luces.'),
+    1, 'La bocina solo para evitar un accidente (art. 33.2); de noche, salvo peligro inminente, debe sustituirse por ráfagas cortas de luces (art. 33.3).'),
   Q('per-10', 'vehicule', 'veh-entretien',
     ['Il gèle et mon pare-brise est givré. Je dois :', 'Dégager un petit trou et partir.', 'Dégivrer complètement le pare-brise et les vitres avant de partir.', 'Rouler lentement en attendant que le chauffage agisse.'],
     ['Está helando y mi parabrisas está escarchado. Debo:', 'Despejar un pequeño agujero y salir.', 'Deshelar completamente el parabrisas y las ventanillas antes de salir.', 'Circular despacio esperando a que actúe la calefacción.'],
@@ -515,6 +516,6 @@ const baseQuestions: Question[] = [
     1, 'Obligación de identificarse; abandonar el lugar = «délit de fuite». Sin desacuerdo basta el constat amiable.'),
 ]
 
-export const questions: Question[] = [...baseQuestions, ...sceneQuestions, ...extraQuestions, ...extraQuestions2, ...extraQuestions3, ...extraQuestions4, ...extraQuestions5, ...extraQuestions6, ...extraQuestions7, ...panneauxQuestions, ...mecaniqueQuestions, ...accidentsQuestions, ...comportementQuestions]
+export const questions: Question[] = [...baseQuestions, ...sceneQuestions, ...extraQuestions, ...extraQuestions2, ...extraQuestions3, ...extraQuestions4, ...extraQuestions5, ...extraQuestions6, ...extraQuestions7, ...extraQuestions8, ...panneauxQuestions, ...mecaniqueQuestions, ...accidentsQuestions, ...comportementQuestions]
 
 export const questionById = Object.fromEntries(questions.map((q) => [q.id, q])) as Record<string, Question>

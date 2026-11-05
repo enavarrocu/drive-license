@@ -168,7 +168,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'Acelerar para cruzar antes es competir con la ambulancia: hay que dejarle el paso y, si hace falta, pararse.',
   ],
   'sc-26': [
-    'Sin sirena el coche de policía no es prioritario: vale la regla normal y él viene por mi izquierda.',
+    'Sin sirena no tengo obligación de cederle (art. 38): vale la regla normal y él viene por mi izquierda.',
     null,
     'No hay bloqueo: la prioridad de la derecha decide a mi favor.',
   ],
@@ -233,7 +233,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
     null,
   ],
   'y-pri-04': [
-    'Aunque el peatón esté en infracción, debo dejarle terminar: nunca se le pone en peligro.',
+    'No está en infracción: empezó a cruzar en verde, y debo dejarle terminar (art. 40.4.1).',
     'La bocina no sirve para apremiar a un peatón (art. 33.2): se espera a que termine.',
     null,
   ],
@@ -572,7 +572,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'No hace falta que se detenga: se le adelanta en marcha respetando la distancia lateral.',
   ],
   'z-dep-06': [
-    'La prohibición de adelantar para todos es la C35; la C39 solo se dirige a los conductores de vehículos de más de 3,5 t.',
+    'La prohibición de adelantar para todos es la C35; la C39 solo se dirige a los conductores de vehículos de transporte de mercancías de más de 3,5 t.',
     'La C39 no protege a los camiones de ser adelantados: son los conductores de más de 3,5 t los que no pueden adelantar.',
     null,
   ],
@@ -619,7 +619,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'El código belga no fija tolerancia cero para los profesionales, sino 0,2 g/l.',
   ],
   'alc-03': [
-    'Entre 0,5 y 0,8 g/l la sanción inmediata es multa y prohibición de conducir de 12 h, sin retirada del permiso.',
+    'Entre 0,5 y 0,8 g/l lo habitual es multa y prohibición de conducir de 12 h; la retirada inmediata es posible (art. 55) pero no sistemática.',
     null,
     '1,5 g/l es demasiado alto: la retirada inmediata empieza ya por encima de 0,8 g/l.',
   ],
@@ -650,7 +650,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
   ],
   'y-alc-01': [
     'Desde 0,5 g/l ya hay infracción, conduzca con prudencia o no.',
-    'La retirada inmediata de 15 días es para tasas de más de 0,8 g/l.',
+    'La retirada inmediata de 15 días se aplica sistemáticamente desde 0,8 g/l; por debajo es posible (art. 55), pero no automática.',
     null,
   ],
   'y-alc-03': [
@@ -666,7 +666,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
   'z-alc-02': [
     null,
     'El alcolock se ajusta por debajo del límite general: bloquea ya desde 0,2 g/l.',
-    '0,8 g/l es el umbral de la retirada inmediata, no el del alcolock.',
+    '0,8 g/l es el umbral de la infracción más grave (art. 34 §2), no el del alcolock.',
   ],
   'z-alc-03': [
     'Desde 0,8 g/l el juez puede imponer el alcolock, pero no está obligado a hacerlo.',
@@ -746,11 +746,6 @@ export const optionNotes: Record<string, (string | null)[]> = {
     null,
     'No se mete prisa con el claxon a un grupo de niños (art. 33.2): se espera.',
     'Cortar un grupo guiado está prohibido y es muy peligroso.',
-  ],
-  'y-usa-03': [
-    null,
-    'El bastón blanco levantado no es un saludo: es la señal de que quiere cruzar.',
-    'No tiene nada que ver con un taxi: indica que va a cruzar y hay que dejarle paso.',
   ],
   'y-usa-06': [
     'En un anillo de un solo carril no queda sitio para dejar 1 m al ciclista.',

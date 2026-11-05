@@ -15,24 +15,24 @@ export const part1: CourseChapter[] = [
         title: { fr: 'Les catégories de permis', es: 'Las categorías de permiso' },
         body: `El permiso belga es una tarjeta válida **10 años** (hay que renovarla, sin examen). Cada categoría autoriza un tipo de vehículo:
 
-- **AM** (desde 16 años): «cyclomoteurs» de clase A y B (≤ 45 km/h) y cuadriciclos ligeros.
+- **AM** (desde 16 años): «cyclomoteurs» de clase B (≤ 45 km/h) y cuadriciclos ligeros (AR 23/3/1998, art. 2). Para un ciclomotor de clase A (≤ 25 km/h) no hace falta permiso, basta tener 16 años.
 - **A1** (18), **A2** (20), **A** (24, o 22 con dos años de A2): motocicletas por potencia creciente.
 - **B** (18): vehículos de «masse maximale autorisée» (MMA) ≤ 3.500 kg y máximo 8 plazas además del conductor; remolque ≤ 750 kg, o más pesado si la suma de las MMA no supera 3.500 kg.
 - **B96**: código que amplía B hasta 4.250 kg de conjunto (se obtiene con un examen práctico). **BE**: remolque hasta 3.500 kg.
 - **C / CE** (21): camiones. **D / DE** (24): autobuses. **G**: tractores agrícolas.
 
-Con el permiso **B** también puedes conducir: ciclomotores y cuadriciclos ligeros (AM), tractores agrícolas de uso privado, y motos ligeras A1 (≤ 125 cm³, ≤ 11 kW) **solo en Bélgica**: si obtuviste el B después del 1 de mayo de 2011, hace falta además una formación práctica de 4 horas en autoescuela, que añade el código 372 al permiso.`,
+Con el permiso **B** también puedes conducir: ciclomotores y cuadriciclos ligeros (AM), tractores agrícolas de uso privado, y motos ligeras A1 (≤ 125 cm³, ≤ 11 kW) **solo en Bélgica**: si obtuviste el B a partir del 1 de mayo de 2011, hace falta tener el B desde **al menos 2 años** y seguir una formación práctica de 4 horas en autoescuela, que añade el código 372 al permiso (AR 23/3/1998, art. 20).`,
       },
       {
         id: 'ch01-theorique',
         title: { fr: "L'examen théorique", es: 'El examen teórico' },
-        body: `Se puede presentar desde los **17 años**. En Bruselas se hace en los centros de examen de Anderlecht o Schaerbeek (unos 19 €). Para hacer después el práctico en Bruselas, el teórico tiene que haberse aprobado en Bruselas.
+        body: `Se puede presentar desde los **17 años**. En Bruselas se hace en los centros de examen de Anderlecht o Schaerbeek (el examen es de pago; consulta la tarifa vigente en be.brussels). Para hacer después el práctico en Bruselas, el teórico tiene que haberse aprobado en Bruselas.
 
 - **50 preguntas** en ordenador, con **15 segundos** como máximo por pregunta (unos 30 minutos en total). Una respuesta validada no se cambia.
 - Se aprueba con **41/50**. Error normal: −1. Error sobre una infracción grave (prioridad, velocidad, adelantamiento, alcohol, distancia de seguridad…): **−5**. Dos errores graves = suspenso automático.
 - Tras **dos suspensos**, hay que seguir una formación de **12 h** en una autoescuela antes de volver a presentarse.
 - El aprobado vale **3 años**: el práctico tiene que hacerse dentro de ese plazo; si no, se repite el teórico.
-- Lengua: francés o neerlandés; en Bruselas se puede pedir un intérprete de alemán, inglés o lengua de signos (50 €).`,
+- Lengua: francés o neerlandés; en Bruselas se puede pedir un intérprete de alemán, inglés o lengua de signos (de pago).`,
       },
       {
         id: 'ch01-provisoire',
@@ -61,7 +61,7 @@ Tener el permiso B desde **8 años** como mínimo, no estar ni haber estado en l
 - Llevar pasajeros: con el **M36**, solo los guías inscritos (o un instructor); con el **M18**, como máximo **dos** personas que cumplan las condiciones de guía.
 - Llevar remolque.
 - Conducir en el extranjero (el PCP belga solo vale en Bélgica).
-- Olvidar la **placa «L»** blanca con L roja, bien visible detrás.`,
+- Olvidar el **signo «L»** reglamentario (L blanca sobre fondo azul), bien visible detrás (AR 23/3/1998, art. 6).`,
       },
       {
         id: 'ch01-pratique',
@@ -70,7 +70,7 @@ Tener el permiso B desde **8 años** como mínimo, no estar ni haber estado en l
 
 En la vía pública: comprobaciones previas, dos maniobras (aparcar marcha atrás detrás de un vehículo y dar media vuelta en una calle estrecha) y circulación en tráfico real, con unos 10–15 minutos de conducción autónoma hacia un destino (GPS o señales). Se hace con el coche de la autoescuela o con el propio: placa L, segundo retrovisor interior (salvo con M18) y que cumpla la LEZ. Tras **dos suspensos**, 6 h de autoescuela obligatorias antes de volver.
 
-Tras aprobar, el permiso definitivo se recoge en la comuna. Los **conductores noveles** (menos de 2 años de permiso B) pueden ser condenados a repetir exámenes tras ciertas infracciones graves.`,
+Tras aprobar, el permiso definitivo se recoge en la comuna. Los **conductores noveles** (menos de 2 años de permiso B) condenados por una infracción que puede dar lugar a déchéance: el juez **debe** imponer la déchéance y exigir al menos el examen teórico o el práctico para recuperar el permiso (ley de 16/3/1968, art. 38 §5).`,
       },
     ],
   },
@@ -92,7 +92,7 @@ Tras aprobar, el permiso definitivo se recoge en la comuna. Los **conductores no
 - un **«triangle de danger»** homologado,
 - un **«extincteur»** (extintor) fijado y accesible, con fecha de validez,
 - una **«trousse de secours»** (botiquín),
-- un **«gilet rétroréfléchissant»** (chaleco), al alcance del conductor (en el habitáculo, no en el maletero): es obligatorio ponérselo al salir del coche averiado en autopista o «route pour automobiles» si ha quedado donde está prohibido parar (art. 51.4).
+- un **«gilet rétroréfléchissant»** (chaleco), mejor en el habitáculo que en el maletero, para tenerlo a mano: es obligatorio ponérselo al salir del coche averiado en autopista o «route pour automobiles» si ha quedado donde está prohibido parar (art. 51.4).
 
 No son obligatorios: rueda de repuesto, bombillas de recambio, cadenas, neumáticos de invierno (recomendados por debajo de 7 °C).
 
@@ -125,7 +125,7 @@ Nunca tapes un testigo ni «esperes a ver»: un rojo no atendido convierte una a
       {
         id: 'ch02-charge',
         title: { fr: 'Chargement et remorques', es: 'Carga y remolques' },
-        body: `La carga debe ir **sujeta**, sin reducir la visibilidad ni la estabilidad, sin tapar luces ni matrícula, sin sobresalir lateralmente, y sin superar la MMA del vehículo (figura en el COC). Por detrás puede sobresalir **1 m** como máximo (3 m para piezas indivisibles largas); si sobresale **más de 1 m**, hay que señalar el extremo con un panel cuadrado de 50 cm con bandas rojas y blancas (y, cuando las luces son obligatorias, una luz roja y catadióptricos naranjas laterales). Por delante la carga **no puede sobresalir** del vehículo (art. 46–47). Carga en el techo: respetar el máximo del fabricante y sujetar con correas, no con «tendeurs» elásticos.
+        body: `La carga debe ir **sujeta**, sin reducir la visibilidad ni la estabilidad, sin tapar luces ni matrícula, sin superar la anchura máxima de 2,55 m (art. 46), y sin superar la MMA del vehículo (figura en el COC). Por detrás puede sobresalir **1 m** como máximo (3 m para piezas indivisibles largas); si sobresale **más de 1 m**, hay que señalar el extremo con un panel cuadrado de 50 cm con bandas rojas y blancas (y, cuando las luces son obligatorias, una luz roja y catadióptricos naranjas laterales). Por delante la carga **no puede sobresalir** del vehículo (art. 46–47). Carga en el techo: respetar el máximo del fabricante y sujetar con correas, no con «tendeurs» elásticos.
 
 Con **remolque**: ≤ 750 kg de MMA con el B sin más; de 750 a 3.500 kg hace falta que la suma de MMA no pase de 3.500 kg (si no, B96 o BE). Un remolque de más de 750 kg necesita su propia matrícula, frenos y seguro; los ligeros llevan una reproducción de la matrícula del coche. Con remolque la distancia de frenado aumenta, el viento lateral afecta más y en autopista el límite baja a 90 km/h para conjuntos de MMA superior a 3,5 t. Comprobar el enganche, el cable de seguridad y las luces del remolque antes de salir.`,
       },
@@ -166,7 +166,7 @@ El conductor debe tener el **control** del vehículo en todo momento, las manos 
       {
         id: 'ch03-ceinture',
         title: { fr: 'Ceinture et enfants', es: 'Cinturón y niños' },
-        body: `**«Ceinture de sécurité»** obligatoria para todos los ocupantes, delante y detrás, en todo trayecto, también en ciudad y con airbag. A 50 km/h, un choque sin cinturón equivale a caer desde un tercer piso. El conductor es responsable de que los **menores de 18** vayan sujetos. Excepciones (art. 35.2): dispensa médica, el conductor que hace marcha atrás y el taxista cuando lleva a un cliente (los pasajeros del taxi sí deben llevarlo).
+        body: `**«Ceinture de sécurité»** obligatoria para todos los ocupantes, delante y detrás, en todo trayecto, también en ciudad y con airbag. A 50 km/h, un choque sin cinturón equivale a caer desde un tercer piso. Excepciones (art. 35.2): dispensa médica, el conductor que hace marcha atrás y el taxista cuando lleva a un cliente (los pasajeros del taxi sí deben llevarlo).
 
 **Niños de menos de 1,35 m** (y menores de 18): en un «dispositif de retenue» homologado (silla, «rehausseur»), adaptado a su peso/talla, delante o detrás. Una silla a contramarcha delante exige **desactivar el airbag** del pasajero. Si no hay sitio para una tercera silla detrás, un niño de 3 años o más puede ir con el cinturón de adulto en el asiento trasero. Niños de más de 1,35 m: cinturón normal. Un bebé nunca en brazos. Para un trayecto corto y ocasional sin sillas disponibles, los niños de 3 años o más pueden ir detrás solo con el cinturón, **salvo si conduce uno de sus padres** (art. 35.1.2).
 
@@ -175,7 +175,7 @@ Otras reglas: no llevar más pasajeros que plazas con cinturón; no transportar 
       {
         id: 'ch03-distraction',
         title: { fr: 'Téléphone et distractions', es: 'Teléfono y distracciones' },
-        body: `Está prohibido, mientras se conduce (también parado en un semáforo o en un atasco), **tener en la mano o manipular** un «appareil mobile avec écran» (teléfono, tablet, GPS portátil) que no esté fijado en un **soporte**. Está permitido usar el manos libres y el teléfono en un soporte, aunque la conversación sigue reduciendo la atención. Infracción de **3.er grado** (multa inmediata de 191 € desde julio de 2026) y, desde febrero de 2026, **retirada inmediata del permiso durante 15 días**.
+        body: `Está prohibido, mientras se conduce (también parado en un semáforo o en un atasco), **tener en la mano o manipular** un «appareil mobile avec écran» (teléfono, tablet, GPS portátil) que no esté fijado en un **soporte**. Está permitido usar el manos libres y el teléfono en un soporte, aunque la conversación sigue reduciendo la atención. Infracción de **3.er grado** y, desde febrero de 2026, **retirada inmediata del permiso durante 15 días** (police.be).
 
 Tres tipos de distracción: **visual** (apartar la vista: a 90 km/h, 2 s de mirar el móvil = 50 m a ciegas), **manual** (soltar el volante) y **cognitiva** (pensar en otra cosa: una conversación intensa, aunque sea con un pasajero). Programar GPS y música antes de salir; si hay que atender algo, parar en un lugar seguro.`,
       },
@@ -187,26 +187,26 @@ Tres tipos de distracción: **visual** (apartar la vista: a 90 km/h, 2 s de mira
 - Una «unité» estándar (25 cl de cerveza, 10 cl de vino, 3 cl de licor) sube la tasa unos **0,2–0,3 g/l** según peso, sexo y estómago; el pico llega 30–60 min después. El hígado elimina solo **~0,15 g/l por hora**: tras una fiesta puedes estar por encima del límite a la mañana siguiente. Café, agua, ducha o vomitar no sirven.
 
 ### Efectos
-Desde 0,3 g/l: campo visual más estrecho, peor percepción de distancias y velocidad, reflejos más lentos, exceso de confianza. A 0,5 g/l el riesgo de accidente mortal se multiplica por 2; a 0,8 por 10; a 1,5 por 25.
+Desde 0,3 g/l: campo visual más estrecho, peor percepción de distancias y velocidad, reflejos más lentos, exceso de confianza. El riesgo de accidente crece muy deprisa con la tasa: con 0,5 g/l ya es claramente mayor que sobrio.
 
 ### Sanciones
-- 0,5–0,8 g/l: multa (197 € si se paga en el acto, desde julio de 2026) e **«interdiction de conduire» de 12 h** en el sitio (ley de 16/3/1968, art. 60 §3; antes eran 3 h).
-- ≥ 0,8 g/l: la misma «interdiction de conduire» de **12 h** y además **«retrait immédiat du permis» de 15 días** (aplicado en todo el país desde febrero de 2026), multa más alta, posible citación ante el «tribunal de police» y «déchéance».
-- Con tasas muy altas (≥ 1,8 g/l) o en caso de **reincidencia**, el juez debe en principio imponer el «éthylotest antidémarrage» (alcolock) y puede exigir exámenes médicos y psicológicos.
+- 0,5–0,8 g/l: multa e **«interdiction de conduire» de 12 h** en el sitio (ley de 16/3/1968, art. 60 §3; antes eran 3 h).
+- ≥ 0,8 g/l: la misma «interdiction de conduire» de **12 h** y además **«retrait immédiat du permis» de 15 días** (aplicado sistemáticamente en todo el país desde febrero de 2026; la ley ya lo permite desde 0,5 g/l, art. 55), multa más alta, posible citación ante el «tribunal de police» y «déchéance».
+- Con tasas muy altas (≥ 1,8 g/l) o en **reincidencia** con ≥ 1,2 g/l las dos veces, el juez debe en principio imponer el «éthylotest antidémarrage» (alcolock; en otros casos desde 0,8 g/l, puede) (art. 37/1) y puede exigir exámenes médicos y psicológicos.
 - **Negarse** al test de aliento o al análisis de sangre se castiga como una tasa alta.
 - «Ivresse» (embriaguez manifiesta, independiente de la tasa): también delito.`,
       },
       {
         id: 'ch03-drogues',
         title: { fr: 'Drogues et médicaments', es: 'Drogas y medicamentos' },
-        body: `**Drogas: tolerancia cero.** La policía hace un «test salivaire»; cualquier rastro de cannabis, cocaína, anfetaminas, MDMA u opiáceos → prohibición de conducir de 12 h, «retrait immédiat du permis» (15 días), tribunal y posible «déchéance». El cannabis sigue detectándose horas o días después y afecta a la coordinación, la atención y la percepción del tiempo; las drogas estimulantes dan una falsa sensación de control.
+        body: `**Drogas: no hay cantidad tolerada.** La policía hace un «test salivaire»; basta superar umbrales muy bajos de cannabis (THC), cocaína, anfetaminas, MDMA u opiáceos (art. 37bis) → prohibición de conducir de 12 h (art. 61ter), «retrait immédiat du permis» (15 días, art. 55), tribunal y posible «déchéance». El cannabis sigue detectándose horas o días después y afecta a la coordinación, la atención y la percepción del tiempo; las drogas estimulantes dan una falsa sensación de control.
 
 **Medicamentos**: somníferos, tranquilizantes, antidepresivos, antihistamínicos (alergia), jarabes con codeína, algunos analgésicos y antiepilépticos reducen la vigilancia; el pictograma de un coche en la caja (negro, naranja o rojo según el riesgo) lo indica. Pregunta al médico o al farmacéutico, lee el prospecto, no combines con alcohol, y no conduzcas al empezar un tratamiento hasta saber cómo te afecta.`,
       },
       {
         id: 'ch03-fatigue',
         title: { fr: 'La fatigue', es: 'La fatiga' },
-        body: `La **«somnolence»** causa en Bélgica alrededor de 1 de cada 5 accidentes graves en autopista. Señales: bostezos, «paupières lourdes», picor de ojos, dificultad para mantener la trayectoria o la velocidad, no recordar los últimos kilómetros, «micro-sommeils» de 1–4 s (a 120 km/h, 130 m a ciegas).
+        body: `La **«somnolence»** es una causa importante de accidentes graves, sobre todo en autopista. Señales: bostezos, «paupières lourdes», picor de ojos, dificultad para mantener la trayectoria o la velocidad, no recordar los últimos kilómetros, «micro-sommeils» de 1–4 s (a 120 km/h, 130 m a ciegas).
 
 Horas de mayor riesgo: **entre 2 y 5 de la madrugada** y **a primera hora de la tarde** (13–15 h). Factores: dormir poco, comida copiosa, alcohol, medicamentos, calor en el habitáculo, monotonía de la autopista.
 
@@ -243,8 +243,8 @@ Lo único eficaz: **parar y dormir 15–20 minutos** (más lleva a inercia del s
         title: { fr: 'Les usagers', es: 'Los usuarios' },
         body: `- **«Conducteur»**: quien conduce un vehículo o guía animales de tiro o de carga. Un ciclista es conductor; quien lleva la bici a pie es **«piéton»**.
 - **«Piéton»**: a pie, o empujando a mano una silla de ruedas, un cochecito o una bici. Quien usa un «engin de déplacement non motorisé» (patines, patinete sin motor) es peatón si va al paso y ciclista si va más rápido (art. 7bis). Usa la acera o el accotement; si tiene que ir por la calzada, por el borde **izquierdo** (de cara al tráfico), o el derecho si es más seguro. Debe cruzar por el paso si hay uno a menos de unos **20 m**.
-- **«Usagers faibles»**: peatones, ciclistas, usuarios de patinete, PMR (personas con movilidad reducida). Tienen protección especial: indemnización automática de daños corporales por el seguro del vehículo implicado (art. 29bis).
-- **«Cycle»**, **«cyclomoteur»** (clase A ≤ 25 km/h, clase B ≤ 45 km/h, permiso AM), **«motocyclette»**, **«engin de déplacement motorisé»** (patinete eléctrico, monociclo, segway: máx. 25 km/h, mínimo 16 años salvo zonas de encuentro/peatonales/juegos, nunca por la acera, sin pasajero, se asimila al ciclista).
+- **«Usagers faibles»**: peatones, ciclistas, usuarios de patinete, PMR (personas con movilidad reducida). Tienen protección especial: indemnización automática de daños corporales por el seguro del vehículo implicado (art. 29bis de la ley de 21/11/1989).
+- **«Cycle»**, **«cyclomoteur»** (clase A ≤ 25 km/h, clase B ≤ 45 km/h, permiso AM), **«motocyclette»**, **«engin de déplacement motorisé»** (patinete eléctrico, monociclo, segway: máx. 25 km/h, mínimo 16 años salvo zonas de encuentro/peatonales/juegos, se asimila al ciclista (art. 7bis): en población no por la acera, sin pasajero salvo si está construido para ello).
 - **«Véhicule prioritaire»**: con luz azul y sirena especial.
 - **«Véhicule sur rails»**: el tranvía; no es un vehículo a motor a efectos de prioridad y tiene reglas propias.
 - **«Agent qualifié»**: policía y otros agentes habilitados (art. 3), que pueden dar órdenes de circulación. También hay que obedecer a los «surveillants habilités» de las escuelas, que paran el tráfico con un disco C3 para que crucen los niños.`,
@@ -303,7 +303,7 @@ Siempre hay que **«obtempérer»** (obedecer) y presentar los documentos. Una o
 - **Peatones** (silueta roja/verde) y **ciclistas** (bici roja/verde, a veces con cuenta atrás).
 - **B22 / B23** junto al semáforo: los ciclistas (y speed pedelecs) pueden girar a la derecha / seguir recto en rojo o naranja cediendo el paso; nunca los coches.
 - **Semáforos de carril** (cruz roja / flecha verde hacia abajo sobre un carril): el carril está cerrado / abierto; flecha naranja oblicua: abandonar ese carril hacia el lado de la flecha.
-- **Semáforos de tranvía/bus** (barras, círculos y triángulos blancos sobre fondo negro): no te conciernen, pero indican que el tram o el bus va a moverse.
+- **Semáforos de tranvía/bus** (barras, círculos y triángulos blancos sobre fondo negro): solo regulan el transporte público (art. 62ter): no te conciernen.
 - **Paso a nivel**: dos luces rojas intermitentes alternas = detenerse; luz blanca intermitente = paso autorizado, con prudencia.
 - **Luz naranja intermitente aislada** en un lugar peligroso: reducir y extremar la atención.
 - Un semáforo con **cámara** no cambia la regla, solo permite multar.`,
@@ -321,7 +321,7 @@ Siempre hay que **«obtempérer»** (obedecer) y presentar los documentos. Una o
 - **F — Indication**: rectángulos (azules o blancos): agglomération (F1a/F3a), zonas (F4a/F4b zona 30, F12a/F12b residencial, F103/F105 peatonal, F111/F113 zona ciclista), autoroute (F5/F7), túnel (F8), route pour automobiles (F9/F11), sentido único (F19), callejón sin salida (F45), carriles bus (F17/F18), preaviso y dirección (F25–F37), paso de peatones (F49), paso de ciclistas (F50), etc.
 - **Placas adicionales**: bajo la señal, precisan a quién se aplica (modelos M, negro sobre blanco, para bicis y ciclomotores: «excepté» o «uniquement»), distancia, tramo, horario o categoría de vehículos.
 
-Reglas de lectura: las de prohibición (C) y las E valen en general **hasta el próximo cruce** salvo si llevan placa de distancia/tramo o son de **zona** (valen hasta la señal de fin). Una señal temporal (obras, fondo amarillo o naranja) prevalece sobre la permanente. Una señal colocada encima de un carril, o con F91, solo concierne a ese carril.`,
+Reglas de lectura: C33, C35, C39 y C43 valen **hasta el próximo cruce inclusive**; las E, hasta el próximo cruce y del lado donde están; las prohibiciones de acceso (C1, C3…), para la vía que señalizan; con placa de distancia o tramo, lo que indique la placa; las de **zona**, hasta la señal de fin. En obras, las marcas naranjas anulan las blancas (art. 73.4). Una señal colocada encima de un carril, o con F91, solo concierne a ese carril.`,
       },
     ],
   },

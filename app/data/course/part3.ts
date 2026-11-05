@@ -111,17 +111,17 @@ Parquímetro, horodator o app según la zona (en Bruselas, zonas de colores con 
         body: `1. **Luces de emergencia** («feux de détresse») de inmediato.
 2. Salir de la calzada: **bande d'arrêt d'urgence** o arcén, lo más a la derecha; ruedas giradas hacia el exterior.
 3. **Chaleco** puesto **al salir** del coche (obligatorio en autopista y route pour automobiles, art. 51.4); salir por el lado derecho (lejos del tráfico); pasajeros fuera y detrás del **guardarraíl** («glissière»).
-4. **Triángulo** a **100 m** como mínimo detrás en autopista (30 m en vía ordinaria), visible a unos 50 m; antes de la curva si hay una. Solo si es seguro ir a ponerlo.
-5. Llamar al **112** o usar la **borne d'appel** (cada 2 km, indica tu posición exacta; las flechas de los postes del arcén apuntan a la más cercana), o la asistencia. Esperar fuera del coche, detrás de la barrera.
+4. **Triángulo** obligatorio si el coche queda donde está prohibido parar (art. 51): a **100 m** como mínimo detrás en autopista (30 m en vía ordinaria), visible a unos 50 m; antes de la curva si hay una. Ponte el chaleco antes de salir.
+5. Llamar al **112** o usar la **borne d'appel** (indica tu posición exacta; las flechas de los postes del arcén apuntan a la más cercana), o la asistencia. Esperar fuera del coche, detrás de la barrera.
 6. No intentar reparar en el arcén salvo algo trivial y seguro; no cruzar nunca la calzada.
 
-Si el vehículo se queda en un carril y no puedes moverlo: luces de emergencia, chaleco, salir y alejarse, avisar al 112.`,
+Si el vehículo se queda en un carril y no puedes moverlo: luces de emergencia, chaleco, salir y ponerse a salvo detrás del guardarraíl, señalarlo con el triángulo (art. 51) y avisar al 112.`,
       },
       {
         id: 'ch13-accident',
         title: { fr: 'Accident', es: 'Accidente' },
         body: `### Obligaciones
-Todo implicado debe **detenerse**, quedarse en el lugar, enseñar su documento de identidad a los otros implicados que lo pidan (si tiene más de 15 años) y **prestar asistencia** a los heridos; irse para escapar de las comprobaciones es **«délit de fuite»** (delito, prisión y déchéance). Con solo daños materiales y acuerdo: rellenar juntos el **«constat européen d'accident»** (parte amistoso) y **apartar los vehículos** (anotando antes su posición o haciendo fotos). Sin acuerdo: **policía** (101). Con heridos: la **policía** debe venir (112) y no es obligatorio mover los vehículos. Si el perjudicado no está (coche aparcado): dejar **nombre y dirección** en el lugar y comunicarlos cuanto antes, directamente o por la policía (detalles en el capítulo 19).
+Todo implicado debe **detenerse**, quedarse en el lugar, enseñar su documento de identidad a los otros implicados que lo pidan (si tiene más de 15 años) y **prestar asistencia** a los heridos; irse para escapar de las comprobaciones es **«délit de fuite»** (delito: multa elevada y posible déchéance; con heridos o muertos, pena mayor y déchéance obligatoria de al menos 3 meses; ley de 16/3/1968, art. 33). Con solo daños materiales y acuerdo: rellenar juntos el **«constat européen d'accident»** (parte amistoso) y **apartar los vehículos** (anotando antes su posición o haciendo fotos). Sin acuerdo: **policía** (101). Con heridos: la **policía** debe venir (112) y no es obligatorio mover los vehículos. Si el perjudicado no está (coche aparcado): dejar **nombre y dirección** en el lugar y comunicarlos cuanto antes, directamente o por la policía (detalles en el capítulo 19).
 
 ### Con heridos: P.A.S.
 - **Protéger**: luces de emergencia, chaleco, triángulo, apagar contactos, no fumar, poner a los presentes a salvo detrás del guardarraíl, señalizar en los dos sentidos si hace falta.
@@ -144,7 +144,7 @@ Tras el accidente, declarar al seguro cuanto antes (el plazo habitual de los con
       {
         id: 'ch14-feux',
         title: { fr: 'Quel feu, quand', es: 'Qué luz, cuándo' },
-        body: `- **Feux de croisement** (cortas): obligatorias entre la **tombée** y el **lever du jour** y siempre que la visibilidad sea **< 200 m** (lluvia fuerte, niebla, nieve, túnel, humo). Las luces diurnas (DRL) **no** encienden las traseras: con mala visibilidad o de noche, activa las de cruce.
+        body: `- **Feux de croisement** (cortas) **o de route** (largas): obligatorias entre la **tombée** y el **lever du jour** y siempre que no se vea claramente a unos **200 m** (lluvia fuerte, niebla, nieve, túnel oscuro, humo) (art. 30.1); las largas se cambian por las cortas al cruzarse con alguien, al seguir a otro a menos de 50 m o con alumbrado suficiente. Las luces diurnas (DRL) **no** encienden las traseras: con mala visibilidad o de noche, activa las de cruce.
 - **Feux de route** (largas): de noche, sin alumbrado suficiente. Hay que cambiarlas por las de cruce (art. 30.1): al acercarse un usuario de frente (coche, bici, peatón) y en todo caso si te hace ráfagas porque lo deslumbras, ante un tranvía o un barco cuyo conductor podría deslumbrarse, cuando sigues a un vehículo a **menos de 50 m** (salvo para adelantar), y si el alumbrado de la calzada es continuo y permite ver a unos **100 m**. **Appel de phares** = alternar brevemente largas y cortas para avisar (sustituye a la bocina de noche, salvo peligro inminente).
 - **Feux de position**: para ser visto **parado**, de noche o con visibilidad < 200 m: luces de posición delante y rojas detrás (en población, a veces basta la luz de estacionamiento del lado de la calzada). Solo son obligatorias si el alumbrado público no permite ver el vehículo a unos **100 m**. En marcha, nunca solas.
 - **Feu de brouillard arrière**: si el coche lo tiene, **obligatorio** con niebla o nieve que reduzcan la visibilidad a **< 100 m** y con **lluvia fuerte**; prohibido en el resto de casos (deslumbra).
@@ -212,7 +212,7 @@ Deberes del conductor: ceder en los pasos al peatón que cruza o **se dispone a 
         title: { fr: 'Les cyclistes', es: 'Los ciclistas' },
         body: `Reglas del ciclista que conviene conocer: usa la **piste cyclable** si existe y es practicable (D7 o dos líneas discontinuas); si no, la calzada por la derecha (o el accotement de plain-pied; fuera de población, también la acera; los niños de **menos de 10 años** pueden ir siempre por la acera); puede ir **de dos en fondo** salvo si impide el cruce y, fuera de población, debe ponerse en fila cuando llega un vehículo por detrás; puede ir a contramano en los **SUL**; puede usar **B22/B23** para pasar en rojo cediendo; en una **zone cyclable** puede ocupar toda la calzada (o la mitad derecha si es de doble sentido); no está obligado a usar el casco (recomendado) ni a señalar con el brazo si es peligroso; de noche, luces y reflectantes; un remolque de bici puede llevar 2 niños como máximo; no puede llevar pasajero sin asiento adecuado.
 
-Deberes del conductor: **1 m** (población) / **1,5 m** (fuera) al adelantar; no adelantar en zone cyclable y no intentarlo dentro de una rotonda; ceder a los que van recto cuando giras; mirar el ángulo muerto derecho antes de girar a la derecha; no estacionar ni parar en la piste cyclable; abrir la puerta con la mano contraria («poignée hollandaise»); en rotonda, ceder al salir a los de la pista ciclable; contar con ciclistas de frente en los SUL. Las **bicicletas eléctricas** (≤ 25 km/h) son ciclos; las **speed pedelecs** (≤ 45 km/h, matrícula, permiso AM, casco de ciclomotor o de bici) son ciclomotores y siguen en general las reglas de los de clase B, con algunas propias (por ejemplo, en una zone cyclable se asimilan a los ciclistas).`,
+Deberes del conductor: **1 m** (población) / **1,5 m** (fuera) al adelantar; no adelantar en zone cyclable; ceder a los que van recto cuando giras; mirar el ángulo muerto derecho antes de girar a la derecha; no estacionar ni parar en la piste cyclable; abrir la puerta con la mano contraria («poignée hollandaise»); en rotonda, ceder al salir a los de la pista ciclable; contar con ciclistas de frente en los SUL. Las **bicicletas eléctricas** (≤ 25 km/h) son ciclos; las **speed pedelecs** (≤ 45 km/h, matrícula, permiso AM, casco de ciclomotor o de bici) son una categoría propia de ciclomotor (ni clase A ni clase B, art. 2.17), con reglas propias: en la zone cyclable se asimilan a los ciclistas, y donde el límite es de 50 km/h o menos pueden elegir calzada o piste cyclable (art. 9.1.2).`,
       },
       {
         id: 'ch15-motos',
@@ -224,7 +224,7 @@ Son estrechos y rápidos: difíciles de ver en el retrovisor y de estimar su vel
 Clase **A** (≤ 25 km/h): como la bici, deben usar la piste cyclable si existe. Clase **B** (≤ 45 km/h, permiso AM, matrícula): donde el límite es de 50 km/h o menos, **pueden** usar la piste cyclable (D7 o marcas) sin poner en peligro a nadie; donde el límite es mayor, **deben** usarla si existe (art. 9.1.2); las placas M6 / M7 bajo D7 lo imponen o lo prohíben. Prohibidos en autopista y route pour automobiles.
 
 ### Patinetes eléctricos y otros «engins de déplacement motorisés»
-Máximo 25 km/h por construcción; mínimo **16 años** (salvo zonas residenciales, de encuentro, peatonales, chemins réservés y rue réservée au jeu); se asimilan a **ciclistas**: calzada o piste cyclable, **nunca la acera** (se empujan a pie si hay que ir por ella), sin pasajero, sin estacionar donde estorben (plazas reservadas con placas M21–M24), luces y reflectantes de noche. **Casco obligatorio** (de bici o de ciclomotor) si el aparato puede superar los **20 km/h** por construcción (art. 36). El alcohol y las drogas se sancionan igual que al volante.`,
+Máximo 25 km/h por construcción; mínimo **16 años** (salvo zonas residenciales, de encuentro, peatonales, chemins réservés y rue réservée au jeu); se asimilan a **ciclistas**: calzada o piste cyclable; en población, **no por la acera** (se empujan a pie; fuera de población, solo si no hay piste cyclable, art. 9.1.2), sin pasajero, sin estacionar donde estorben (plazas reservadas con placas M21–M24), luces y reflectantes de noche. **Casco obligatorio** (de bici o de ciclomotor) si el aparato puede superar los **20 km/h** por construcción (art. 36). El alcohol y las drogas se sancionan igual que al volante.`,
       },
     ],
   },
@@ -240,36 +240,31 @@ Máximo 25 km/h por construcción; mínimo **16 años** (salvo zonas residencial
       {
         id: 'ch16-degres',
         title: { fr: 'Les quatre degrés', es: 'Los cuatro grados' },
-        body: `Bélgica **no tiene permiso por puntos**. Las infracciones se clasifican por gravedad; la mayoría se liquidan con una **«perception immédiate»** (multa inmediata) y, si no se paga o es grave, con el **tribunal de police**:
+        body: `Bélgica **no tiene permiso por puntos**. Las infracciones al código se clasifican en cuatro **«degrés»** (AR 30/9/2005). Muchas se liquidan con una **«perception immédiate»** (multa inmediata, cuyo importe sube con el grado y se indexa cada año); si no se paga o la infracción es grave, decide el **tribunal de police**:
 
-Importes de la «perception immédiate» desde el 1 de julio de 2026 (antes: 58 / 116 / 174 / 474 €):
+- **1.er grado**: todas las que no figuran en los otros grados: no señalar un cambio de dirección, no guardar la distancia de seguridad, circular por la bande bus sin derecho, estacionar mal sin peligro…
+- **2.º grado**: no respetar un **B1** o un **STOP (B5)**, no ceder el paso a la derecha, no llevar el **cinturón**, parar o estacionar en autopista…
+- **3.er grado**: saltarse un **rojo**, **teléfono en la mano**, adelantar donde está prohibido (también en un paso a nivel), no ceder a los peatones o ciclistas al girar…
+- **4.º grado** (el juez debe imponer en principio una **déchéance** de 8 días a 5 años; si no, debe motivarlo): marcha atrás, media vuelta o contramano en **autopista**, entrar en un paso a nivel con las barreras o las luces rojas en marcha, parar o estacionar en un paso a nivel, adelantar en una cima o una curva sin visibilidad, carreras de velocidad…
 
-- **1.er grado** (64 €): faltas leves: no señalar, estacionar mal sin peligro, no llevar documentos…
-- **2.º grado** (128 €): poner en peligro indirecto: no respetar un B1, estacionar en un paso de peatones, cinturón, no respetar la distancia de seguridad…
-- **3.er grado** (191 €): peligro directo: saltarse un **rojo** o un **STOP**, adelantar donde está prohibido, no ceder a un peatón, circular por la bande bus, **teléfono en la mano**…
-- **4.º grado** (520 €; normalmente tribunal y **déchéance**): marcha atrás, demi-tour o contramano en **autopista**, adelantar en paso a nivel, ignorar las barreras o luces de un paso a nivel…
-
-Además: **alcohol/drogas** (categorías propias), **exceso de velocidad** (tarifa propia), **délit de fuite**, conducir sin seguro, sin ITV o sin permiso válido.`,
+Además: **alcohol/drogas**, **exceso de velocidad**, **délit de fuite**, conducir sin seguro, sin ITV o sin permiso válido tienen sanciones propias.`,
       },
       {
         id: 'ch16-vitesse',
         title: { fr: 'Les excès de vitesse', es: 'Los excesos de velocidad' },
-        body: `Se aplica un **margen técnico** (6 km/h hasta 100 km/h, 6 % por encima) antes de contar el exceso. Luego:
+        body: `La multa crece con los km/h de exceso (antes de contarlo, la policía descuenta un **margen técnico** por la precisión del aparato). Los umbrales que hay que saber (ley de 16/3/1968):
 
-Importes desde el 1 de julio de 2026:
+- **Retirada inmediata** del permiso posible (art. 55): más de **+20 km/h** en población, zona 30, abords d'école, zona residencial o de encuentro; más de **+30 km/h** en las demás vías.
+- **Tribunal y déchéance** de 8 días a 5 años (el juez debe imponerla o motivar por qué no, art. 29 §3): más de **+30 km/h** en población, zona 30, abords d'école, zona residencial o de encuentro; más de **+40 km/h** en las demás vías. En esos casos ya no se paga una simple multa inmediata.
 
-- En **población, zona 30, abords d'école, zona residencial o de encuentro**: los primeros 10 km/h de exceso, 58 €; cada km/h adicional, +12 €. Por encima de **+30 km/h** ya no hay multa inmediata: **fiscal y tribunal**, con posible déchéance.
-- En el resto (carretera, autopista): primeros 10 km/h, 58 €; +7 € por km/h adicional; por encima de **+40 km/h**, fiscal y tribunal.
-- En esos grandes excesos (+30 en población / +40 fuera) también es posible la **retirada inmediata** del permiso.
-
-Radares: fijos, móviles, «lidar» y de tramo («trajet»); las cámaras de semáforo multan rojo y velocidad. Puede haber radares sin señalar. Un conductor **novel** (< 2 años) condenado por una infracción grave puede tener que repetir el práctico y/o el teórico.`,
+Radares: fijos, móviles, «lidar» y de tramo («trajet»); las cámaras de semáforo multan rojo y velocidad. Puede haber radares sin señalar. Un conductor **novel** (< 2 años de permiso B) condenado a una déchéance debe además aprobar de nuevo al menos el teórico o el práctico (art. 38 §5).`,
       },
       {
         id: 'ch16-retrait',
         title: { fr: 'Retrait, déchéance et récidive', es: 'Retirada, inhabilitación y reincidencia' },
-        body: `- **«Retrait immédiat du permis»**: medida del fiscal («procureur du Roi») tomada en el momento: alcohol ≥ 0,8 g/l, drogas, teléfono en la mano (desde febrero de 2026), grandes excesos de velocidad, délit de fuite, accidente grave. Dura 15 días (prorrogable); se recupera y luego juzga el tribunal.
+        body: `- **«Retrait immédiat du permis»**: medida del fiscal («procureur du Roi») tomada en el momento en los casos de la ley (art. 55): alcohol desde 0,5 g/l (sistemática desde 0,8 g/l), drogas, grandes excesos de velocidad, délit de fuite, accidente grave; desde febrero de 2026 también el teléfono en la mano (police.be). Dura 15 días (prorrogable); se recupera y luego juzga el tribunal.
 - **«Déchéance du droit de conduire»**: pena del tribunal, de 8 días a 5 años (o definitiva). Puede condicionarse a aprobar de nuevo el teórico, el práctico, exámenes médicos y psicológicos, o a instalar un **«éthylotest antidémarrage»**. Durante la déchéance, conducir es un delito grave.
-- **Reincidencia**: repetir en 3 años una infracción grave (4.º grado, alcohol ≥ 0,8, grandes excesos, délit de fuite) obliga al juez a déchéance larga y a los cuatro exámenes de reintegración.
+- **Reincidencia**: repetir en 3 años una infracción grave (4.º grado, alcohol ≥ 0,8, grandes excesos, délit de fuite) obliga al juez a una déchéance de al menos 3 meses y a los cuatro exámenes de reintegración (ley de 16/3/1968, art. 38 §6).
 - **Fin de semana**: el juez puede ordenar que la déchéance se cumpla solo los fines de semana y festivos, para permitir trabajar.
 - **Conductores noveles**: con menos de 2 años de permiso, una condena por ciertas infracciones graves conlleva déchéance y la obligación de repetir exámenes.
 - **Sanciones administrativas comunales** (SAC): las comunas sancionan directamente estacionamiento y pequeñas infracciones.`,
@@ -277,10 +272,10 @@ Radares: fijos, móviles, «lidar» y de tramo («trajet»); las cámaras de sem
       {
         id: 'ch16-assurance',
         title: { fr: "L'assurance et la responsabilité", es: 'El seguro y la responsabilidad' },
-        body: `- **RC auto («responsabilité civile»)**: **obligatoria** para circular. Cubre los daños que causes a terceros (no los tuyos ni los de tu coche). El certificado va a bordo. Conducir sin seguro: delito, retirada inmediata, el Fondo de garantía paga a las víctimas y te reclama.
+        body: `- **RC auto («responsabilité civile»)**: **obligatoria** para circular. Cubre los daños que causes a terceros (no los tuyos ni los de tu coche). El certificado va a bordo. Conducir sin seguro: delito (ley de 21/11/1989), posible déchéance e inmovilización del vehículo; el Fondo común de garantía paga a las víctimas y te reclama.
 - **Omnium** (completo), **mini-omnium** (robo, incendio, cristales, animales), **protección jurídica**, **conductor**: opcionales.
 - **Bonus-malus / «joker»**: cada aseguradora fija su escala; un accidente con responsabilidad sube la prima.
-- **Usagers faibles**: el seguro del vehículo implicado indemniza automáticamente sus daños corporales, haya o no responsabilidad del conductor (art. 29bis), salvo falta intencional de la víctima.
+- **Usagers faibles**: el seguro del vehículo implicado indemniza automáticamente sus daños corporales, haya o no responsabilidad del conductor (art. 29bis de la ley de 21/11/1989), salvo falta intencional de la víctima.
 - **Conductor ocasional**: el seguro cubre a quien conduzca con tu permiso, salvo exclusión expresa; un conductor joven no declarado puede implicar franquicia.
 - **Responsabilidad**: el conductor responde de sus infracciones; el **titular de la matrícula** debe identificar al conductor si se le reclama; los padres responden de los daños de sus hijos menores; conducir sin «état de conduire» o con el coche en mal estado agrava la responsabilidad.
 - **Car-Pass** (historial de km) obligatorio para vender a un particular; **certificado de conformidad** y **ITV de venta** (si el coche ha circulado).`,

@@ -149,7 +149,7 @@ Las reglas generales de parada y estacionamiento (distancias, zona azul) están 
 ### Inicio y fin de reglas
 - **F5 / F7** inicio / fin de autopista; **F9 / F11** inicio / fin de vía para automóviles (F11 es el coche de F9 tachado).
 - **F8**: túnel de **más de 500 m** (una placa indica la longitud).
-- **F12a / F12b** zona residencial o de encuentro (20 km/h); **F103 / F105** zona peatonal; **F111 / F113** zona o calle **ciclista** (30 km/h, prohibido adelantar a los ciclistas; tras **F113** se les puede volver a adelantar con las reglas normales).
+- **F12a / F12b** zona residencial o de encuentro (20 km/h); **F103 / F105** zona peatonal; **F111 / F113** inicio / fin de **zone cyclable** (zona ciclista) (30 km/h, prohibido adelantar a los ciclistas; tras **F113** se les puede volver a adelantar con las reglas normales).
 - **F99a / F101a**: inicio / fin de un camino reservado a los usuarios dibujados.
 
 ### Carriles y calles
@@ -248,7 +248,7 @@ Con **«câbles de démarrage»**: 1) rojo al **+ de la descargada**, 2) rojo al
       {
         id: 'ch18-direction',
         title: { fr: 'Direction et suspension', es: 'Dirección y suspensión' },
-        body: `La **«direction assistée»** y el **«servofrein»** funcionan gracias al motor. Si el motor **se cala en marcha**, volante y freno se vuelven **mucho más duros pero siguen funcionando**: girar y frenar con más fuerza. Nunca quitar la llave en marcha: el **«antivol de direction»** podría bloquear el volante.
+        body: `La **«direction assistée»** y el **«servofrein»** necesitan el motor en muchos coches. Si el motor **se cala en marcha**, la asistencia puede reducirse o desaparecer (el servofreno conserva reserva para una o dos frenadas): volante y freno **siguen funcionando, pero más duros**: girar y frenar con más fuerza. Nunca quitar la llave en marcha: el **«antivol de direction»** podría bloquear el volante.
 
 | Síntoma (sin frenar) | Causa probable |
 |---|---|
@@ -329,7 +329,7 @@ Si entre los dos vehículos hay **más de 3 m**, la unión se señaliza:
 | De día, sin luces obligatorias | un trozo de **«étoffe rouge»** (tela roja) |
 | Con luces obligatorias | una **luz naranja visible lateralmente**, salvo que la unión esté iluminada |
 
-Una **«dépanneuse»** (grúa) debe llevar encendidas sus luces amarillo-naranja intermitentes en el lugar del rescate **y durante el remolque**, y solo entonces.`,
+Una **«dépanneuse»** (grúa) debe llevar encendidas sus luces amarillo-naranja intermitentes en el lugar del rescate, **durante el remolque** y cuando circula por el arcén de emergencia o el couloir de secours para llegar a un incidente (art. 32.3).`,
       },
       {
         id: 'ch19-accident',
@@ -343,7 +343,7 @@ Una **«dépanneuse»** (grúa) debe llevar encendidas sus luces amarillo-naranj
 | Además | | **socorrer** a los heridos |
 
 - Toda persona implicada **de más de 15 años** debe enseñar su **«carte d'identité»** a los demás implicados que se la pidan y quedarse en el lugar.
-- El **parte amistoso**: firmarlo **no es reconocer la culpa**, pero lo firmado **ya no se puede modificar**; cada uno se lleva su ejemplar. A la aseguradora se declara en 8 días (capítulo 13).
+- El **parte amistoso**: firmarlo **no es reconocer la culpa**, pero lo firmado **ya no se puede modificar**; cada uno se lleva su ejemplar. A la aseguradora se declara en el plazo del contrato, normalmente 8 días (capítulo 13).
 - **Perjudicado ausente** (coche aparcado): dejar en el lugar **nombre y dirección** y comunicarlos cuanto antes, directamente o por la policía.
 - Con heridos, si no se ha podido contactar con la policía en un plazo razonable: declarar el accidente en una comisaría **en las 24 horas**.
 - **«Délit de fuite»**: marcharse para escapar de las comprobaciones, **también con solo daños materiales**. Alejarse un momento para socorrer o avisar **no** es huir, si antes se dan nombre y dirección a alguna persona presente.

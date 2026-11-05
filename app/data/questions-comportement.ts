@@ -43,7 +43,7 @@ export const comportementQuestions: Question[] = [
   Q('z-com-11', 'comportement', 'com-perception',
     ['Un piéton, les yeux sur son téléphone, attend au bord du trottoir, hors passage. Je dois :', 'Continuer, il doit me céder le passage.', 'Ralentir et être prêt à freiner s\'il traverse.', 'Faire un appel de phares et garder ma vitesse.'],
     ['Un peatón, con la vista en el teléfono, espera al borde de la acera, fuera de un paso. Debo:', 'Seguir, él debe cederme el paso.', 'Reducir y estar listo para frenar si cruza.', 'Hacer una ráfaga y mantener la velocidad.'],
-    1, 'Un peatón distraído puede cruzar sin mirar. Aunque fuera del paso deba ceder, el conductor debe prever su error.'),
+    1, 'Un peatón distraído puede cruzar sin mirar. Fuera del paso, el peatón solo puede cruzar con prudencia y teniendo en cuenta los vehículos que se acercan (art. 42.4.4), pero el conductor debe poder detenerse ante un obstáculo previsible (art. 10.1, 3°).'),
   Q('z-com-12', 'comportement', 'com-perception',
     ['Une camionnette de livraison est arrêtée en double file et me cache le trottoir. Je dois :', 'La contourner lentement, prêt à voir surgir un piéton.', 'La contourner vite pour gêner moins longtemps.', 'Klaxonner pour que le livreur la déplace.'],
     ['Una furgoneta de reparto está parada en doble fila y me tapa la acera. Debo:', 'Rodearla despacio, preparado por si sale un peatón.', 'Rodearla rápido para molestar menos tiempo.', 'Tocar el claxon para que el repartidor la mueva.'],

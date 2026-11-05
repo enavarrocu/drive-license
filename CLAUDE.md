@@ -180,15 +180,21 @@ Dockerfile · DEPLOYMENT.md · README.md
 
 ## Estado (25 oct 2026) y herramientas de diagnóstico
 
-- 697 preguntas en 16 temas (13 de dos opciones «oui / non»). Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
+- 697 preguntas en 16 temas (15 de dos opciones «oui / non»). Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
   `z-prio/vit/dep/alc-NN`), -extra4 (resto de temas, `z-sig/sta/aut/usa/man/ecl/veh/per-NN`) y uno por
   tema nuevo: -panneaux (`z-pan-NN`), -mecanique (`z-mec-NN`), -accidents (`z-acc-NN`),
   -comportement (`z-com-NN`) y -extra5 (31 escenas de adelantamiento, carriles, rotondas de 2 carriles,
   tranvía, peatones, estacionamiento y autopista, `z5-<tema>-NN`), -extra6 (escenas y temas graves, `z6-…`) y
   -extra7 (texto y oui/non, `z7-…`); estos dos cubren huecos detectados al comparar con simulacros reales
-  (nov 2026). Siguiente bloque: `questions-extra8.ts`, ids `z8-<tema>-NN`.
+  (nov 2026), y -extra8 (caminos reservados F99/F101, `z8-…`). Siguiente bloque: `questions-extra9.ts`, ids `z9-<tema>-NN`.
 - Vocabulario: la F111 es «zone cyclable» (código vigente; los paneles «rue cyclable» valen hasta el 1/1/2035).
-  Textos oficiales para verificar: codedelaroute.be (AR 1/12/1975, ley de 16/3/1968, AR 23/3/1998 del permiso).
+  Textos oficiales para verificar: codedelaroute.be (AR 1/12/1975, ley de 16/3/1968, AR 23/3/1998 del permiso, AR 10/7/2006 del
+  provisional) y ejustice (AR 30/9/2005 de los grados de infracción: usa la versión consolidada vigente de ejustice, la de
+  Wallex/codedelaroute en PDF estaba desfasada). El 5 nov 2026 se revisó TODO el contenido contra esos textos (8 revisiones
+  en paralelo + verificación de cada hallazgo): grados corregidos (STOP = 2.º, teléfono = 3.º, adelantar en paso a nivel = 3.º,
+  distancia de seguridad y carril bus = 1.º), retirada inmediata posible desde 0,5 g/l (art. 55; sistemática desde 0,8 por
+  política de la fiscalía), y se retiraron preguntas sin base (x-sta-08, x-sig-03, x-sig-10, y-usa-03, y-man-05). La «priorité
+  de droite» que se conserva aunque el prioritario se detenga es jurisprudencia: no la atribuyas al art. 12.3.1.
 - Modos de estudio: repaso inteligente (por defecto), faltas graves, errores de un examen (`?ids=`),
   quiz de señales (`/signs?mode=quiz`, progreso con ids `sign:<código>` en la misma tabla `progress`),
   mini-test por capítulo del curso (`ChapterQuiz`, con un mapa capítulo → theoryId dentro del componente),

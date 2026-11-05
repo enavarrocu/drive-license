@@ -341,7 +341,7 @@ export const panneauxQuestions: Question[] = [
   { ...Q('z-pan-65', 'panneaux', 'pan-indication',
     ['Ce signal indique :', 'Un site bus et tram que je peux franchir.', 'Une bande que je peux emprunter la nuit.', 'Une gare de bus et de trams à proximité.'],
     ['Esta señal indica:', 'Una plataforma bus y tranvía que puedo cruzar.', 'Un carril que puedo usar de noche.', 'Una estación de autobuses y tranvías cerca.'],
-    0, 'F18: «site spécial franchissable» reservado al transporte público regular. Se puede cruzar, pero no circular por él.'), signs: ['F18'] },
+    0, 'F18: «site spécial franchissable» reservado al transporte público regular. Los demás solo pueden cruzarlo en los cruces o para entrar o salir de una propiedad o un aparcamiento, y circular por él solo para esquivar un obstáculo en la calzada (art. 72.6).'), signs: ['F18'] },
 
   { ...Q('z-pan-66', 'panneaux', 'pan-indication',
     ['Ce signal, placé avant un carrefour, me demande :', 'De rester sur la bande de droite.', 'De choisir à temps ma bande.', 'De céder le passage aux bus.'],
@@ -366,7 +366,7 @@ export const panneauxQuestions: Question[] = [
   { ...Q('z-pan-70', 'panneaux', 'pan-indication',
     ['Ce signal indique :', 'Une piste cyclable obligatoire.', 'Une zone cyclable à 30 km/h.', 'Un passage pour cyclistes.'],
     ['Esta señal indica:', 'Un carril bici obligatorio.', 'Una zona ciclista a 30 km/h.', 'Un paso para ciclistas.'],
-    2, 'F50: paso para ciclistas y ciclomotores de dos ruedas (se coloca en el mismo paso; A25 lo anuncia). Debo cederles el paso cuando cruzan.'), signs: ['F50'] },
+    2, 'F50: paso para ciclistas y ciclomotores de dos ruedas (se coloca en el mismo paso; A25 lo anuncia). Me acerco a velocidad moderada sin poner en peligro a los que están cruzando y, si hace falta, me detengo para dejarles pasar (art. 40ter).'), signs: ['F50'] },
 
   { ...Q('z-pan-71', 'panneaux', 'pan-indication',
     ['Ce signal s\'adresse aux conducteurs qui tournent. Il indique que :', 'La piste cyclable est interdite.', 'Des cyclistes suivent la même voie.', 'Les cyclistes doivent céder le passage.'],

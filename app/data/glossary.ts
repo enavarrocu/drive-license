@@ -77,7 +77,7 @@ export const glossary: GlossaryEntry[] = [
 
   /* --- Semáforos y señales --- */
   { fr: 'le feu rouge / vert / orange', es: 'el semáforo en rojo / verde / ámbar', theme: 'signaux' },
-  { fr: 'le feu orange fixe', es: 'el ámbar fijo (hay que parar)', theme: 'signaux' },
+  { fr: 'le feu orange fixe', es: 'el ámbar fijo (hay que parar, salvo si ya no se puede con seguridad)', theme: 'signaux' },
   { fr: 'le feu orange clignotant', es: 'el ámbar intermitente (el semáforo no regula: valen las señales)', theme: 'signaux' },
   { fr: 'la flèche verte', es: 'la flecha verde', theme: 'signaux' },
   { fr: 'la ligne d\'arrêt', es: 'la línea de detención', theme: 'signaux' },
@@ -86,7 +86,7 @@ export const glossary: GlossaryEntry[] = [
   { fr: 'le signal de danger / d\'interdiction / d\'obligation / d\'indication', es: 'señal de peligro / prohibición / obligación / indicación', theme: 'signaux' },
   { fr: 'les marques au sol / le marquage', es: 'las marcas viales', theme: 'signaux' },
   { fr: 'la zone d\'évitement', es: 'la zona excluida (cebreado)', theme: 'signaux' },
-  { fr: 'les chevrons (de distance)', es: 'los chevrones: marcas blancas en V en el carril, en autopista', note: 'Mantén al menos dos chevrones con el vehículo de delante.', theme: 'signaux' },
+  { fr: 'les chevrons (de distance)', es: 'los chevrones: marcas blancas en V en el carril, en autopista', note: 'Recomendación de los paneles: deja al menos dos chevrones con el vehículo de delante (la ley exige una distancia de seguridad suficiente, art. 10.1).', theme: 'signaux' },
   { fr: 'les marques en damier', es: 'el damero (plataforma del transporte público o paso a nivel; prohibido parar)', theme: 'signaux' },
   { fr: 'les flèches de sélection', es: 'las flechas de selección de carril', theme: 'signaux' },
   { fr: 'le passage pour piétons', es: 'el paso de peatones', theme: 'usagers-faibles' },
