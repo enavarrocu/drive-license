@@ -13,6 +13,7 @@
     "postinstall": "nuxt prepare",
     "validate": "tsx scripts/validate-data.ts",
     "icons": "tsx scripts/gen-icons.ts",
+    "legal": "tsx scripts/fetch-legal.ts",
     "test": "vitest run"
   },
   "dependencies": {

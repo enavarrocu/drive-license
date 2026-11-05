@@ -62,7 +62,9 @@ server/
   api/            auth/{register,login,logout,config}, me.get, prefs.put, progress/{record,flag,reset}, course/read, exams/{index,[id],stats},
                   reports/{index.post (usuario), index.get, [id].put (admin)}, admin/{backups.get, backup.post}
 public/           manifest.webmanifest, sw.js (service worker a mano), offline.html, icons/ (generados)
-scripts/          validate-data.ts (+ checks.ts calidad, check-scenes.ts escenas), gen-icons.ts (`pnpm icons`)
+scripts/          validate-data.ts (+ checks.ts calidad, check-scenes.ts escenas), gen-icons.ts (`pnpm icons`),
+                  fetch-legal.ts (`pnpm legal`: baja los textos legales a docs/legal/)
+docs/legal/       textos legales vigentes en texto plano (fuente de verdad para el contenido)
 tests/            vitest (unitarios de app/lib y datos; api.smoke.test.ts arranca .output en el puerto 3132)
 Dockerfile · DEPLOYMENT.md · README.md
 ```
@@ -115,7 +117,10 @@ Dockerfile · DEPLOYMENT.md · README.md
   por bbox ignorando el marco, `svgo`); los PDF están en `~/Downloads/drive-license` y el nombre de
   cada PDF es el código. Todas son vectoriales (sin PNG/WebP). El 25 oct 2026 se compararon una a
   una con su PDF (176/176 correctas tras corregir C5, F63, F79, F81 y los recortes de C37/C41/C45/
-  C46/F103/M2/M4). Si añades una, compárala con el PDF: hubo imágenes de otra página del PDF. Los SVG **no pintan el blanco** de la señal, por eso
+  C46/F103/M2/M4). El 5 nov 2026 se repitió la comparación con las 182 (render del SVG con `qlmanage` contra la
+  página del PDF recortada): F101c llevaba un JPEG incrustado (en el PDF esa variante solo está en raster; se usa la
+  página 6, vectorial y con las mismas categorías que F99c) y el recorte de B5 cortaba el borde. Comprueba que ningún
+  SVG lleve `<image` ni `data:` (`grep -l 'data:image' public/signs/*.svg` debe salir vacío). Si añades una, compárala con el PDF: hubo imágenes de otra página del PDF. Los SVG **no pintan el blanco** de la señal, por eso
   `img.sign-img` lleva fondo blanco. Los dibujos de `signPictos.ts` solo son respaldo
   (`SignImage.vue` elige imagen oficial si existe) y sirven para `signWithValue(code, valor)`
   cuando no hay variante oficial con esa cifra.
@@ -188,9 +193,11 @@ Dockerfile · DEPLOYMENT.md · README.md
   -extra7 (texto y oui/non, `z7-…`); estos dos cubren huecos detectados al comparar con simulacros reales
   (nov 2026), y -extra8 (caminos reservados F99/F101, `z8-…`). Siguiente bloque: `questions-extra9.ts`, ids `z9-<tema>-NN`.
 - Vocabulario: la F111 es «zone cyclable» (código vigente; los paneles «rue cyclable» valen hasta el 1/1/2035).
-  Textos oficiales para verificar: codedelaroute.be (AR 1/12/1975, ley de 16/3/1968, AR 23/3/1998 del permiso, AR 10/7/2006 del
-  provisional) y ejustice (AR 30/9/2005 de los grados de infracción: usa la versión consolidada vigente de ejustice, la de
-  Wallex/codedelaroute en PDF estaba desfasada). El 5 nov 2026 se revisó TODO el contenido contra esos textos (8 revisiones
+  Textos oficiales para verificar: **copia local en `docs/legal/`** (versión consolidada de ejustice: AR 1/12/1975, ley de
+  16/3/1968, AR 23/3/1998 del permiso, AR 10/7/2006 del provisional, AR 30/9/2005 de los grados, ley de 21/11/1989 del
+  seguro; ver `docs/legal/README.md`). Consúltala con `grep` en vez de ir a internet; `pnpm legal` la vuelve a bajar y
+  `git diff docs/legal` muestra qué ha cambiado en la ley (hazlo antes de cada revisión del contenido). Los PDF de
+  Wallex/codedelaroute pueden estar desfasados (el de los grados lo estaba). El 5 nov 2026 se revisó TODO el contenido contra esos textos (8 revisiones
   en paralelo + verificación de cada hallazgo): grados corregidos (STOP = 2.º, teléfono = 3.º, adelantar en paso a nivel = 3.º,
   distancia de seguridad y carril bus = 1.º), retirada inmediata posible desde 0,5 g/l (art. 55; sistemática desde 0,8 por
   política de la fiscalía), y se retiraron preguntas sin base (x-sta-08, x-sig-03, x-sig-10, y-usa-03, y-man-05). La «priorité
