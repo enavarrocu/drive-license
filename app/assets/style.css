@@ -218,9 +218,10 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 .sign-popup-close { position: absolute; top: 8px; right: 10px; border: 0; background: transparent; color: var(--muted); font-size: 1.6rem; line-height: 1; cursor: pointer; }
 
 /* Señales mostradas antes del enunciado (como la imagen del examen) */
-.question-signs { display: flex; gap: 10px; justify-content: center; margin: 6px 0 10px; }
+.question-signs { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 6px 0 10px; }
 .question-sign { border: 1px solid var(--line); background: var(--card); border-radius: 12px; padding: 6px; cursor: pointer; }
-.question-sign svg, .question-sign img { width: 92px; height: auto; max-height: 140px; display: block; object-fit: contain; }
+.question-sign svg, .question-sign img { width: 120px; height: auto; max-height: 170px; display: block; object-fit: contain; }
+.question-sign:only-child svg, .question-sign:only-child img { width: 150px; max-height: 210px; }
 
 /* Corrección del examen */
 .review-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
@@ -229,14 +230,17 @@ footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 18
 .review-item.review-ko { border-left-color: var(--ko); }
 
 .question-image { display: flex; justify-content: center; margin: 6px 0 10px; }
-.question-image svg { height: 150px; width: auto; max-width: 100%; display: block; border-radius: 12px; }
+.question-image svg { height: 190px; width: auto; max-width: 100%; display: block; border-radius: 12px; }
 
 /* Pregunta con dibujo: en pantallas anchas, imagen a la izquierda y texto/opciones a la derecha. */
 @media (min-width: 900px) {
   .q-layout.has-visual { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 24px; align-items: start; margin-top: 14px; }
   .q-layout.has-visual .scene-wrap { margin: 0; max-width: none; }
-  .q-layout.has-visual .question-signs { justify-content: flex-start; margin: 0 0 10px; }
-  .q-layout.has-visual .question-image { justify-content: flex-start; margin: 0; }
+  .q-layout.has-visual .question-signs { justify-content: center; margin: 0 0 10px; }
+  .q-layout.has-visual .question-sign svg, .q-layout.has-visual .question-sign img { width: 140px; max-height: 200px; }
+  .q-layout.has-visual .question-sign:only-child svg, .q-layout.has-visual .question-sign:only-child img { width: 230px; max-height: 300px; }
+  .q-layout.has-visual .question-image { justify-content: center; margin: 0; }
+  .q-layout.has-visual .question-image svg { height: 300px; }
   .q-layout.has-visual .q-body .q { margin-top: 0; }
 }
 
