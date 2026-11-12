@@ -89,7 +89,7 @@ Dockerfile · DEPLOYMENT.md · README.md
   acceso tiene B1/B5; la SUL se detecta por la leyenda «excepté cyclistes»; `turn: 'none'` fuera de
   rotonda no participa; una señal en el brazo prevalece sobre `mainAxis`.
   Para carreteras rectas, carriles y marcas: `layout`, `marks` (spot, dim, sign, stop, garage, crest,
-  lanesig, person, path…), `ringLanes: 2` y, en vehículos, `lane`/`pos`/`path`/`blink`.
+  lanesig, person, path…), `ringLanes: 2`, `dirt: [brazo]` (camino de tierra: el que sale de él cede a todos, art. 12.3.1 b; el verificador lo modela) y, en vehículos, `lane`/`pos`/`path`/`blink`.
 - **Notas por opción** (`app/data/optionNotes.ts`): por qué es falsa cada opción incorrecta (una
   entrada por opción, `null` en la correcta; validate lo comprueba). Cubren todas las preguntas graves;
   si cambias las opciones de una pregunta, actualiza sus notas.

@@ -35,7 +35,7 @@ export const extraQuestions6: Question[] = [
     ['Je sors d\'un chemin de terre pour tourner à droite sur la route. Le cycliste C arrive par ma gauche. Qui passe en premier ?', 'Moi, il vient de ma gauche.', 'Le plus rapide des deux.', 'Le cycliste C.'],
     ['Salgo de un camino de tierra para girar a la derecha en la carretera. El ciclista C llega por mi izquierda. ¿Quién pasa primero?', 'Yo, viene por mi izquierda.', 'El más rápido de los dos.', 'El ciclista C.'],
     2, 'Quien sale de un «chemin de terre» o de un sendero a una vía con calzada cede el paso a todo conductor que circula por ella (art. 12.3.1 b), venga por la derecha o por la izquierda. Un ciclista es un conductor como los demás.', true),
-    { type: 'T', vehicles: [meAt('S', 'right'), at('C', 'W', 'straight', { kind: 'bike', back: 0.6 })], caption: 'je sors d\'un chemin de terre' }),
+    { type: 'T', dirt: ['S'], vehicles: [meAt('S', 'right'), at('C', 'W', 'straight', { kind: 'bike', back: 0.6 })], caption: 'je sors d\'un chemin de terre' }),
   { ...Q('z6-prio-04', 'priorite', 'dep-croisement',
     ['Ce signal est placé à l\'entrée d\'un pont étroit. Une voiture arrive en face, à la même distance que moi du pont. Ai-je la priorité ?', 'Oui.', 'Non.'],
     ['Esta señal está a la entrada de un puente estrecho. Un coche viene de frente, a la misma distancia del puente que yo. ¿Tengo prioridad?', 'Sí.', 'No.'],

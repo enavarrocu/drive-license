@@ -54,6 +54,7 @@ function wrongWay(ctx: Ctx, v: SceneVehicle): boolean {
 /** Nivel de control del vehículo (más alto = más prioridad) y su motivo. */
 function level(ctx: Ctx, v: SceneVehicle): { n: number; why: string } {
   if (wrongWay(ctx, v)) return { n: 0, why: 'viene de un sentido prohibido (art. 12.3.1)' }
+  if (ctx.sc.dirt?.includes(v.arm)) return { n: 1, why: 'sale de un camino de tierra (art. 12.3.1 b)' }
   if (ctx.sc.type === 'roundabout' && ctx.legalRoundabout) {
     if (v.inRing) return { n: 3, why: 'circula por el anillo de una rotonda señalizada (art. 12.3.1)' }
   }
@@ -98,7 +99,7 @@ function mustYield(ctx: Ctx, x: SceneVehicle, y: SceneVehicle): string | null {
 export function computePriority(sc: Scene): PriorityResult {
   if (sc.type === 'road') return { kind: 'unsupported', reason: 'tramo sin cruce (type road)' }
   if (sc.crossing?.pedestrian) return { kind: 'unsupported', reason: 'peatón en la escena (peatones no modelados)' }
-  if (sc.caption && MANEUVER_CAPTION.test(sc.caption)) return { kind: 'unsupported', reason: `maniobra o salida no modelada: «${sc.caption}»` }
+  if (sc.caption && MANEUVER_CAPTION.test(sc.caption) && !sc.dirt?.length) return { kind: 'unsupported', reason: `maniobra o salida no modelada: «${sc.caption}»` }
   if (Object.values(sc.signs ?? {}).includes('light-orange')) return { kind: 'unsupported', reason: 'semáforo en ámbar fijo' }
 
   if (sc.type === 'merge') {

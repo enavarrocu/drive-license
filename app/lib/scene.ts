@@ -120,6 +120,8 @@ export interface Scene {
   oneWay?: Arm[]
   /** Vía prioritaria dibujada más ancha (B9) sobre un eje. */
   mainAxis?: 'EW' | 'NS'
+  /** Brazos que son un camino de tierra o un sendero (tierra, sin marcas): quien sale de ellos cede a todos (art. 12.3.1 b). */
+  dirt?: Arm[]
   /** Texto opcional bajo la escena. */
   caption?: string
   /** Tramo (`type: 'road'`) con carriles a medida; sin él se dibuja la calzada simple de dos sentidos. */
@@ -463,14 +465,23 @@ export function renderScene(sc: Scene): string {
   } else {
     const arms: Arm[] = sc.type === 'T' ? (['N', 'E', 'S', 'W'] as Arm[]).filter((a) => a !== (sc.missing ?? 'N')) : ['N', 'E', 'S', 'W']
     const wide = (axis: 'EW' | 'NS') => (sc.mainAxis === axis ? ROAD + 16 : ROAD)
+    const dirt = sc.dirt ?? []
     for (const a of arms) {
+      if (dirt.includes(a)) continue
       if (a === 'N') parts.push(`<rect x="${C - wide('NS') / 2}" y="0" width="${wide('NS')}" height="${C}" fill="#6b6b6b"/>`)
       if (a === 'S') parts.push(`<rect x="${C - wide('NS') / 2}" y="${C}" width="${wide('NS')}" height="${C}" fill="#6b6b6b"/>`)
       if (a === 'W') parts.push(`<rect x="0" y="${C - wide('EW') / 2}" width="${C}" height="${wide('EW')}" fill="#6b6b6b"/>`)
       if (a === 'E') parts.push(`<rect x="${C}" y="${C - wide('EW') / 2}" width="${C}" height="${wide('EW')}" fill="#6b6b6b"/>`)
     }
+    // caminos de tierra: más estrechos, color tierra, con rodadas y sin marcas; empiezan en el borde de la calzada
+    for (const a of dirt) {
+      const DW = 76
+      const edge = ROAD / 2
+      const ruts = Array.from({ length: 14 }, (_, i) => `<circle cx="${(i * 37) % DW - DW / 2 + 4}" cy="${edge + 12 + ((i * 53) % (C - edge - 20))}" r="1.6" fill="#8d7146"/>`).join('')
+      parts.push(`<g transform="translate(${C} ${C}) rotate(${rot(a)})"><rect x="${-DW / 2}" y="${edge}" width="${DW}" height="${C - edge}" fill="#c2a878"/><path d="M${-DW / 2} ${edge} V${C} M${DW / 2} ${edge} V${C}" stroke="#a88f5f" stroke-width="3"/><path d="M-22 ${edge + 4} V${C} M22 ${edge + 4} V${C}" stroke="#a88a58" stroke-width="7" opacity="0.55"/><path d="M0 ${edge + 6} V${C}" stroke="#7fa35a" stroke-width="6" stroke-dasharray="3 5" opacity="0.7"/>${ruts}</g>`)
+    }
     // líneas centrales discontinuas fuera del cruce
-    for (const a of arms) {
+    for (const a of arms.filter((x) => !dirt.includes(x))) {
       const seg =
         a === 'N' ? `M${C} 0 V${C - ROAD / 2}` : a === 'S' ? `M${C} ${C + ROAD / 2} V${W}` : a === 'W' ? `M0 ${C} H${C - ROAD / 2}` : `M${C + ROAD / 2} ${C} H${W}`
       if (!sc.oneWay?.includes(a)) parts.push(`<path d="${seg}" stroke="#fff" stroke-width="2" stroke-dasharray="12 9" fill="none"/>`)
