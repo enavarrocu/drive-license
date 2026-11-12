@@ -554,7 +554,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
   'z-dep-01': [
     null,
     'La circulación en filas no se considera adelantamiento (art. 16.2): no es un adelantamiento por la derecha prohibido.',
-    'La regla de las filas vale para todos los vehículos, no solo para los camiones.',
+    'No hay que frenar para quedarse a su altura: en filas, ir más rápido que la fila de al lado no es adelantar (art. 16.2).',
   ],
   'z-dep-02': [
     'El art. 16.2bis permite a todo motorista circular entre filas lentas, no solo a la policía.',

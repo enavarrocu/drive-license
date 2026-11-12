@@ -135,9 +135,9 @@ export const extraQuestions3: Question[] = [
 
   /* ============ DÉPASSEMENT (+12) ============ */
   Q('z-dep-01', 'depassement', 'dep-regles',
-    ['Sur autoroute, la circulation est dense et se fait en files. La file de droite avance plus vite que celle de gauche. Est-ce permis ?', 'Oui, en files ce n\'est pas interdit.', 'Non, c\'est un dépassement par la droite.', 'Oui, mais seulement pour les camions.'],
-    ['En autopista, el tráfico es denso y se circula en filas. La fila de la derecha avanza más rápido que la de la izquierda. ¿Está permitido?', 'Sí, en filas no está prohibido.', 'No, es un adelantamiento por la derecha.', 'Sí, pero solo para los camiones.'],
-    0, 'En «circulation en files» (tráfico denso en varias filas), que una fila avance más rápido que la otra no se considera adelantamiento prohibido por la derecha. Cambiar de fila sigue siendo una maniobra: hay que ceder el paso a quien circula por la fila a la que te pasas (art. 12.4).', true),
+    ['Sur autoroute, la circulation est dense et se fait en files. Je suis dans la file de droite, qui avance plus vite que celle de gauche. Puis-je continuer à rouler plus vite que les voitures de gauche ?', 'Oui, en files ce n\'est pas un dépassement.', 'Non, c\'est un dépassement par la droite.', 'Non, je dois rester à leur hauteur.'],
+    ['En autopista, el tráfico es denso y se circula en filas. Estoy en la fila de la derecha, que avanza más rápido que la de la izquierda. ¿Puedo seguir avanzando más rápido que los coches de la izquierda?', 'Sí, en filas no es un adelantamiento.', 'No, es un adelantamiento por la derecha.', 'No, debo quedarme a su altura.'],
+    0, 'Con tráfico denso se puede circular en varias filas (art. 9.5), y que una fila avance más rápido que otra no se considera adelantamiento (art. 16.2). Lo que sí sería una maniobra es cambiar de fila: entonces hay que ceder el paso a quien circula por la fila a la que te pasas (art. 12.4).', true),
   Q('z-dep-02', 'depassement', 'z3-dep-complements',
     ['Sur autoroute, les voitures roulent lentement en files. Un motocycliste passe entre deux files. Que dit la règle ?', 'C\'est interdit, sauf aux motos de police.', 'C\'est permis, mais à 50 km/h maximum.', 'C\'est permis, à la vitesse qu\'il juge sûre.'],
     ['En autopista, los coches avanzan despacio en filas. Un motorista pasa entre dos filas. ¿Qué dice la norma?', 'Está prohibido, salvo a las motos de policía.', 'Está permitido, pero a 50 km/h como máximo.', 'Está permitido, a la velocidad que considere segura.'],
