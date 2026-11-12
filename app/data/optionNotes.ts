@@ -518,7 +518,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
   ],
   'x-dep-03': [
     null,
-    'Volver en cuanto mi frontal lo rebasa es cerrarle el paso al adelantado.',
+    'Volver en cuanto mi frontal rebasa el coche es cerrarle el paso.',
     'No hay una distancia fija: depende de la velocidad y de ver al adelantado en el retrovisor.',
   ],
   'y-dep-01': [
