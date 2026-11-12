@@ -686,7 +686,7 @@ export const optionNotes: Record<string, (string | null)[]> = {
   'z-alc-11': [
     'La radio no evita los microsueños: seguir conduciendo así es muy peligroso.',
     null,
-    'Ir más rápido con microsueños multiplica el riesgo: hay que parar ya.',
+    'El aire fresco despeja unos minutos, pero no evita los microsueños: hay que parar y dormir.',
   ],
 
   // ── Passages à niveau ────────────────────────────────────────────────────

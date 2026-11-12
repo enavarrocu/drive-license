@@ -222,7 +222,7 @@ export const extraQuestions3: Question[] = [
     ['¿A partir de qué tasa el alcohol empieza ya a alterar la conducción?', 'Desde unos 0,2 g/l.', 'Desde 0,5 g/l, no antes.', 'Solo por encima de 0,8 g/l.'],
     0, 'Desde unos 0,2 g/l ya hay efectos (reflejos, atención). El límite legal de 0,5 g/l no es un umbral de seguridad.'),
   Q('z-alc-11', 'alcool', 'alc-drogues',
-    ['Je ne me souviens plus des derniers kilomètres et je dévie de ma bande. Que dois-je faire ?', 'Monter le son de la radio et continuer.', 'M\'arrêter dès que possible pour dormir.', 'Rouler plus vite pour arriver plus tôt.'],
-    ['No recuerdo los últimos kilómetros y me salgo de mi carril. ¿Qué debo hacer?', 'Subir el volumen de la radio y seguir.', 'Parar en cuanto pueda para dormir.', 'Ir más rápido para llegar antes.'],
-    1, 'Son signos claros de somnolencia (posibles microsueños). La única solución es parar en un lugar seguro y dormir 15–20 minutos.', true),
+    ['Je roule de nuit sur autoroute depuis des heures. Je me rends compte que je ne me souviens plus des derniers kilomètres et que ma voiture a dévié de sa bande. Que dois-je faire ?', 'Monter le son de la radio et continuer.', 'M\'arrêter dès que possible et dormir un peu.', 'Ouvrir la fenêtre et continuer.'],
+    ['Conduzco de noche por autopista desde hace horas. Me doy cuenta de que no recuerdo los últimos kilómetros y de que el coche se ha desviado de su carril. ¿Qué debo hacer?', 'Subir el volumen de la radio y seguir.', 'Parar en cuanto pueda y dormir un rato.', 'Bajar la ventanilla y seguir.'],
+    1, 'No recordar los últimos kilómetros y salirse del carril son signos claros de somnolencia (posibles microsueños). La única solución es parar en cuanto se pueda en un lugar seguro (en autopista, un área de descanso o un parking, no el arcén) y dormir 15–20 minutos.', true),
 ]
