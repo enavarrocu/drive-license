@@ -161,19 +161,23 @@ function vehicleShape(v: SceneVehicle, color: string): string {
   return `<rect x="-11" y="-20" width="22" height="40" rx="5" fill="${fill}" stroke="${stroke}" stroke-width="2"/><rect x="-8" y="-14" width="16" height="7" rx="2" fill="#fff" opacity="0.85"/><rect x="-8" y="8" width="16" height="5" rx="2" fill="#fff" opacity="0.6"/>${siren}`
 }
 
-/** Flecha de trayectoria desde el vehículo (en coordenadas locales: llega desde el sur). */
-function pathArrow(turn: Turn, color: string, back: number): string {
+/**
+ * Flecha de trayectoria desde el vehículo (en coordenadas locales: llega desde el sur).
+ * `dist` = distancia del vehículo al centro del cruce: si se conoce, los giros terminan en el
+ * carril derecho de la calle de destino (22 px del eje), no sobre la línea central.
+ */
+function pathArrow(turn: Turn, color: string, back: number, dist?: number): string {
   if (turn === 'none') return ''
   const y0 = -24 // morro del vehículo
   const d = 40 + back * 26
   if (turn === 'straight') return `<path d="M0 ${y0} v-${d + 36}" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
-  if (turn === 'right') return `<path d="M0 ${y0} v-${d} a16 16 0 0 1 16 -16 h28" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
+  if (turn === 'right') return `<path d="M0 ${y0} v-${dist === undefined ? d : Math.max(dist - 62, 0)} a16 16 0 0 1 16 -16 h28" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
   if (turn === 'lane-left' || turn === 'lane-right') {
     const s = turn === 'lane-left' ? -40 : 40
     return `<path d="M0 ${y0} v-14 c0 -24 ${s} -20 ${s} -44 v-${d - 20}" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
   }
   if (turn === 'overtake') return `<path d="M0 ${y0} v-10 c0 -24 -40 -18 -40 -42 v-${d + 30} c0 -24 40 -18 40 -42 v-10" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
-  return `<path d="M0 ${y0} v-${d + 18} a22 22 0 0 0 -22 -22 h-30" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
+  return `<path d="M0 ${y0} v-${dist === undefined ? d + 18 : dist - 24} a22 22 0 0 0 -22 -22 h-30" stroke="${color}" stroke-width="3" fill="none" marker-end="url(#ah-${color.slice(1)})"/>`
 }
 
 /** Intermitentes: puntos naranja en las esquinas (coordenadas locales: el vehículo mira al norte). */
@@ -532,7 +536,7 @@ export function renderScene(sc: Scene): string {
     const lane = v.kind === 'tram' && sc.tramRails ? 0 : 22 // carril derecho
     const turn = v.turn ?? 'straight'
     parts.push(
-      `<g transform="translate(${C} ${C}) rotate(${rot(v.arm)}) translate(${lane} ${dist})">${pathArrow(turn, color, back)}${vehicleShape(v, color)}${blinkers(v)}<g transform="rotate(${-rot(v.arm)})"><circle r="10" fill="#fff" stroke="${color}" stroke-width="2"/><text x="0" y="3" font-size="${v.you ? 7 : 10}" font-weight="700" text-anchor="middle" fill="${color}" font-family="Arial">${v.you ? 'moi' : v.id}</text></g></g>`,
+      `<g transform="translate(${C} ${C}) rotate(${rot(v.arm)}) translate(${lane} ${dist})">${pathArrow(turn, color, back, dist)}${vehicleShape(v, color)}${blinkers(v)}<g transform="rotate(${-rot(v.arm)})"><circle r="10" fill="#fff" stroke="${color}" stroke-width="2"/><text x="0" y="3" font-size="${v.you ? 7 : 10}" font-weight="700" text-anchor="middle" fill="${color}" font-family="Arial">${v.you ? 'moi' : v.id}</text></g></g>`,
     )
   }
 
