@@ -185,7 +185,7 @@ Dockerfile · DEPLOYMENT.md · README.md
 
 ## Estado (25 oct 2026) y herramientas de diagnóstico
 
-- 697 preguntas en 16 temas (15 de dos opciones «oui / non»). Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
+- 696 preguntas en 16 temas (15 de dos opciones «oui / non»). Ficheros: questions, -scenes, -extra, -extra2, -extra3 (temas graves,
   `z-prio/vit/dep/alc-NN`), -extra4 (resto de temas, `z-sig/sta/aut/usa/man/ecl/veh/per-NN`) y uno por
   tema nuevo: -panneaux (`z-pan-NN`), -mecanique (`z-mec-NN`), -accidents (`z-acc-NN`),
   -comportement (`z-com-NN`) y -extra5 (31 escenas de adelantamiento, carriles, rotondas de 2 carriles,

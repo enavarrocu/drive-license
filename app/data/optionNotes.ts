@@ -212,11 +212,6 @@ export const optionNotes: Record<string, (string | null)[]> = {
     'Paso primero: mi derecha está libre y B, que gira a la izquierda de frente, me cede.',
     'B no puede pasar primero: tiene a A a su derecha y además gira a la izquierda delante de mí.',
   ],
-  'sc-35': [
-    'Que no cruce su trayectoria no me exime: la prioridad de la derecha no depende de hacia dónde voy.',
-    null,
-    'El orden de llegada no cuenta: A viene por mi derecha y tiene prioridad.',
-  ],
   'y-pri-01': [
     'El giro de A no cambia nada: viene por mi derecha y conserva la prioridad.',
     'La velocidad no cuenta: sin señales manda la prioridad de la derecha.',
